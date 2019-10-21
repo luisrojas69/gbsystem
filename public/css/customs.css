@@ -1,0 +1,19 @@
+/*!
+ *   AdminLTE v2.4.2
+ *   Author: Luis Rojas
+ *   License: Open source - MIT
+ *           Please visit http://opensource.org/licenses/MIT for more information
+ */
+/*
+ * Core: Customs CSS
+ * -------------------------
+ */
+
+ .disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+    } 
+ 
+ 
+ 

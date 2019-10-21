@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Crop;
+
+class CropController extends Controller
+{
+
+
+    public function index()
+    {	
+    	$crops= Crop::all();
+    	return view('pages.administration.crops.index', compact('crops'));
+
+	}
+
+    public function create()
+    {
+    	return view('pages.administration.crops.create');
+    }
+
+    public function show(Crop $crop)
+    {
+    	return 	redirect('crop');
+   	}
+
+    public function store(Request $request)
+    {
+    	try {	
+	    
+	    	$crop= New Crop;
+	    	$crop->crop_na = $request->crop_na;
+	    	$crop->crop_de = $request->crop_de;
+	    	DB::beginTransaction();
+	    	$crop->save();
+	    	DB::commit();
+	    	session()->flash('my_message', 'Cultivo Registrado Correctamente');
+	    	return redirect('crop');
+    	
+    	} catch (Exception $e) {
+    		
+    		session()->flash('my_error', $e->getMessage());	
+    		DB::rollback();
+    	}	
+    }
+
+    public function destroy(Crop $crop)
+    {
+    	try {
+    		$crop = Crop::find($crop->id);
+    		DB::beginTransaction();
+    		$crop->delete();
+    		DB::commit();
+    		session()->flash('my_message', 'Cultivo Eliminado Correctamente');
+    		return redirect('crop');
+    	} catch (Exception $e) {
+    		session()->flash('my_error', $e->getMessage());	
+    		DB::rollback();
+    	}
+    }
+
+    public function edit(Crop $crop)
+    {
+    	return view('pages.administration.crops.edit', compact('crop'));
+    }
+
+    public function update(Request $request, Crop $crop)
+    {
+    	try {
+    		$crop = Crop::find($crop->id);
+    		$crop->crop_na = $request->get('crop_na');
+    		$crop->crop_de = $request->get('crop_de');
+    		DB::beginTransaction();
+    		$crop->save();
+    		DB::commit();
+    		session()->flash('my_message', 'Cultivo Modificado Correctamente');
+    		return redirect('crop');
+    	} catch (Exception $e) {
+    		session()->flash('my_error', $e->getMessage());
+    		DB::rollback();
+    	}
+    }
+
+}

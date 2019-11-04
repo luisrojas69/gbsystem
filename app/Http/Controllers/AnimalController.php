@@ -20,8 +20,9 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        $animals = Animal::all();
-        return view('pages.administration.ganaderia.animals.index', compact('animals'));
+        $animals_active = Animal::where('rodeo_id', '=', 1)->get();
+        $animals_inactive = Animal::where('rodeo_id', '!=', 1)->get();
+        return view('pages.administration.ganaderia.animals.index', compact('animals_active', 'animals_inactive'));
     }
 
     /**
@@ -83,7 +84,10 @@ class AnimalController extends Controller
     {   
         $paddocks = Paddock::where("id", "!=", $animal->paddock_id)->get();
         $rodeos = Rodeo::where("id","!=",$animal->rodeo_id)->get();
-        return view('pages.administration.ganaderia.animals.show', compact('animal', 'rodeos', 'paddocks'));
+        $species = Specie::where("id","!=",$animal->specie_id)->get();
+        $breeds = Breed::where("id","!=",$animal->breed_id)->get();
+        
+        return view('pages.administration.ganaderia.animals.show', compact('animal', 'rodeos', 'paddocks', 'species','breeds'));
     }
 
     /**
@@ -106,7 +110,32 @@ class AnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
-        //
+       // dd($request->all());
+
+        try {
+            $animal = Animal::find($animal->id);
+            $animal->animal_cod = $request->animal_cod;
+            $animal->animal_na = $request->animal_na;
+            $animal->animal_col = $request->animal_col;
+            $animal->gender = $request->gender;
+            $animal->lot_id = $request->lot_id;
+            $animal->breed_id = $request->breed_id;
+            $animal->date_in = $request->date_in;
+            $animal->weight_in = $request->weight_in;
+            $animal->condition = $request->condition;
+            $animal->paddock_id = $request->paddock_id;
+            $animal->rodeo_id = $request->rodeo_id;
+            $animal->comment = $request->comment;
+            //dd($animal);          
+            DB::beginTransaction();
+            $animal->save();
+            DB::commit();
+            session()->flash('my_message','Animal Editado Correctamente');
+            return redirect()->back();           
+        } catch (Exception $e) {
+            session()->flash('my_error', $e->getMessage());
+            DB::rollback();           
+        }
     }
 
     /**
@@ -167,13 +196,15 @@ class AnimalController extends Controller
         }   
     }
 
-
+    //Movimineto de Ganado por Lote a Nuevos Rodeos
+    
     public function MultiMoveToRodeoCall()
     {
         $animals = Animal::all();
         $rodeos = Rodeo::all();
-        return view('pages.administration.ganaderia.animals.move_multiple', compact('animals', 'rodeos'));
+        return view('pages.administration.ganaderia.animals.move_multiple_rodeo', compact('animals', 'rodeos'));
     }
+
 
     public function MultiMoveToRodeoExecute(Request $request)
     {
@@ -181,7 +212,7 @@ class AnimalController extends Controller
         $rodeo_id =$request->rodeo_id;
         $rodeo = Rodeo::find($rodeo_id);
 
-        if (is_array($ids)) 
+        if (is_array($ids) and !is_null($rodeo_id)) 
         {
             try {   
             DB::beginTransaction();
@@ -195,8 +226,42 @@ class AnimalController extends Controller
             }
         }
          session()->flash('my_error','Seleccione al Menos un Animal y un Rodeo');
-         return redirect()->back();
+         return redirect()->back()->withInput();
+    }
+    //FIN Movimineto de Ganado por Lote a Nuevos Rodeos
+    
+
+    //Movimineto de Ganado por Lote a Nuevos Potreros 
+    public function MultiMoveToPaddockCall()
+    {
+        $animals = Animal::all();
+        $paddocks = Paddock::all();
+        return view('pages.administration.ganaderia.animals.move_multiple_paddock', compact('animals', 'paddocks'));
     }
 
+        
+    public function MultiMoveToPaddockExecute(Request $request)
+    {
+        $ids = $request->ids;
+        $paddock_id =$request->paddock_id;
+        $paddock = Paddock::find($paddock_id);
 
+        if (is_array($ids) and !is_null($paddock_id)) 
+        {
+            try {   
+            DB::beginTransaction();
+            Animal::whereIn('id', $ids)->update(['paddock_id' => $paddock_id]);
+            DB::commit();
+            session()->flash('my_message','Animales Movidos con exito al Potrero de Animales: '.$paddock->paddock_na);
+            return redirect()->back();       
+            } catch (Exception $e) {
+                session()->flash('my_error',$e->getMessage());
+                DB::rollback();            
+            }
+        }
+         session()->flash('my_error','Seleccione al Menos un Animal y un Potrero');
+         return redirect()->back()->withInput();
+    }
+    //FIN Movimineto de Ganado por Lote a Nuevos Potreros
+            
 }

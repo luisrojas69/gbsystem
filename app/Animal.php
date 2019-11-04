@@ -6,6 +6,7 @@ use App\Breed;
 use App\Sanitation;
 use App\Paddock;
 use App\Rodeo;
+use App\Specie;
 
 use Illuminate\Database\Eloquent\Model;
 

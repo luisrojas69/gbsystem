@@ -67,7 +67,7 @@
             <li class="{{ Request::is('capture') ? 'active' : ''}}"><a href="{{ route('capture.index') }}"><i class="fa fa-list"></i> Ultimas Capturas</a></li>
           </ul>
         </li>
-          @if (Auth::user()->role == 'ADMIN')
+          @if (Auth::user()->role != 'ADMIN')
         <li class="treeview {{ Request::is('establishments*') ? 'active menu-open' : ''}}">
           <a href="#">
             <i class="fa fa-home"></i> <span>Establecimientos</span>
@@ -97,15 +97,12 @@
             <li class="{{ Request::is('supplies/crop') ? 'active' : ''}}"><a href="{{ route('crop.index') }}"><i class="fa fa-leaf"></i>Cultivos</a></li>
 
             <li class="{{ Request::is('supplies/variety') ? 'active' : ''}}"><a href="{{ route('variety.index') }}"><i class="fa fa-asterisk"></i>Variedades</a></li>
-
-            <li class="{{ Request::is('supplies/fertilizer') ? 'active' : ''}}"><a href="{{ route('fertilizer.index') }}"><i class="fa fa-asterisk"></i>Fertilizantes</a></li>
           </ul>
         </li>
      
 
         <!-- END Insumos-->
      
-
 
          <li class="treeview {{ Request::is('crop*') ? 'active' : ''}}">
           <a href="#">
@@ -158,7 +155,25 @@
             <li class="{{ Request::is('pluviometry/create') ? 'active' : ''}}"><a href="{{ route('pluviometry.create') }}"><i class="fa fa-plus"></i> Insertar Pluviometria</a></li>
             <li class="{{ Request::is('pluviometry') ? 'active' : ''}}"><a href="{{ route('pluviometry.index') }}"><i class="fa fa-list"></i> Ultimos Registros</a></li>
           </ul>
+        </li>   
+
+
+        <!--Ganaderia-->
+
+          <li class="treeview {{ Request::is('animal*') ? 'active' : ''}}">
+          <a href="#">
+            <i class="fa fa-umbrella"></i> <span>Ganader&iacute;a</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('animals/animal/create') ? 'active' : ''}}"><a href="{{ route('animal.create') }}"><i class="fa fa-plus"></i> Registrar Animal</a></li>
+            <li class="{{ Request::is('animals/animal') ? 'active' : ''}}"><a href="{{ route('animal.index') }}"><i class="fa fa-list"></i> Ultimos Registros</a></li>
+          </ul>
         </li>        
+
+        <!-- Fin Ganaderia -->     
 
 
         <li class="header">ACCIONES</li>

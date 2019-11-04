@@ -33,7 +33,7 @@
                   <th>Fecha Ingreso</th>
                 </tr>
                     @foreach($animals as $animal)
-              <form action="{{ url('multimovetorodeo') }}" method="post" id="multiple">
+              <form action="{{ url('multimovetopaddock') }}" method="post" id="multiple">
                 @csrf
                 <tr>
                   <td style="text-align: center;">
@@ -57,11 +57,11 @@
                <tr>
                   <td colspan="4">
                     <div class="col-sm-10">
-                    <select class="form-control" name="rodeo_id" id="rodeo_id" required>
-                        <option value=''>Seleccione el Rodeo Destino</option>
-                         @foreach($rodeos as $rodeo)
-                              <option value="{{$rodeo->id}}">
-                                {{ $rodeo->rodeo_na }}
+                    <select class="form-control" name="paddock_id" id="paddock_id" required>
+                        <option value=''>Seleccione el Potrero Destino</option>
+                         @foreach($paddocks as $paddock)
+                              <option value="{{$paddock->id}}">
+                                {{ $paddock->paddock_na }}
                               </option>
                           @endforeach
                     </select>

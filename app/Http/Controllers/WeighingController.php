@@ -37,7 +37,13 @@ class WeighingController extends Controller
     public function new_weighing()
     {
         $animals = Animal::where('rodeo_id', '1')->get();
-        return view('pages.administration.ganaderia.weighings.new_weight', compact('animals'));
+         if (!is_array($animals)){
+            session()->flash('my_error', 'No se encontraron Animales en Rodeos "Machos para Engorde"');
+            return redirect()->back();
+            }else{
+            return view('pages.administration.ganaderia.weighings.new_weight', compact('animals'));        
+            }
+        
     }
 
     /**

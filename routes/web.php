@@ -37,7 +37,7 @@ Route::resource('supplies/crop', 'CropController');
 
 Route::resource('supplies/variety', 'VarietyController');
 
-Route::resource('supplies/fertilizer', 'FertilizerController');
+//Route::resource('supplies/fertilizer', 'FertilizerController');
 
 Route::resource('activity', 'ActivityController');
 
@@ -74,12 +74,16 @@ Route::get ('/animals/multimovetorodeo', 'AnimalController@MultiMoveToRodeoCall'
 
 Route::post('multimovetorodeo', 'AnimalController@MultiMoveToRodeoExecute');
 
+Route::get ('/animals/multimovetopaddock', 'AnimalController@MultiMoveToPaddockCall')->name('multimovetopaddock');
+
+Route::post('multimovetopaddock', 'AnimalController@MultiMoveToPaddockExecute');
+
 Route::get ('/animals/add_weighing/{id}', 'WeighingController@create')->name('add_weighing');
 
 Route::get ('/animals/new_weighing/', 'WeighingController@new_weighing')->name('new_weighing');
 
-Route::get ('/report/master', 'ReportController@master');
+Route::get ('/report/rodeos', 'RodeoController@rodeosPDF')->name('rodeos.pdf');
 
-Route::post ('/reportajax', 'ReportController@show');
+//Route::post ('/reportajax', 'ReportController@show');
 
 

@@ -6,6 +6,7 @@ use App\Rodeo;
 use App\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class RodeoController extends Controller
 {
@@ -118,5 +119,13 @@ class RodeoController extends Controller
             session()->flash('my_error',$e->getMessage());
             DB::rollback();            
         }
+    }
+
+    public function rodeosPDF(){
+        $rodeos = Rodeo::get();
+        $date = date('d-m-Y');
+        $pdf = PDF::loadView('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
+        return $pdf->download('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
+        //return view('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
     }
 }

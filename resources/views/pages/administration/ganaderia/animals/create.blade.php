@@ -385,6 +385,9 @@
             </div>
             <!-- /.box-footer -->
           </div>
+         </div>
+      </div>
+     </section>     
 @endsection
 
 @section('additionals-scripts')

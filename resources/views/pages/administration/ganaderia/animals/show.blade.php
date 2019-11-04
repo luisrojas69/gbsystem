@@ -72,6 +72,148 @@
                 <!-- movetopadock end -->
 
 
+                <!--Form Edit Start -->
+                <div id="form_edit_animal" class="form-move">
+                  <form class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('animal.update', $animal) }}">
+                {{ csrf_field() }}
+                {{ method_field('PUT') }}
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Nombre: </label>
+
+                  <div class="col-sm-10">
+                    <input type="text" maxlength="30" autocomplete="off" class="form-control" name="animal_na" id="animal_na" value="{{ $animal->animal_na }}" placeholder="Nombre del Animal (Opcional)">
+                  </div>
+                </div>
+
+                <div class="form-group">
+
+                  <label class="col-sm-2 control-label">Código: </label>
+                  <div class="col-sm-5">
+                    <input type="text" maxlength="30" autocomplete="off" class="form-control" name="animal_cod" id="animal_cod" placeholder="Codigo del Animal (Requerido)" value="{{ $animal->animal_cod }}" required="">
+                  </div>
+
+                  <div class="col-sm-5">
+                    <select class="form-control" name="animal_col" id="animal_col">
+                          <option value='{{ $animal->animal_col }}'>{{ $animal->animal_col }}</option>
+                          <option value='Negro'>Negro</option>
+                          <option value='Blanco'>Blanco</option>
+                          <option value='Blanco y Negro'>Blanco y Negro</option>
+                          <option value='Negro y Blanco'>Negro y Blanco</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Raza: </label>
+                  <div class="col-sm-5">
+                    <select class="form-control" name="breed_id" id="breed_id" required value="{{ old('breed_id') }}">
+                      <option value=' {{ $animal->breed_id }}'>{{ $animal->breed->breed_na  }}</option>
+                        @foreach($species as $specie)
+                          <optgroup label="{{ $specie->specie_de }}">
+                          @foreach($breeds as $item)
+                            @if($specie->id == $item->Specie->id)
+                              <option value="{{$item->id}}">
+                                <!-- {{ $item->Specie->specie_de }} -->
+                                     {{ $item->breed_de }}
+                              </option>
+                            @endif
+                          @endforeach
+                          </optgroup>
+                        @endforeach
+                    </select>
+                  </div>
+
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-5 btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-xs btn-default active">
+                        <i class="fa fa-male"></i>
+                        <input type="radio" name="gender" id="macho" autocomplete="off" value="m" checked=""> MACHO
+                      </label>
+                      <label class="btn btn-xs btn-default">
+                        <i class="fa fa-female"></i>
+                        <input type="radio" name="gender" id="hembra" autocomplete="off" value="f"> HEMBRA
+                      </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Ingreso: </label>
+                  <div class="col-sm-5">
+                    <input type="date" class="form-control" max="<?php echo date("Y-m-d");?>" value="{{ $animal->date_in }}" name="date_in" id="date_in" placeholder="Fecha de Ingreso" required>
+                  </div>
+
+                  <div class="col-sm-5">
+                      <input type="number" maxlength="30" class="form-control" name="weight_in" id="weight_in" placeholder="Peso al Ingresar (Requerido)" required="" value="{{ $animal->weight_in }}">
+                  </div>
+                </div>
+
+            <div class="form-group">
+                  <label class="col-sm-2 control-label">Lote: </label>
+                  <div class="col-sm-5">
+                    <input type="number" step="1" min="1" class="form-control" value="{{ $animal->lot_id }}" name="lot_id" id="lot_id" placeholder="Lote en el que llegó (Requerido)" required="">
+                  </div>
+
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-5 btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-xs btn-default active">
+                        <i class="fa fa-bank"></i>
+                        <input type="radio" name="condition" id="propio" autocomplete="off" value="propia" {{ ($animal->lot_id==2)? "checked" : "" }} > PROPIO
+                      </label>
+                      <label class="btn btn-xs btn-default">
+                        <i class="fa fa-cut"></i>
+                        <input type="radio" name="condition" id="mediania" autocomplete="off" value="mediania" {{ ($animal->lot_id==3)? "checked" : "" }}> MEDIANIA
+                      </label>
+                  </div>
+            </div>
+
+             <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Potrero: </label>
+                  <div class="col-sm-5">
+                    <select class="form-control" name="paddock_id" id="paddock_id" required>
+                        <option value='{{ $animal->paddock_id }}'>{{ $animal->paddock->paddock_na }}</option>
+                          @foreach($paddocks as $paddock)
+                              <option value="{{$paddock->id}}">
+                                {{ $paddock->paddock_na }}
+                              </option>
+                          @endforeach
+                    </select>
+                  </div>
+
+                  <div class="col-sm-5">
+                    <select class="form-control" name="rodeo_id" id="rodeo_id" required>
+                       <option value='{{ $animal->rodeo_id }}'>{{ $animal->rodeo->rodeo_na }}</option>
+                          @foreach($rodeos as $rodeo)
+                              <option value="{{$rodeo->id}}">
+                                {{ $rodeo->rodeo_na }}
+                              </option>
+                          @endforeach
+                    </select>
+                  </div>
+             </div>
+
+            <div class="form-group">
+              <label  class="col-sm-2 control-label">Observacion: </label>
+              <div class="col-sm-10">
+                <textarea class="form-control" name="comment" id="comment" rows="2" placeholder="Observaciones si Existen (Opcional)">{{ $animal->comment }}</textarea>
+              </div>
+            </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-info pull-right">Actualizar</button>
+              </div>
+              <!-- /.box-footer -->
+          </div>
+        </form>
+                 
+                </div>    
+                <!-- movetopadock end -->
+
+
                  <!--add-weighing start -->
                 <div id="form-add-weigth" class="form-add-weigth">
                             
@@ -132,15 +274,7 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- Fin Modal -->
-
-
-
-
-
-
-
-
-
+        
 
 
   <div class="row">
@@ -232,7 +366,7 @@
                         
                         <a href="javascript:void(0)" class="movetopaddock" id="movetopaddock"><img src="{{ asset('img/movetopaddock.png') }}" alt="..." class="margin"></a>
                         
-                        <a href="{{ route('animal.edit', $animal) }}"><img src="{{ asset('img/editanimal.png') }}" alt="..." class="margin"></a>
+                        <a href="javascript:void(0)" id="editanimal"><img src="{{ asset('img/editanimal.png') }}" alt="..." class="margin"></a>
 
                         <a href="javascript:void(0)" id="{{ $animal->id }}" class="btn-delete"><img src="{{ asset('img/deleteanimal.png') }}" alt="..." class="margin"></a>
 
@@ -454,6 +588,7 @@
       $( "#movetorodeo").on('click', function(){
          $('.modal-title').text('Mover de Rodeo');
           $('#form-add-weigth').hide();
+          $('#form_edit_animal').hide();
           $('#form-move-to-paddock').hide();
           $('#form-move-to-rodeo').show();
           $('#modal-form').modal('show');
@@ -463,6 +598,7 @@
       $( "#addweighing").on('click', function(){
          $('.modal-title').text('Agregar Pesaje a Este Animal');
           $('#form-move-to-rodeo').hide();
+          $('#form_edit_animal').hide();
           $('#form-move-to-paddock').hide();
           $('#form-add-weigth').show();
           $('#modal-form').modal('show');
@@ -472,8 +608,19 @@
       $( "#movetopaddock").on('click', function(){
          $('.modal-title').text('Mover de Potrero Este Animal');
           $('#form-move-to-rodeo').hide();
+          $('#form_edit_animal').hide();
           $('#form-add-weigth').hide();
           $('#form-move-to-paddock').show();
+          $('#modal-form').modal('show');
+     });
+
+      //Funcion Ejecuta Modal Agregar Pesaje al Animal Actual
+      $( "#editanimal").on('click', function(){
+         $('.modal-title').text('Editar Este Animal');
+          $('#form-move-to-rodeo').hide(); 
+          $('#form-move-to-paddock').hide();
+          $('#form-add-weigth').hide();
+          $('#form_edit_animal').show();
           $('#modal-form').modal('show');
      });
 

@@ -10,6 +10,7 @@ use App\Rodeo;
 use App\Weighing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class AnimalController extends Controller
 {
@@ -86,8 +87,14 @@ class AnimalController extends Controller
         $rodeos = Rodeo::where("id","!=",$animal->rodeo_id)->get();
         $species = Specie::where("id","!=",$animal->specie_id)->get();
         $breeds = Breed::where("id","!=",$animal->breed_id)->get();
-        
-        return view('pages.administration.ganaderia.animals.show', compact('animal', 'rodeos', 'paddocks', 'species','breeds'));
+        //Determinamos si el Animal ha Tenido mas pesajes luego de haber ingreado
+        if((Weighing::where("animal_id", $animal->id )->count() > 0) ){
+            $query=Weighing::where("animal_id", $animal->id )->orderBy('id', 'DESC')->first();
+            $weight=$query->weight;
+        }else{
+            $weight=$animal->weight_in;
+        }
+        return view('pages.administration.ganaderia.animals.show', compact('animal', 'rodeos', 'paddocks', 'species','breeds', 'weight'));
     }
 
     /**
@@ -263,5 +270,22 @@ class AnimalController extends Controller
          return redirect()->back()->withInput();
     }
     //FIN Movimineto de Ganado por Lote a Nuevos Potreros
+
+     public function animalsPDF(){
+        $animals_active = Animal::where('rodeo_id', '=', 1)->get();
+        $animals_inactive = Animal::where('rodeo_id', '!=', 1)->get();
+        $date = date('d-m-Y');
+        $pdf = PDF::loadView('pages.administration.reports.animals-pdf', compact('animals_active', 'animals_inactive', 'date'));
+        return $pdf->download('animals-list-'.date('Y-m-d_H:i:s').'.pdf');
+        //return view('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
+    }
+
+
+    public function getWeighins($id){
+        $weighings= DB::select(DB::raw("SELECT `date_read` as date, `weight` as weight FROM `weighings` WHERE animal_id = ".$id." ORDER BY `date_read` ASC"));
+        
+        //$weighings = Weighing::where("animal_id", $id)->pluck('weight');
+        return response()->json($weighings);
+    }
             
 }

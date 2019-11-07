@@ -15,6 +15,15 @@
 <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
+
+               <a class="no-margin pull-right"
+                                title="Exportar a PDF"
+                                href="{{ route('rodeos.pdf') }}">
+                                <span class="label label-danger"><i class="fa fa-file-pdf-o"></i></span>    
+               </a>
+
+                 
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">

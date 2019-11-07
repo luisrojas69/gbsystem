@@ -205,6 +205,10 @@ footer {
   text-align: center;
 }
 
+.page-break {
+    page-break-after: always;
+}
+
  </style>
 
 </head>
@@ -238,47 +242,34 @@ footer {
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>	
           <tr>
-            <th class="no">ID</th>
+            <th class="no">COD</th>
             <th class="desc">NOMBRE</th>
-            <th class="unit">Num. Animals</th>
-            <th class="qty">Creacion</th>
-            <th class="total">TOTAL</th>
+            <th class="unit">Especie</th>
+            <th class="qty">Raza</th>
+            <th class="total">Potrero</th>
+            <th class="total">Ingreso</th>
           </tr>
         </thead>
         <tbody>
 
-        @foreach($rodeos as $rodeo)
+        @foreach($animals_active as $animal)
           <tr>
-            <td class="no">{{ $rodeo->id }}</td>
-            <td class="desc"><h3>{{ $rodeo->rodeo_na }}</h3>{{ $rodeo->rodeo_de }}</td>
-            <td class="unit">{{ $rodeo->numAnimals }}</td>
-            <td class="qty">{{ $rodeo->created_at }}</td>
-            <td class="total">$1,200.00</td>
+            <td class="no">{{ $animal->animal_cod }}</td>
+            <td class="desc"><h3>{{ $animal->animal_na }}</h3>Pesaje al Ingresar: {{ $animal->weight_in }}</td>
+            <td class="unit">{{ $animal->breed->specie->specie_na }}</td>
+            <td class="qty">{{ $animal->breed->breed_na }}</td>
+            <td class="total">{{ $animal->paddock->paddock_na }}</td>
+            <td class="unit">{{ $animal->date_in }}</td>
           </tr>
          @endforeach
         </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"></td>
-            <td colspan="2">SUBTOTAL</td>
-            <td>$5,200.00</td>
-          </tr>
-          <tr>
-            <td colspan="2"></td>
-            <td colspan="2">TAX 25%</td>
-            <td>$1,300.00</td>
-          </tr>
-          <tr>
-            <td colspan="2"></td>
-            <td colspan="2">GRAND TOTAL</td>
-            <td>$6,500.00</td>
-          </tr>
-        </tfoot>
+        
       </table>
       <div id="thanks">Thank you!</div>
       <div id="notices">
 
 
+<!--div class="page-break"></div-->
 
         <div><strong>AVISO DE CONFIDENCIALIDAD</strong></div>
         <div class="notice">La presente documentación de carácter privado y confidencial es propiedad de Granja Boraure C.A., y esta dirigido exclusivamente a su(s) destinatario(s), no podrá ser objeto de reproducción total o parcial, ni transmisión de ninguna forma o por cualquier medio, ya sea electrónico, mecánico, digital, registro o cualquier otro; tampoco podrá ser distribuido bajo ningún concepto sin el permiso previo y escrito de Granja Boraure, C.A. Si usted ha recibido este documento por error, debe evitar realizar cualquier acción descrita anteriormente, asimismo le agradecemos comunicarlo al remitente. El incumplimiento de las limitaciones señaladas por cualquier persona que tenga acceso a la documentación será sancionada de conformidad al marco jurídico vigente.</div>

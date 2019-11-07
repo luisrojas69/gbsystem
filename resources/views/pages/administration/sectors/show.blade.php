@@ -264,7 +264,7 @@
                 pr==6?['Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic','Ene','Feb','Mar', 'Abr', 'May', 'Jun']:
                 pr==7?['Ago', 'Sep', 'Oct', 'Nov', 'Dic', 'Ene','Feb', 'Mar','Abr', 'May', 'Jun', 'Jul' ]:
                 pr==8?['Sep','Oct','Nov','Dic','Ene','Feb', 'Mar', 'Abr','May', 'Jun', 'Jul', 'Ago']:
-                Pr==9?['Oct','Nov','Dic','Ene','Feb', 'Mar', 'Abr','May','Jun', 'Jul', 'Ago', 'Sep']:
+                pr==9?['Oct','Nov','Dic','Ene','Feb', 'Mar', 'Abr','May','Jun', 'Jul', 'Ago', 'Sep']:
                 pr==10?['Nov','Dic', 'Ene','Feb', 'Mar','Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct' ]:
                 ['Dic', 'Ene','Feb', 'Mar', 'Abr','May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov'],
       

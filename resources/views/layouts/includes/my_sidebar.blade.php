@@ -168,8 +168,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ Request::is('animals/animal/create') ? 'active' : ''}}"><a href="{{ route('animal.create') }}"><i class="fa fa-plus"></i> Registrar Animal</a></li>
-            <li class="{{ Request::is('animals/animal') ? 'active' : ''}}"><a href="{{ route('animal.index') }}"><i class="fa fa-list"></i> Ultimos Registros</a></li>
+            <li class="{{ Request::is('animals/animal') ? 'active' : ''}}"><a href="{{ route('animal.index') }}"><i class="fa fa-paw"></i> Animales</a></li>
+            <li class="{{ Request::is('animals/rodeo') ? 'active' : ''}}"><a href="{{ route('rodeo.index') }}"><i class="fa fa-database"></i> Rodeos</a></li>
+            <li class="{{ Request::is('animals/weighing') ? 'active' : ''}}"><a href="{{ route('weighing.index') }}"><i class="fa fa-balance-scale"></i> Pesajes</a></li>
+            <li class="{{ Request::is('animals/paddocks') ? 'active' : ''}}"><a href="{{ route('paddock.index') }}"><i class="fa fa-bank"></i> Potreros</a></li>
+            <li class="{{ Request::is('animals/specie') ? 'active' : ''}}"><a href="{{ route('specie.index') }}"><i class="fa fa-cube"></i> Especies</a></li>
+            <li class="{{ Request::is('animals/breeds') ? 'active' : ''}}"><a href="{{ route('breed.index') }}"><i class="fa fa-cubes"></i> Razas</a></li>
+
           </ul>
         </li>        
 

@@ -63,7 +63,7 @@ class WeighingController extends Controller
             $weighing->save();
             DB::commit();
             session()->flash('my_message','Pesaje Registrado Correctamente para el Animal: '.$weighing->animal->animal_na);
-            return redirect ('animals/weighing');
+            return redirect()->back();
         } catch (Exception $e) {
             session()->flash('my_error', $e->getMessage());
             DB::rollback();

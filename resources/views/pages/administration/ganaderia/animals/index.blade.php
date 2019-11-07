@@ -20,6 +20,11 @@
           <div class="box box-info">
               <div class="box-header with-border">
                 <h3 class="box-title">Administracion de @yield('title-page') (Activos)</h3>
+                <a class="no-margin pull-right"
+                                title="Exportar a PDF"
+                                href="{{ route('animals.pdf') }}">
+                                <span class="label label-danger"><i class="fa fa-file-pdf-o"></i></span>    
+               </a>
               </div>
 
                             <div class="box-body">

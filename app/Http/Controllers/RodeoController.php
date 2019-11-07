@@ -125,7 +125,7 @@ class RodeoController extends Controller
         $rodeos = Rodeo::get();
         $date = date('d-m-Y');
         $pdf = PDF::loadView('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
-        return $pdf->download('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
+        return $pdf->stream('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
         //return view('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
     }
 }

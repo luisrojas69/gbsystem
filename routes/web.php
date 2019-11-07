@@ -84,6 +84,10 @@ Route::get ('/animals/new_weighing/', 'WeighingController@new_weighing')->name('
 
 Route::get ('/report/rodeos', 'RodeoController@rodeosPDF')->name('rodeos.pdf');
 
+Route::get ('/report/animals', 'AnimalController@animalsPDF')->name('animals.pdf');
+
 //Route::post ('/reportajax', 'ReportController@show');
+
+Route::get('animal/{id}/getweighins', 'AnimalController@getWeighins');
 
 

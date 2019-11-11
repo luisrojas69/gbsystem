@@ -6,12 +6,13 @@
 
 @section('title-page', "Movilización Multiple de Animales a Rodeos")
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
 
 @section('content')
 
-    @include('layouts._my_message')
-    @include('layouts._my_error')
-    <!-- Main content -->
     <section class="content">
 
       <div class="box">

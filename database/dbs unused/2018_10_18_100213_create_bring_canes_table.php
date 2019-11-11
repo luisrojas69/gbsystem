@@ -24,7 +24,8 @@ class CreateBringCanesTable extends Migration
             $table->timestamps();
 
             $table->foreign('sector_id')->references('id')->on('sectors');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            //$table->foreign('user_id')->references('id')->on('users');
         });
     }
 

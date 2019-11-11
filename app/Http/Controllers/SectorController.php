@@ -7,6 +7,7 @@ use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\SectorRequest;
 
 use App\Sector;
 
@@ -38,7 +39,7 @@ class SectorController extends Controller
      
     }
 
-     public function store(Request $request)
+     public function store(SectorRequest $request)
     {
 
        try {

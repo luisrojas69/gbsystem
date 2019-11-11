@@ -159,7 +159,7 @@
 
 
         <!--Ganaderia-->
-
+          
           <li class="treeview {{ Request::is('animal*') ? 'active' : ''}}">
           <a href="#">
             <i class="fa fa-umbrella"></i> <span>Ganader&iacute;a</span>
@@ -167,9 +167,14 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+        
           <ul class="treeview-menu">
             <li class="{{ Request::is('animals/animal') ? 'active' : ''}}"><a href="{{ route('animal.index') }}"><i class="fa fa-paw"></i> Animales</a></li>
+            
+            @can('rodeo.index')
             <li class="{{ Request::is('animals/rodeo') ? 'active' : ''}}"><a href="{{ route('rodeo.index') }}"><i class="fa fa-database"></i> Rodeos</a></li>
+            @endcan
+
             <li class="{{ Request::is('animals/weighing') ? 'active' : ''}}"><a href="{{ route('weighing.index') }}"><i class="fa fa-balance-scale"></i> Pesajes</a></li>
             <li class="{{ Request::is('animals/paddocks') ? 'active' : ''}}"><a href="{{ route('paddock.index') }}"><i class="fa fa-bank"></i> Potreros</a></li>
             <li class="{{ Request::is('animals/specie') ? 'active' : ''}}"><a href="{{ route('specie.index') }}"><i class="fa fa-cube"></i> Especies</a></li>
@@ -179,8 +184,30 @@
         </li>        
 
         <!-- Fin Ganaderia -->     
+        <!--Menu Configuraciones-->
+        @if(auth()->user()->hasRole('admin'))
+        <li class="header">MENU ADMINISTRADOR</li>
+        <li class="treeview {{ Request::is('administration*') ? 'active' : ''}}">
+          <a href="#">
+            <i class="fa fa-gear"></i> <span>Configuaciones</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('administration/user') ? 'active' : ''}}"><a href="{{ route('user.index') }}"><i class="fa fa-user"></i> Usuarios</a></li>
+             <li class="{{ Request::is('administration/role') ? 'active' : ''}}"><a href="{{ route('user.index') }}"><i class="fa fa-tasks"></i> Roles</a></li>
+             <li class="{{ Request::is('administration/permission') ? 'active' : ''}}"><a href="{{ route('user.index') }}"><i class="fa fa-lock"></i> Permisos</a></li>
+          </ul>
+
+        </li>
+        @endif 
 
 
+
+
+        <!--Menu Acciones-->
         <li class="header">ACCIONES</li>
         <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" ><i class="fa fa-bar-chart text-green"></i> <span>Ver Reportes</span></a></li>
         <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" ><i class="fa fa-sign-out text-red"></i> <span>Cerrar Sesión</span></a></li>

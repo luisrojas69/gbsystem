@@ -39,5 +39,16 @@ class HomeController extends Controller
 
     }
 
+    public function getRolesTest(){
+      $roles = auth()->user()->roles;
+      $permissions = auth()->user()->permissions;
+      //auth()->user()->givePermissionTo('edit.pages', 'create.pages', 'delete.pages');
+      //auth()->user()->removeRoles('Admin');
+      //auth()->user()->assignRoles('Supervisor');
+      //auth()->user()->syncRoles('Admin');
+      
+      //dd($roles);
+    }
+
 
 }

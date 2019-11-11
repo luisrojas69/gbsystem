@@ -6,23 +6,29 @@
 
 @section('title-page', "Rodeos Granja Boraure")
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_status')
+@include('layouts._my_error')
+@endsection
 
 @section('content')
-    @include('layouts._my_message')
-    @include('layouts._my_status')
-    @include('layouts._my_error')
 
 <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
 
-               <a class="no-margin pull-right"
-                                title="Exportar a PDF"
-                                href="{{ route('rodeos.pdf') }}">
-                                <span class="label label-danger"><i class="fa fa-file-pdf-o"></i></span>    
-               </a>
+               
 
-                 
+          <a title="Exportar a PDF"
+                                href="{{ route('rodeos.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
+            <i class="fa fa-download"></i> Generar PDF
+          </a>
+
+          <a title="Exportar a PDF"
+                                href="{{ route('rodeos.pdf') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+            <i class="fa fa-download"></i> Generar EXCEL
+          </a>
 
             </div>
             <!-- /.box-header -->
@@ -42,31 +48,36 @@
                   <td>{{ $rodeo->rodeo_de }}</td>
                   <td style="width: 120px; text-align: center;"><span class="badge bg-aqua">{{ $rodeo->num_animals }}</span></td>
                   <td style="text-align: center;">
-                        <a href="javascript:void(0)"
-                            title="Editar"
-                            onclick="event.preventDefault();
-                            document.getElementById('form-edit-{{ $rodeo->id }}').submit()">
-                             <span class="label label-primary"><i class="fa fa-pencil"></i></span>
-                        </a>
+                    
+                        @can('rodeo.edit')
+                          <a href="javascript:void(0)"
+                              title="Editar"
+                              onclick="event.preventDefault();
+                              document.getElementById('form-edit-{{ $rodeo->id }}').submit()">
+                               <span class="label label-primary"><i class="fa fa-pencil"></i></span>
+                          </a>
 
-                        <form method="GET"
-                            action="{{ route('rodeo.edit', $rodeo) }}"
-                            id="form-edit-{{ $rodeo->id }}"
-                            style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
+                          <form method="GET"
+                              action="{{ route('rodeo.edit', $rodeo) }}"
+                              id="form-edit-{{ $rodeo->id }}"
+                              style="display: none;">
+                              {{ csrf_field() }}
+                          </form>
+                        @endcan
 
-                        <a href="javascript:void(0)" id="{{ $rodeo->id }}"
-                          class="btn-delete  {{ count($rodeo->animals)>0 ? 'disabled' : '' }}"
-                          title="Eliminar">
-                        <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+                        @can('rodeo.destroy')
+                            <a href="javascript:void(0)" id="{{ $rodeo->id }}"
+                              class="btn-delete  {{ count($rodeo->animals)>0 ? 'disabled' : '' }}"
+                              title="Eliminar">
+                            <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-                     <form method="POST"
-                        id="form-destroy-{{ $rodeo->id }}"
-                        action="{{ route('rodeo.destroy', $rodeo) }}">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                    </form>
+                           <form method="POST"
+                              id="form-destroy-{{ $rodeo->id }}"
+                              action="{{ route('rodeo.destroy', $rodeo) }}">
+                              {{ csrf_field() }}
+                              {{ method_field('DELETE') }}
+                          </form>
+                        @endcan
 
                   </td>
                 </tr>

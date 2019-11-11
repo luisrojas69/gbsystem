@@ -7,6 +7,9 @@ use App\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Database\Eloquent\Model\Permission;
+use Illuminate\Database\Eloquent\Model\Role;
+use App\Http\Requests\RodeoRequest;
 
 class RodeoController extends Controller
 {
@@ -15,6 +18,22 @@ class RodeoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+
+        
+        $this->middleware('can:rodeo.create')->only(['create', 'store']);
+
+        $this->middleware('can:rodeo.index')->only(['index']);
+
+        $this->middleware('can:rodeo.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:rodeo.show')->only(['show']);
+
+        $this->middleware('can:rodeo.destroy')->only(['destroy']);
+
+    }
+
     public function index()
     {
         $rodeos = Rodeo::all();
@@ -37,7 +56,7 @@ class RodeoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RodeoRequest $request)
     {
         try {
             $rodeo = new Rodeo;
@@ -52,17 +71,6 @@ class RodeoController extends Controller
             session()->flash('my_error', $e->getMessage());
             DB::rollback();           
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Rodeo  $rodeo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Rodeo $rodeo)
-    {
-        //
     }
 
     /**
@@ -83,7 +91,7 @@ class RodeoController extends Controller
      * @param  \App\Rodeo  $rodeo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rodeo $rodeo)
+    public function update(RodeoRequest $request, Rodeo $rodeo)
     {
         try {
             $rodeo = Rodeo::find($rodeo->id);

@@ -7,12 +7,13 @@
 
 @section('title-page', "Detalles del Animal  $animal->animal_cod")
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
+
 
 @section('content')
-    @include('layouts._my_message')
-    @include('layouts._my_error')
-
-
 
         <!--Modal-->
         <div class="modal fade" tabindex="-1" id="modal-form">

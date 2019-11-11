@@ -7,7 +7,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
   
-  <title>GBSystem 2.0 | @yield('title-page')</title>
+  <title>GBSystem 3.0 | @yield('title-page')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -58,14 +58,14 @@
         <small>Sistema Integral</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="{{ route('home') }}" title="Ir al Home"><i class="fa fa-home"></i> Inicio</a></li>
       </ol>
     </section>
   <!-- END - Breadcrumbs -->
 
     <!-- Main content -->
     <section class="content">
+      @yield('message')
       @yield('content')
     </section>
     <!-- /.content -->

@@ -1,0 +1,7 @@
+GbSystem. (Sistem Integral para el COntrol de Pluviometria, Siembra, Cosecha, Ganaderia y demas)
+
+Paquetes Adicionales:
+Shinobi (Control de Roles y Permisos)
+Se debe cambiar el archivo .ENV -> CACHE_DRIVER=file a CACHE_DRIVER=array para solucionar el error al migrar los seeder de Permisos y Roles
+
+DOMPdf

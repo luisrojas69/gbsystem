@@ -20,8 +20,7 @@ class CaptureController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        //$this->middleware('isadmin');
+        
     }
 
     public function index()
@@ -44,7 +43,7 @@ class CaptureController extends Controller
     	$lots = Lot::with('Sector')->get(['id','lot_de','sector_id']);
         $planks = Plank::with('Lot')->get(['id','plank_de','lot_id']);
     	$crops = Crop::get(['id','crop_de']);
-        $varieties = Variety::get();
+        $varieties = Variety::get(['id', 'variety_na']);
     	return view('pages.administration.captures.create', compact('lots','planks', 'varieties', 'crops', 'sectors'));
     }
 

@@ -48,7 +48,9 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::post('multimovetorodeo', 'AnimalController@MultiMoveToRodeoExecute');
 
-	Route::get ('/report/rodeos', 'RodeoController@rodeosPDF')->name('rodeos.pdf');
+	Route::get ('/report/rodeos-pdf', 'RodeoController@rodeosPDF')->name('rodeos.pdf');
+
+	Route::get ('/report/rodeos-excel', 'RodeoController@rodeosExcel')->name('rodeos.excel');
 
 
 	//Pluviometria
@@ -122,7 +124,8 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::resource('animals/animal', 'AnimalController');
 
-	Route::get ('/report/animals', 'AnimalController@animalsPDF')->name('animals.pdf');
+	Route::get ('/report/animals-pdf', 'AnimalController@animalsPDF')->name('animals.pdf');
 
+	Route::get ('/report/animals-excel', 'AnimalController@animalsExcel')->name('animals.excel');
 
 });//Fin Grupo de Rutas con el Middleware Auth ( para forzar el inicio d Sesion)

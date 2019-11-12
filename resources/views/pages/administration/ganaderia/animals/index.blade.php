@@ -22,11 +22,15 @@
           <div class="box box-info">
               <div class="box-header with-border">
                 <h3 class="box-title">Administracion de @yield('title-page') (Activos)</h3>
-                <a class="no-margin pull-right"
-                                title="Exportar a PDF"
-                                href="{{ route('animals.pdf') }}">
-                                <span class="label label-danger"><i class="fa fa-file-pdf-o"></i></span>    
-               </a>
+                   <a title="Exportar a PDF"
+                                href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
+                      <i class="fa fa-download"></i> Generar PDF
+                  </a>
+
+                  <a title="Exportar a Excel"
+                                        href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+                    <i class="fa fa-download"></i> Generar EXCEL
+                  </a>
               </div>
 
                             <div class="box-body">
@@ -133,6 +137,15 @@
           <div class="box box-danger">
               <div class="box-header with-border">
                 <h3 class="box-title">Administracion @yield('title-page') (Inactivos)</h3>
+                   <a title="Exportar a PDF"
+                                href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
+                      <i class="fa fa-download"></i> Generar PDF
+                  </a>
+
+                  <a title="Exportar a Excel"
+                                        href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+                    <i class="fa fa-download"></i> Generar EXCEL
+                  </a>                
               </div>
 
           <div class="box-body">

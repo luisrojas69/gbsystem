@@ -10,6 +10,9 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Database\Eloquent\Model\Permission;
 use Illuminate\Database\Eloquent\Model\Role;
 use App\Http\Requests\RodeoRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RodeosExport;
+
 
 class RodeoController extends Controller
 {
@@ -135,5 +138,9 @@ class RodeoController extends Controller
         $pdf = PDF::loadView('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
         return $pdf->stream('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
         //return view('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
+    }
+
+    public function rodeosExcel(){       
+        return Excel::download(new RodeosExport, 'rodeo-list-'.date('Y-m-d_H:i:s').'.xlsx');
     }
 }

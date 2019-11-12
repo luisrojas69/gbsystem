@@ -11,6 +11,8 @@ use App\Weighing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AnimalsExport;
 
 class AnimalController extends Controller
 {
@@ -271,6 +273,9 @@ class AnimalController extends Controller
     }
     //FIN Movimineto de Ganado por Lote a Nuevos Potreros
 
+
+
+    //Funcion para Generar Reporte de Animales Activos en PDF
      public function animalsPDF(){
         $animals_active = Animal::where('rodeo_id', '=', 1)->get();
         $animals_inactive = Animal::where('rodeo_id', '!=', 1)->get();
@@ -279,6 +284,14 @@ class AnimalController extends Controller
         return $pdf->download('animals-list-'.date('Y-m-d_H:i:s').'.pdf');
         //return view('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
     }
+
+
+
+    //Funcion para Generar Reporte de Animales Activos en Excel
+    public function animalsExcel(){
+       return Excel::download(new AnimalsExport, 'animal-list-'.date('Y-m-d_H:i:s').'.xlsx');
+    }
+
 
 
     public function getWeighins($id){

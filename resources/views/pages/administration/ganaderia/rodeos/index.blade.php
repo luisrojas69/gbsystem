@@ -69,8 +69,8 @@
             <i class="fa fa-download"></i> Generar PDF
           </a>
 
-          <a title="Exportar a PDF"
-                                href="{{ route('rodeos.pdf') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+          <a title="Exportar a Excel"
+                                href="{{ route('rodeos.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
             <i class="fa fa-download"></i> Generar EXCEL
           </a>
 
@@ -106,12 +106,6 @@
                        <span class="label label-primary"><i class="fa fa-pencil"></i></span>
                           </a>
 
-                          <form method="GET"
-                              action="{{ route('rodeo.edit', $rodeo) }}"
-                              id="form-edit-{{ $rodeo->id }}"
-                              style="display: none;">
-                              {{ csrf_field() }}
-                          </form>
                         @endcan
 
                         @can('rodeo.destroy')

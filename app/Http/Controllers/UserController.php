@@ -18,13 +18,13 @@ class UserController extends Controller
         
         //$this->middleware('can:users.create')->only(['create', 'store']);
 
-        $this->middleware('can:users.index')->only(['index']);
+        $this->middleware('can:user.index')->only(['index']);
 
-        $this->middleware('can:users.edit')->only(['edit', 'update']);
+        $this->middleware('can:user.edit')->only(['edit', 'update']);
 
-        //$this->middleware('can:rodeo.show')->only(['show']);
+        $this->middleware('can:user.show')->only(['show']);
 
-        $this->middleware('can:users.destroy')->only(['destroy']);
+        $this->middleware('can:user.destroy')->only(['destroy']);
 
     }
 

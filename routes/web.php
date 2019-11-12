@@ -34,11 +34,11 @@ Route::middleware(['auth'])->group(function () {
 	Route::resource('administration/user','UserController')->except(['create']);
 
 	//Roles
-	Route::resource('administration/role','RoleController')->except(['show']);
+	Route::resource('administration/role','RoleController');
 
 
 	//Rodeos
-	Route::resource('animals/rodeo','RodeoController')->except(['show']);
+	Route::resource('animals/rodeo','RodeoController')->except(['show', 'edit']);
 
 	Route::get ('/animals/movetorodeo/{id}', 'AnimalController@MoveToRodeoCall')->name('movetorodeo');
 
@@ -89,14 +89,14 @@ Route::middleware(['auth'])->group(function () {
 	Route::resource('capture', 'CaptureController');
 
 	//Species
-	Route::resource('animals/specie', 'SpecieController');
+	Route::resource('animals/specie', 'SpecieController')->except(['show', 'edit']);
 
 
 	//Breeds
 	Route::resource('animals/breed', 'BreedController');
 
 	//Paddocks
-	Route::resource('animals/paddock', 'PaddockController');
+	Route::resource('animals/paddock', 'PaddockController')->except(['show', 'edit']);
 
 	Route::get ('/animals/multimovetopaddock', 'AnimalController@MultiMoveToPaddockCall')->name('multimovetopaddock');
 

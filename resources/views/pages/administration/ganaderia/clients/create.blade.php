@@ -4,7 +4,6 @@
 
 @section('message')
 @include('layouts._my_message')
-@include('layouts._my_status')
 @include('layouts._my_error')
 @endsection
 

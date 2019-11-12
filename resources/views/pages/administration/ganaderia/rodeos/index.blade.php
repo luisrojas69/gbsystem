@@ -8,13 +8,57 @@
 
 @section('message')
 @include('layouts._my_message')
-@include('layouts._my_status')
 @include('layouts._my_error')
 @endsection
 
 @section('content')
 
 <div class="box">
+
+<!--Formulario para Crear un Nuevo Registro-->  
+<div class="modal fade" id="modal-form-store" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Registrar un Nuevo Rodeo</h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_rodeo" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('rodeo.store') }}">
+                {{ csrf_field() }}        
+          @include('layouts.includes.partials.forms.ganaderia.form_rodeos')
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Formulario para Editar Registro-->
+<div class="modal fade" id="modal-form-update" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_rodeo" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('rodeo.update','test') }}">
+                {{ csrf_field() }}
+                {{ method_field('patch') }} 
+          <input type="hidden" name="rodeo_id" id="rodeo_id" value="">             
+          @include('layouts.includes.partials.forms.ganaderia.form_rodeos')
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
             <div class="box-header with-border">
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
 
@@ -50,11 +94,16 @@
                   <td style="text-align: center;">
                     
                         @can('rodeo.edit')
-                          <a href="javascript:void(0)"
+                          <a href=""
                               title="Editar"
-                              onclick="event.preventDefault();
-                              document.getElementById('form-edit-{{ $rodeo->id }}').submit()">
-                               <span class="label label-primary"><i class="fa fa-pencil"></i></span>
+                              data-toggle="modal"
+                              data-target="#modal-form-update"
+                              data-rodeo_na="{{ $rodeo->rodeo_na }}"
+                              data-rodeo_de="{{ $rodeo->rodeo_de }}"
+                              data-rodeo_id="{{ $rodeo->id }}"
+                              data-title="Formulario de Edicion - Editar {{ $rodeo->rodeo_na }}"
+                              >
+                       <span class="label label-primary"><i class="fa fa-pencil"></i></span>
                           </a>
 
                           <form method="GET"
@@ -87,11 +136,15 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-               <a class="btn btn-primary no-margin pull-right"
-                                title="Crear un nueva Rodeo"
-                                href="{{ route('rodeo.create') }}">
-                                <i class="fa fa-plus"></i> Agregar Nuevo
-                     </a>
+              @can('rodeo.create')
+                <button 
+                  type="button" 
+                  class="btn btn-primary no-margin pull-right" 
+                  data-toggle="modal" 
+                  data-target="#modal-form-store">
+                  <i class="fa fa-plus"></i>Agregar Nuevo
+                </button>
+               @endcan    
             </div>
 </div>
 
@@ -104,4 +157,25 @@
 
 @section('additionals-scripts')
 <script type="text/javascript" src="{{ asset('scripts/confirm-delete.js') }}"></script>
+<script type="text/javascript">
+
+  $(function(){
+        $('#modal-form-update').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var nameRodeo = button.data('rodeo_na') // Extract info from data-* attributes
+        var descriptionRodeo = button.data('rodeo_de')
+        var idRodeo = button.data('rodeo_id')
+        var title = button.data('title')
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(title)
+        modal.find('.modal-body #rodeo_na').val(nameRodeo)
+        modal.find('.modal-body #rodeo_de').val(descriptionRodeo)
+        modal.find('.modal-body #rodeo_id').val(idRodeo)
+})
+
+  });
+  
+</script>
 @endsection

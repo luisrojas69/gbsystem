@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\DB;
 
 class SpecieController extends Controller
 {
+ 
+    public function __construct(){
+        
+        $this->middleware('can:specie.create')->only(['create', 'store']);
+
+        $this->middleware('can:specie.index')->only(['index']);
+
+        $this->middleware('can:specie.edit')->only(['update']);
+
+        $this->middleware('can:specie.destroy')->only(['destroy']);
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -57,38 +69,16 @@ class SpecieController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Specie  $specie
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Specie $specie)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Specie  $specie
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Specie $specie)
-    {
-        return view('pages.administration.ganaderia.species.edit', compact('specie'));
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Specie  $specie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Specie $specie)
+    public function update(Request $request)
     {
         try {
-            $specie = Specie::find($specie->id);
+            $specie = Specie::findOrFail($request->specie_id);
             $specie->specie_na = $request->specie_na;
             $specie->specie_de = $request->specie_de;
             DB::beginTransaction();

@@ -6,11 +6,13 @@
 
 @section('title-page', "Tablones Granja Boraure")
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
 
 @section('content')
-    @include('layouts._my_message')
-    @include('layouts._my_error')
-
+ 
  <div class="col-md-6">
   <div class="box box-info" >
 

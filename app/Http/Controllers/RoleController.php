@@ -15,15 +15,15 @@ class RoleController extends Controller
     public function __construct(){
 
         
-        //$this->middleware('can:Roles.create')->only(['create', 'store']);
+        $this->middleware('can:role.create')->only(['create', 'store']);
 
-        //$this->middleware('can:role.index')->only(['index']);
+        $this->middleware('can:role.index')->only(['index']);
 
-        //$this->middleware('can:role.edit')->only(['edit', 'update']);
+        $this->middleware('can:role.edit')->only(['edit', 'update']);
 
-        //$this->middleware('can:rodeo.show')->only(['show']);
+        $this->middleware('can:role.show')->only(['show']);
 
-        //$this->middleware('can:role.destroy')->only(['destroy']);
+        $this->middleware('can:role.destroy')->only(['destroy']);
 
     }
 
@@ -50,19 +50,18 @@ class RoleController extends Controller
     }
 
 
-    public function show (Role $Role)
-    {
-        return view('pages.administration.manager.roles.show', compact('Role'));
-     
+    public function show (Role $role)
+    {   
+        $permissions = $role->permissions;
+        return response()->json([$role, $permissions]);     
     }
 
 
 
-    public function destroy(Role $Role){
+    public function destroy(Role $role){
         try{
-            $Role =Role::find($Role->id);
             DB::beginTransaction();
-            $Role->delete();
+            $role->delete();
             DB::commit();
             session()->flash('my_message', 'Rol Eliminado Correctamente');
             return redirect()->back();

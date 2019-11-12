@@ -5,9 +5,27 @@ namespace App\Http\Controllers;
 use App\Paddock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model\Permission;
+use Illuminate\Database\Eloquent\Model\Role;
+
 
 class PaddockController extends Controller
 {
+    
+    public function __construct(){
+        
+        $this->middleware('can:paddock.create')->only(['create', 'store']);
+
+        $this->middleware('can:paddock.index')->only(['index']);
+
+        $this->middleware('can:paddock.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:paddock.show')->only(['show']);
+
+        $this->middleware('can:paddock.destroy')->only(['destroy']);
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -81,10 +99,10 @@ class PaddockController extends Controller
      * @param  \App\Paddock  $paddock
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Paddock $paddock)
+    public function update(Request $request)
     {
         try {
-            $paddock = Paddock::find($paddock->id);
+            $paddock = Paddock::findOrFail($request->paddock_id);
             $paddock->paddock_na = $request->paddock_na;
             $paddock->paddock_de = $request->paddock_de;
             DB::beginTransaction();

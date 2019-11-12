@@ -6,11 +6,12 @@
 
 @section('title-page', "Clientes Granja Boraure")
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
 
 @section('content')
-    @include('layouts._my_message')
-    @include('layouts._my_status')
-    @include('layouts._my_error')
 
 <div class="box">
             <div class="box-header with-border">

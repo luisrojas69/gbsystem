@@ -7,9 +7,11 @@
 @section('title-page', "Animales Granja Boraure")
 
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
 @section('content')
-    @include('layouts._my_message')
-    @include('layouts._my_error')
 
     <section class="content">
       <div class="row">

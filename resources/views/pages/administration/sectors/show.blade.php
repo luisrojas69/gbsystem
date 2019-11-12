@@ -7,10 +7,13 @@
 
 @section('title-page', "Lotes del Sector  $sector->sector_de")
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
 
 @section('content')
-    @include('layouts._my_message')
-    @include('layouts._my_error')
+
 <div class="col-md-8">
   <div class="box box-info" >
 

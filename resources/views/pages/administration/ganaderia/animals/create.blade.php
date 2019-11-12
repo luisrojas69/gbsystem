@@ -2,10 +2,12 @@
 
 @section('title-page', "Registro de Animales Granja Boraure")
 
-
-@section('content')
+@section('message')
 @include('layouts._my_message')
 @include('layouts._my_error')
+@endsection
+
+@section('content')
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -23,8 +25,23 @@
                <div id="info_modal">
                  
                   @include('layouts.includes.partials.forms.ganaderia.form_breeds')
+                
+                <form id="form_rodeo" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('rodeo.store') }}">
+                        {{ csrf_field() }}        
                   @include('layouts.includes.partials.forms.ganaderia.form_rodeos')
-                  @include('layouts.includes.partials.forms.ganaderia.form_paddocks') 
+                </form>
+
+                 <form id="form_paddock" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('paddock.store') }}">
+                    {{ csrf_field() }}  
+                  @include('layouts.includes.partials.forms.ganaderia.form_paddocks')
+                </form> 
+               
                </div>
               </div>
 

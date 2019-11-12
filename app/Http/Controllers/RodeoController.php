@@ -91,10 +91,10 @@ class RodeoController extends Controller
      * @param  \App\Rodeo  $rodeo
      * @return \Illuminate\Http\Response
      */
-    public function update(RodeoRequest $request, Rodeo $rodeo)
+    public function update(RodeoRequest $request)
     {
         try {
-            $rodeo = Rodeo::find($rodeo->id);
+            $rodeo = Rodeo::findOrFail($request->rodeo_id);
             $rodeo->rodeo_na = $request->rodeo_na;
             $rodeo->rodeo_de = $request->rodeo_de;
             DB::beginTransaction();

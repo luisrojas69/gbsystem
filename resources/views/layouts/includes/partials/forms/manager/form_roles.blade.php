@@ -1,28 +1,4 @@
-
-@extends('layouts.master')
-
-@section('title-page', "Roles Granja Boraure")
-
-@section('message')
-@include('layouts._my_message')
-@include('layouts._my_error')
-@endsection
-
-@section('content')
-  <section class="content">
-
-      <div class="row">
-        <div class="col-md-8">
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <i class="fa fa-lock"></i>
-
-              <h3 class="box-title">Formulario de Edicion de @yield('title-page')</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-               <!-- form start -->
-            <form class="form-horizontal" 
+<form class="form-horizontal" 
                     role="form" 
                     method="POST" 
                     action="{{ route('role.update', $role->id) }}">
@@ -32,33 +8,32 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Nombre: </label>
 
-                  <div class="col-sm-6">
+                  <div class="col-sm-10">
                     <input type="text" class="form-control" name="name" id="name" placeholder="Codigo del role"  value="{{ $role->name }}" required>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Slug: </label>
 
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug del Role" required value="{{ $role->slug }}"> 
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Descripcion: </label>
 
-                  <div class="col-sm-8">
-                    <textarea class="form-control" name="description" id="description" rows="3" placeholder="Introduzca una Breve Descripcion del Rol...">{{ $role->description }}</textarea>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="description" id="description" placeholder="Descripcion del Rol"  value="{{ $role->description }}">
+                  </div>
                 </div>
-                
-              </div>
-              <hr>
                 <div class="form-group">
-                  
-                  <div class="col-sm-8">
+                  <hr>
+
+                  <div class="col-sm-10">
                   <h4>Persimos Especiales</h4>
-                    <label class="radio-inline"><input type="radio" name="special" id="special" value="all-access" {{ $role->special == 'all-access' ? 'checked' : '' }}>Acceso Total</label>
+                    <label class="radio-inline"><input type="radio" name="special" id="special" value="all-access" {{ $role->id == '1' ? 'checked' : '' }}>Acceso Total</label>
                     <br>
-                    <label class="radio-inline"><input type="radio" name="special" id="special" value="no-access" {{ $role->special == 'no-access' ? 'checked' : '' }}>Sin Acceso</label>
+                    <label class="radio-inline"><input type="radio" name="special" id="special" value="no-access" {{ $role->slug == 'suspend' ? 'checked' : '' }}>Sin Acceso</label>
                   </div>
                 </div>
 
@@ -85,17 +60,3 @@
               </div>
               <!-- /.box-footer -->
             </form>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-
-
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-    </section>
-@endsection

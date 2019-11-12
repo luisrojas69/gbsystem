@@ -197,7 +197,7 @@
         
           <ul class="treeview-menu">
             <li class="{{ Request::is('administration/user') ? 'active' : ''}}"><a href="{{ route('user.index') }}"><i class="fa fa-user"></i> Usuarios</a></li>
-             <li class="{{ Request::is('administration/role') ? 'active' : ''}}"><a href="{{ route('user.index') }}"><i class="fa fa-tasks"></i> Roles</a></li>
+             <li class="{{ Request::is('administration/role') ? 'active' : ''}}"><a href="{{ route('role.index') }}"><i class="fa fa-tasks"></i> Roles</a></li>
              <li class="{{ Request::is('administration/permission') ? 'active' : ''}}"><a href="{{ route('user.index') }}"><i class="fa fa-lock"></i> Permisos</a></li>
           </ul>
 

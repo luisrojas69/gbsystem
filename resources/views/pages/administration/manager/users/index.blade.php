@@ -69,7 +69,7 @@
                 <a class="btn btn-primary no-margin pull-right"
                                 title="Crear un nueva animal"
                                 href="{{ route('role.create') }}">
-                                <i class="fa fa-plus"></i> Agregar Nuevo Rol
+                                <i class="fa fa-plus"></i> Insertar Nuevo Rol
                      </a>
               </div>
 
@@ -102,9 +102,12 @@
 
                     <div class="text-center">
 
+                      @can('user.show') 
                         <a href="javascript:void(0)" id="{{ $user->id }}" class="button_show">
                           <span class="label label-success"><i class="fa fa-search"></i></span>
                         </a>
+                      @endcan  
+                      @can('user.edit')   
                         <a href="javascript:void(0)"
                               title="Editar" 
                               onclick="event.preventDefault(); 
@@ -118,7 +121,8 @@
                               style="display: none;">
                               {{ csrf_field() }}
                           </form>
-
+                      @endcan  
+                      @can('user.destroy')     
                           <a href="javascript:void(0)" id="{{ $user->id }}"
                             class="btn-delete"
                             title="Eliminar">
@@ -130,6 +134,7 @@
                               {{ csrf_field() }}
                               {{ method_field('DELETE') }}
                           </form>
+                      @endcan    
                     </div>
                     
                   </div>

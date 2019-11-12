@@ -6,9 +6,12 @@
 <link rel="stylesheet" href="{{ asset ('css/dataTables.bootstrap.min.css') }}">  
 @endsection
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
+
 @section('content')
- @include('layouts._my_message')
- @include('layouts._my_error')
  
 <section class="content">
 

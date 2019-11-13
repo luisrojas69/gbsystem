@@ -63,6 +63,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        session()->flash('my_message','Usted se ha Registrado Correctamente. Por Favor Comuniquese con el Administrador del Sistemas para que le asigne los Roles y Permisos de Accesos');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

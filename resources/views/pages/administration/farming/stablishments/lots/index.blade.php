@@ -2,9 +2,11 @@
 
 @section('additionals-css')
 <link rel="stylesheet" href="{{ asset ('css/jquery-confirm.css') }}">
+
+
 @endsection
 
-@section('title-page', "Cultivos Granja Boraure")
+@section('title-page', "Lotes Granja Boraure")
 
 @section('message')
 @include('layouts._my_message')
@@ -22,56 +24,66 @@
               <table class="table table-bordered">
                 <tbody><tr>
                   <th style="width: 60px">ID</th>
-                  <th style="width: 180px">Nombre</th>
+                  <th style="width: 120px">Codigo</th>
                   <th>Descripcion</th>
+                  <th style="width: 60px; text-align: center;">Tablones</th>
                   <th style="width: 120px; text-align: center;">Acciones</th>
                 </tr>
-                    @foreach($crops as $crop)
-                <tr>
-                  <td>{{ $crop->id }}</td>
-                  <td>{{ $crop->crop_na }}</td>
-                  <td>{{ $crop->crop_de }}</td>
+                    @foreach($lots as $lot)
+                    
+                    <tr>
+                  <td>{{ $lot->id }}</td>
+                  <td>{{ $lot->lot_co }}</td>
+                  <td><a href="{{ route("lot.show", $lot ) }}">{{ $lot->lot_de }}</a></td>
+                  <td style="text-align: center;"><span class="label label-success">{{ count($lot->planks) }}</span></td>
                   <td style="text-align: center;">
+                      @can('lot.edit')  
                         <a href="javascript:void(0)"
                             title="Editar" 
                             onclick="event.preventDefault(); 
-                            document.getElementById('form-edit-{{ $crop->id }}').submit()">
+                            document.getElementById('form-edit-{{ $lot->id }}').submit()">
                              <span class="label label-primary"><i class="fa fa-pencil"></i></span>
                         </a>                    
 
                         <form method="GET" 
-                            action="{{ route('crop.edit', $crop) }}"
-                            id="form-edit-{{ $crop->id }}"
+                            action="{{ route('lot.edit', $lot) }}"
+                            id="form-edit-{{ $lot->id }}"
                             style="display: none;">
                             {{ csrf_field() }}
                         </form>
+                      @endcan
 
-                        <a href="javascript:void(0)" id="{{ $crop->id }}"
-                          class="btn-delete  {{ count($crop->lots)>0 ? 'disabled' : '' }}"
+                      @can('lot.destroy')
+                        <a href="javascript:void(0)" id="{{ $lot->id }}"
+                          class="btn-delete  {{ count($lot->planks)>0 ? 'disabled' : '' }}"
                           title="Eliminar">
                         <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-                     <form method="POST"
-                        id="form-destroy-{{ $crop->id }}" 
-                        action="{{ route('crop.destroy', $crop) }}">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                    </form>
+                         <form method="POST"
+                            id="form-destroy-{{ $lot->id }}" 
+                            action="{{ route('lot.destroy', $lot) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                        </form>
+                      @endcan
                     
                   </td>
+
                 </tr>
                @endforeach
 
               </tbody></table>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-               <a class="btn btn-primary no-margin pull-right"
-                                title="Crear un nuevo Cultivo"
-                                href="{{ route('crop.create') }}">
-                                <i class="fa fa-plus"></i> Agregar Nuevo
-                     </a>
-            </div>
+            @can('lot.create')
+              <div class="box-footer clearfix">
+                 <a class="btn btn-primary no-margin pull-right"
+                                  title="Crear un nuevo Lote"
+                                  href="{{ route('lot.create') }}">
+                                  <i class="fa fa-plus"></i> Agregar Nuevo
+                       </a>
+              </div>
+            @endcan
 </div>
 
 

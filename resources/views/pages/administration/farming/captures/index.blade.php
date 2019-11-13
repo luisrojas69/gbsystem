@@ -36,6 +36,7 @@
                   <td style="text-align: center;">{{ $capture->area }}</td>
                   <td style="text-align: center;">{{ $capture->fecha }}</td>
                   <td style="text-align: center;">
+                  @can('capture.edit')  
                         <a href="javascript:void(0)"
                             title="Editar" 
                             onclick="event.preventDefault(); 
@@ -44,38 +45,44 @@
                         </a>                    
 
                         <form method="GET" 
-                            action="{{ route('capture.edit', $capture->id) }}"
+                            action="{{ route('capture.edit', $capture) }}"
                             id="form-edit-{{ $capture->id }}"
                             style="display: none;">
                             {{ csrf_field() }}
                         </form>
+                      @endcan
 
+                      @can('capture.destroy')
                         <a href="javascript:void(0)" id="{{ $capture->id }}"
                           class="btn-delete"
                           title="Eliminar">
                         <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-                     <form method="POST"
-                        id="form-destroy-{{ $capture->id }}" 
-                        action="{{ route('capture.destroy', $capture->id) }}">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                    </form>
+                         <form method="POST"
+                            id="form-destroy-{{ $capture->id }}" 
+                            action="{{ route('capture.destroy', $capture) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                        </form>
+                      @endcan
                     
                   </td>
+
                 </tr>
                @endforeach
 
               </tbody></table>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-               <a class="btn btn-primary no-margin pull-right"
-                                title="Crear un nuevo capture"
-                                href="{{ route('capture.create') }}">
-                                <i class="fa fa-plus"></i> Agregar Nuevo
-                     </a>
-            </div>
+            @can('capture.create')
+              <div class="box-footer clearfix">
+                 <a class="btn btn-primary no-margin pull-right"
+                                  title="Crear un nuevo Capture"
+                                  href="{{ route('capture.create') }}">
+                                  <i class="fa fa-plus"></i> Agregar Nuevo
+                       </a>
+              </div>
+            @endcan
 </div>
 
 @endsection

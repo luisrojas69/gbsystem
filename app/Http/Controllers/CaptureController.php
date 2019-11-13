@@ -42,7 +42,7 @@ class CaptureController extends Controller
         ->orderBy('fecha', 'desc')
     	->get();
     	//$captures= Capture::all();
-    	return view('pages.administration.captures.index', compact('captures'));
+    	return view('pages.administration.farming.captures.index', compact('captures'));
     	//dd($captures);
     }
 
@@ -53,7 +53,7 @@ class CaptureController extends Controller
         $planks = Plank::with('Lot')->get(['id','plank_de','lot_id']);
     	$crops = Crop::get(['id','crop_de']);
         $varieties = Variety::get(['id', 'variety_na']);
-    	return view('pages.administration.captures.create', compact('lots','planks', 'varieties', 'crops', 'sectors'));
+    	return view('pages.administration.farming.captures.create', compact('lots','planks', 'varieties', 'crops', 'sectors'));
     }
 
     public function show (Capture $capture){
@@ -102,7 +102,7 @@ class CaptureController extends Controller
     	$activities = Activity::all();
     	$crops = Crop::all();
 		$varieties = Variety::all();
-    	return view('pages.administration.captures.edit', compact('capture', 'activities', 'crops', 'plank', 'varieties'));
+    	return view('pages.administration.farming.captures.edit', compact('capture', 'activities', 'crops', 'plank', 'varieties'));
     }
 
 

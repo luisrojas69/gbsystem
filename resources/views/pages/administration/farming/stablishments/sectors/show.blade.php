@@ -87,20 +87,18 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-               @if (Auth::user()->role == 'ADMIN')
+              @can('sector.create')
                <a class="btn btn-primary no-margin pull-right"
                                 title="Crear un nuevo Sector"
                                 href="{{ route('lot.create') }}">
                                 <i class="fa fa-plus"></i> Agregar Nuevo
-                     </a>
-               @else
-               <a class="normal_user btn btn-primary no-margin pull-right"
-                                title="Crear un nuevo Sector"
-                                href="javascript:void(0)">
-                                <i class="fa fa-plus"></i> Agregar Nuevo
                 </a>
-               
-               @endif      
+              @endcan  
+              @can('sector.index')
+              <ul class="list-inline">
+                <li><a href="{{ route('sector.index') }}" class="link-black text-sm"><i class="fa fa-bars"></i> Ir a Tabla de Sectores</a></li>
+              </ul> 
+              @endcan
             </div>
   </div>
 </div>
@@ -137,9 +135,14 @@
         <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Precipitaciones en el {{$sector->sector_de}}</h3>
-<a class="btn btn-primary no-margin pull-right" title="Agregar un nueva Precipitacion" href="{{route('pluviometry.create')}}">
-                                <i class="fa fa-plus"></i> Precipitacion
-                     </a>
+              
+              @can('pluviometry.create')
+              <a class="btn btn-primary no-margin pull-right" 
+                  title="Agregar un nueva Precipitacion" 
+                  href="{{route('pluviometry.create')}}">
+                  <i class="fa fa-plus"></i> Precipitacion
+              </a>
+              @endcan
              
             </div>
 <div class="box-body">
@@ -185,10 +188,20 @@
                 </ul>
 
                 <div class="box-footer">
-                <a href="{{ route('sector.index') }}" class="btn btn-default">Volver a Sectores</a>
-                <a class="btn btn-primary no-margin pull-right" title="Agregar un nueva Precipitacion" href="{{route('pluviometry.create')}}">
-                    <i class="fa fa-plus"></i> Precipitacion
-                </a>
+                
+                @can('sector.index')
+                  <ul class="list-inline">
+                    <li><a href="{{ route('sector.index') }}" class="link-black text-sm"><i class="fa fa-bars"></i> Ir a Tabla de Sectores</a></li>
+                  </ul> 
+                @endcan
+
+                @can('pluviometry.create')
+                  <a class="btn btn-primary no-margin pull-right" 
+                      title="Agregar un nueva Precipitacion" 
+                      href="{{route('pluviometry.create')}}">
+                      <i class="fa fa-plus"></i> Precipitacion
+                  </a>
+                @endcan 
               </div>
             </div>
           </div>
@@ -204,15 +217,17 @@
 @endsection
 
 @section('additionals-scripts')
+
 <script type="text/javascript" src="{{ asset('scripts/confirm-delete.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/Chart.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/Chart.js') }}"></script>
 
+
 <script type="text/javascript">
 
-   var url = "/sector/{{$sector->id}}/pluviometry";
+   var url = "/establishments/sector/{{ $sector->id }}/pluviometry";
     $(document).ready(function(){
      $.ajax({
       dataType: 'json',

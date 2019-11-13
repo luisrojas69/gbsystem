@@ -3,6 +3,11 @@
 
 @section('title-page', "Register - Granja Boraure")
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
+
 @section('content')
 
 <div class="login-box-body">

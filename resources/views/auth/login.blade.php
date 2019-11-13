@@ -2,6 +2,11 @@
 
 @section('title-page', "Login - Granja Boraure")
 
+@section('message')
+@include('layouts._my_message')
+@include('layouts._my_error')
+@endsection
+
 @section('content')
 
 <div class="login-box-body">
@@ -22,7 +27,7 @@
           
         </div>
         <!-- /.col -->
-        <div class="col-xs-4">
+        <div class="col-xs-6 pull-right">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Iniciar Sesión</button>
         </div>
         <!-- /.col -->
@@ -32,6 +37,7 @@
     <!-- /.social-auth-links -->
 
     <a href="#">Olvid&eacute; mi Contrase&ntilde;a</a><br>
+    <a class="pull-right" href="{{ route('register') }}">Registrarse</a><br>
 
 </div>
 

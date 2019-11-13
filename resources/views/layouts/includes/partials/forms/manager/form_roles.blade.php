@@ -55,7 +55,7 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <a href="{{ route('role.index') }}" class="btn btn-default">Cancelar</a>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-info pull-right">Guardar</button>
               </div>
               <!-- /.box-footer -->

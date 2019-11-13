@@ -30,21 +30,21 @@ class PlankController extends Controller
         $lots = Lot::with('Sector')->get(['id','lot_de','sector_id']);
         $planks = Plank::with('Lot')->get(['id','plank_de','lot_id']);
 
-        return view('pages.administration.planks.index', compact('lots','planks', 'sectors'));
+        return view('pages.administration.farming.stablishments.planks.index', compact('lots','planks', 'sectors'));
     }
 
 
     public function plank_data()
     {
         $planks=Plank::all();
-        return view('pages.administration.planks.index', compact('planks'));
+        return view('pages.administration.farming.stablishments.planks.index', compact('planks'));
     }
 
 
     public function create(){
         $sectors = Sector::with('lots')->get(['id','sector_de']);
         $lots = Lot::with('Sector')->get(['id','lot_de','sector_id']);
-    	return view('pages.administration.planks.create', compact('sectors', 'lots'));
+    	return view('pages.administration.farming.stablishments.planks.create', compact('sectors', 'lots'));
         //dd($lots);
     }
 
@@ -71,7 +71,7 @@ class PlankController extends Controller
             ->where('plank_id', $plank->id)
             ->get();
 
-        return view('pages.administration.captures.show', compact('result'));         
+        return view('pages.administration.farming.captures.show', compact('result'));         
         //dd($result);
     }
 
@@ -116,7 +116,7 @@ class PlankController extends Controller
     public function edit(Plank $plank)
     {
         $lot=Lot::all();
-        return view('pages.administration.planks.edit', compact('plank','lot'));
+        return view('pages.administration.farming.stablishments.planks.edit', compact('plank','lot'));
     }
 
     public function update(Request $request, Plank $plank)

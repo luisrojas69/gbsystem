@@ -11,18 +11,18 @@
 @section('content')
   <section class="content">
 
-      <div class="row">
+   
+<div class="row">
+        <!-- left column -->
         <div class="col-md-8">
-          <div class="box box-info">
+          <!-- general form elements -->
+          <div class="box box-primary">
             <div class="box-header with-border">
-              <i class="fa fa-lock"></i>
-
               <h3 class="box-title">Formulario de Edicion de @yield('title-page')</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-               <!-- form start -->
-            <form class="form-horizontal" 
+            <!-- form start -->
+             <form class="form-horizontal" 
                     role="form" 
                     method="POST" 
                     action="{{ route('role.update', $role->id) }}">
@@ -85,17 +85,14 @@
               </div>
               <!-- /.box-footer -->
             </form>
-            </div>
-            <!-- /.box-body -->
           </div>
           <!-- /.box -->
+
+       
+
         </div>
-        <!-- /.col -->
-
-
-        <!-- /.col -->
+        <!--/.col (left) -->
+      
       </div>
-      <!-- /.row -->
-
     </section>
 @endsection

@@ -3246,7 +3246,8 @@ table.text-center th {
 }
 .login-page,
 .register-page {
-  background: #d2d6de;
+  background:url(http://localhost:8000/img/bg_gral.jpg) repeat-x #2a1c11;
+  
 }
 .login-box,
 .register-box {
@@ -3262,7 +3263,7 @@ table.text-center th {
 }
 .login-box-body,
 .register-box-body {
-  background: #fff;
+  background: #f4faf8;
   padding: 20px;
   border-top: 0;
   color: #666;

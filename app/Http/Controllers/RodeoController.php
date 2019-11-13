@@ -6,12 +6,21 @@ use App\Rodeo;
 use App\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade as PDF;
+
+//Validaciones
+use App\Http\Requests\RodeoRequest;
+
+//Shinobi
 use Illuminate\Database\Eloquent\Model\Permission;
 use Illuminate\Database\Eloquent\Model\Role;
-use App\Http\Requests\RodeoRequest;
+
+//DomPDF
+use Barryvdh\DomPDF\Facade as PDF;
+
+//Laravel-Excel
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\RodeosExport;
+use App\Exports\AnimalsExport;
+
 
 
 class RodeoController extends Controller

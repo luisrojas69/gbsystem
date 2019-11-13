@@ -139,7 +139,7 @@
           </li>
           <!-- Control Sidebar Toggle Button -->
           <li>
-            <a title="Cerrar Sesi&oacute;n" href="href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"" data-toggle="control-sidebar"><i class="fa fa-sign-out"></i></a>
+            <a title="Cerrar Sesi&oacute;n" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-toggle="control-sidebar"><i class="fa fa-sign-out"></i></a>
           </li>
 
           <form id="logout-form" 

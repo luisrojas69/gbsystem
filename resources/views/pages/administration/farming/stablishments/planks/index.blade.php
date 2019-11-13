@@ -59,8 +59,7 @@
 
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Tablon: </label>
-
-                  <div class="col-sm-10">
+                <div class="col-sm-10">
                    <select class="form-control" name="plank_id" id="plank_id" value="{{ old('plank_id') }}" required>
                       <option value="">Seleccione un Tablon</option>       
                    </select>
@@ -116,10 +115,11 @@
                 </ul>
 
                 <div class="box-footer">
-                <a href="{{ route('plank.index') }}" class="btn btn-default">Volver a Tablones</a>
+              @can('plank.create') 
                 <a class="btn btn-primary no-margin pull-right" title="Agregar un nuevo Lote" href="{{ route('plank.create') }}">
                     <i class="fa fa-plus"></i> Tablon
                 </a>
+              @endcan
               </div>
             </div>
           </div>

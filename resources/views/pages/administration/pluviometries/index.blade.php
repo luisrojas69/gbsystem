@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset ('css/jquery-confirm.css') }}">
 @endsection
 
-@section('title-page', "Pluviometr&iacute;a Granja Boraure")
+@section('title-page', "Pluviometria Granja Boraure")
 
 @section('message')
 @include('layouts._my_message')
@@ -27,53 +27,60 @@
                     <th>Sector</th>
                     <th style="width: 180px; text-align: center;">Acciones</th>
                 </tr>
-                    @foreach($pluviometries as $item)
+                    @foreach($pluviometries as $pluviometry)
                 <tr>
-                  <td>{{ $item->id }}</td>
-                  <td>{{ $item->date_read }}</td>
-                  <td>{{ $item->value_mm }}</td>
-                  <td><a href="{{ route('sector.show', $item->sector_id) }}">{{$item->Sector->sector_de}}</a></td>
+                  <td>{{ $pluviometry->id }}</td>
+                  <td>{{ $pluviometry->date_read }}</td>
+                  <td>{{ $pluviometry->value_mm }}</td>
+                  <td><a href="{{ route('sector.show', $pluviometry->sector_id) }}">{{$pluviometry->Sector->sector_de}}</a></td>
                   <td style="text-align: center;">
+                        @can('pluviometry.edit')  
                         <a href="javascript:void(0)"
                             title="Editar" 
                             onclick="event.preventDefault(); 
-                            document.getElementById('form-edit-{{ $item->id }}').submit()">
+                            document.getElementById('form-edit-{{ $pluviometry->id }}').submit()">
                              <span class="label label-primary"><i class="fa fa-pencil"></i></span>
                         </a>                    
 
                         <form method="GET" 
-                            action="{{ route('pluviometry.edit', $item->id) }}"
-                            id="form-edit-{{ $item->id }}"
+                            action="{{ route('pluviometry.edit', $pluviometry) }}"
+                            id="form-edit-{{ $pluviometry->id }}"
                             style="display: none;">
                             {{ csrf_field() }}
                         </form>
+                      @endcan
 
-                        <a href="javascript:void(0)" id="{{ $item->id }}"
+                      @can('pluviometry.destroy')
+                        <a href="javascript:void(0)" id="{{ $pluviometry->id }}"
                           class="btn-delete"
                           title="Eliminar">
                         <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-                     <form method="POST"
-                        id="form-destroy-{{ $item->id }}" 
-                        action="{{ route('pluviometry.destroy', $item->id) }}">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                    </form>
+                         <form method="POST"
+                            id="form-destroy-{{ $pluviometry->id }}" 
+                            action="{{ route('pluviometry.destroy', $pluviometry) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                        </form>
+                      @endcan
                     
                   </td>
+
                 </tr>
                @endforeach
 
               </tbody></table>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-               <a class="btn btn-primary no-margin pull-right"
-                                title="Insertar nuevo Registro"
-                                href="{{ route('pluviometry.create') }}">
-                                <i class="fa fa-plus"></i> Agregar Nuevo
-                     </a>
-            </div>
+            @can('pluviometry.create')
+              <div class="box-footer clearfix">
+                 <a class="btn btn-primary no-margin pull-right"
+                                  title="Crear un nueva Pluviometria"
+                                  href="{{ route('pluviometry.create') }}">
+                                  <i class="fa fa-plus"></i> Agregar Nuevo
+                       </a>
+              </div>
+            @endcan
 </div>
 
 @endsection

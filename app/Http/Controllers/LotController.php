@@ -26,19 +26,19 @@ class LotController extends Controller
 	public function index()
     {
         $lots=Lot::all();
-    	return view('pages.administration.lots.index', compact('lots'));
+    	return view('pages.administration.farming.stablishments.lots.index', compact('lots'));
     }
 
 
     public function create(Sector $sector){
         $sectors = Sector::orderBy('sector_co', 'ASC')->get();
-    	return view('pages.administration.lots.create', compact('sectors'));
+    	return view('pages.administration.farming.stablishments.lots.create', compact('sectors'));
     }
 
     
     public function show (Lot $lot)
     {
-        return view('pages.administration.lots.show', compact('lot'));
+        return view('pages.administration.farming.stablishments.lots.show', compact('lot'));
     }
 
 
@@ -82,7 +82,7 @@ class LotController extends Controller
     public function edit(Lot $lot)
     {
         $sector=Sector::all();
-        return view('pages.administration.lots.edit', compact('lot','sector'));
+        return view('pages.administration.farming.stablishments.lots.edit', compact('lot','sector'));
     }
 
     public function update(Request $request, Lot $lot)

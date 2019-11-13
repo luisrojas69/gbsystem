@@ -18,4 +18,9 @@ class Lot extends Model
     {
       return $this->hasMany(Plank::class);
     }
+
+    public function getNumPlanksAttribute(){
+      return count($this->planks);
+    } 
 }
+

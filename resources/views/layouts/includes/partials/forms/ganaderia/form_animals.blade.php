@@ -125,7 +125,7 @@
             </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <a href="{{ route('animal.index') }}" class="btn btn-default">Cancelar</a>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-info pull-right">Guardar</button>
               </div>
               <!-- /.box-footer -->

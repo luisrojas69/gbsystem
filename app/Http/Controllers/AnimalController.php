@@ -10,7 +10,15 @@ use App\Rodeo;
 use App\Weighing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+//Shinobi
+use Illuminate\Database\Eloquent\Model\Permission;
+use Illuminate\Database\Eloquent\Model\Role;
+
+//DomPDF
 use Barryvdh\DomPDF\Facade as PDF;
+
+//Laravel-Excel
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AnimalsExport;
 

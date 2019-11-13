@@ -26,13 +26,13 @@ class CropController extends Controller
     public function index()
     {	
     	$crops= Crop::all();
-    	return view('pages.administration.crops.index', compact('crops'));
+    	return view('pages.administration.farming.crops.index', compact('crops'));
 
 	}
 
     public function create()
     {
-    	return view('pages.administration.crops.create');
+    	return view('pages.administration.farming.crops.create');
     }
 
     public function show(Crop $crop)
@@ -51,7 +51,7 @@ class CropController extends Controller
 	    	$crop->save();
 	    	DB::commit();
 	    	session()->flash('my_message', 'Cultivo Registrado Correctamente');
-	    	return redirect('crop');
+	    	return redirect('supplies/crop');
     	
     	} catch (Exception $e) {
     		
@@ -68,7 +68,7 @@ class CropController extends Controller
     		$crop->delete();
     		DB::commit();
     		session()->flash('my_message', 'Cultivo Eliminado Correctamente');
-    		return redirect('crop');
+    		return redirect('supplies/crop');
     	} catch (Exception $e) {
     		session()->flash('my_error', $e->getMessage());	
     		DB::rollback();
@@ -77,20 +77,20 @@ class CropController extends Controller
 
     public function edit(Crop $crop)
     {
-    	return view('pages.administration.crops.edit', compact('crop'));
+    	return view('pages.administration.farming.crops.edit', compact('crop'));
     }
 
-    public function update(Request $request, Crop $crop)
+    public function update(Request $request)
     {
     	try {
-    		$crop = Crop::find($crop->id);
+    		$crop = Crop::findOrFail($request->crop_id);
     		$crop->crop_na = $request->get('crop_na');
     		$crop->crop_de = $request->get('crop_de');
     		DB::beginTransaction();
     		$crop->save();
     		DB::commit();
     		session()->flash('my_message', 'Cultivo Modificado Correctamente');
-    		return redirect('crop');
+    		return redirect('supplies/crop');
     	} catch (Exception $e) {
     		session()->flash('my_error', $e->getMessage());
     		DB::rollback();

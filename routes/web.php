@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 	//Rodeos
-	Route::resource('animals/rodeo','RodeoController')->except(['show', 'edit']);
+	Route::resource('animals/rodeo','RodeoController')->except(['show', 'edit', 'create']);
 
 	Route::get ('/animals/movetorodeo/{id}', 'AnimalController@MoveToRodeoCall')->name('movetorodeo');
 
@@ -59,11 +59,15 @@ Route::middleware(['auth'])->group(function () {
 
 
 	//Sectors
-	Route::get('sector/{id}/pluviometry', 'SectorController@showPluviometry');
+	Route::get('establishments/sector/{id}/pluviometry', 'SectorController@showPluviometry');
 
-	Route::get('sector/{id}/details', 'SectorController@details');
+	Route::get('establishments/sector/{id}/details', 'SectorController@details');
 
 	Route::resource('establishments/sector', 'SectorController');
+
+	Route::get ('/report/sectors-pdf', 'SectorController@sectorsPDF')->name('sectors.pdf');
+
+	Route::get ('/report/sectors-excel', 'SectorController@sectorsExcel')->name('sectors.excel');
 
 
 	//Lots
@@ -75,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 	//Crops
-	Route::resource('supplies/crop', 'CropController');
+	Route::resource('supplies/crop', 'CropController')->except(['create','show', 'edit']);
 
 	//Varieties
 	Route::resource('supplies/variety', 'VarietyController');
@@ -84,18 +88,19 @@ Route::middleware(['auth'])->group(function () {
 	//Route::resource('supplies/fertilizer', 'FertilizerController');
 
 	//Activities
-	Route::resource('activity', 'ActivityController');
+	Route::resource('activity', 'ActivityController')->except(['create','edit', 'show']);
 
 
 	//Captures
 	Route::resource('capture', 'CaptureController');
 
 	//Species
-	Route::resource('animals/specie', 'SpecieController')->except(['show', 'edit']);
+	Route::resource('animals/specie', 'SpecieController')->except(['create','show', 'edit']);
 
 
 	//Breeds
 	Route::resource('animals/breed', 'BreedController');
+
 
 	//Paddocks
 	Route::resource('animals/paddock', 'PaddockController')->except(['show', 'edit']);

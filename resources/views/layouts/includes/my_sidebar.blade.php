@@ -54,7 +54,6 @@
         @endguest
         
         @auth
-        @can('capture.index')
         <li class="treeview {{ Request::is('capture*') ? 'active' : ''}}">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Capturas</span>
@@ -63,11 +62,16 @@
             </span>
           </a>
           <ul class="treeview-menu">
+          @can('capture.create')  
             <li class="{{ Request::is('capture/create') ? 'active' : ''}}"><a href="{{ route('capture.create') }}"><i class="fa fa-plus"></i> Nueva Captura</a></li>
+          @endcan
+          
+          @can('capture.index')
             <li class="{{ Request::is('capture') ? 'active' : ''}}"><a href="{{ route('capture.index') }}"><i class="fa fa-list"></i> Ultimas Capturas</a></li>
+          @endcan
           </ul>
         </li>
-        @endcan
+        
 
         <li class="treeview {{ Request::is('establishments*') ? 'active menu-open' : ''}}">
           <a href="#">
@@ -220,6 +224,7 @@
         @guest
 
         <li><a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> <span>Login</span></a></li>
+        <li><a href="{{ route('register') }}"><i class="fa fa-edit"></i> <span>Registrarse</span></a></li>
         @endguest
       </ul>
     </section>

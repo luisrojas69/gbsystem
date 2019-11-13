@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SectorRequest;
+
+//Shinobi
+use Illuminate\Database\Eloquent\Model\Permission;
+use Illuminate\Database\Eloquent\Model\Role;
+
+//DomPDF
+use Barryvdh\DomPDF\Facade as PDF;
+
+//Laravel-Excel
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SectorsExport;
+
 
 use App\Sector;
 
@@ -31,19 +41,19 @@ class SectorController extends Controller
     public function index()
     {
     	$sectors= Sector::all();
-    	return view('pages.administration.sectors.index', compact('sectors'));
+    	return view('pages.administration.farming.stablishments.sectors.index', compact('sectors'));
     }
 
     public function create ()
     {
         $this->middleware('isadmin');
-    	return view('pages.administration.sectors.create');
+    	return view('pages.administration.farming.stablishments.sectors.create');
         
     }
 
     public function show (Sector $sector)
     {
-    	return view('pages.administration.sectors.show', compact('sector'));
+    	return view('pages.administration.farming.stablishments.sectors.show', compact('sector'));
      
     }
 
@@ -59,7 +69,7 @@ class SectorController extends Controller
             $sector->save();
             DB::commit();
             session()->flash('my_message', 'Sector Creado Correctamente');
-            return redirect('establishments/sector/create');
+            return redirect()->back();
         } catch (Exception $e) {
             session()->flash('my_error', $e->getMessage());
             DB::rollback();
@@ -82,13 +92,13 @@ class SectorController extends Controller
     }
 
     public function edit(Sector $sector){
-    	return view('pages.administration.sectors.edit', compact('sector'));
+    	return view('pages.administration.farming.stablishments.sectors.edit', compact('sector'));
     }
 
 
-    public function update(Request $request, Sector $sector){
+    public function update(Request $request){
     	try{
-    		$sector = Sector::find($sector->id);
+    		$sector = Sector::findOrFail($request->sector_id);
     		$sector->sector_co = $request->get('sector_co');
     		$sector->sector_de = $request->get('sector_de');
     		DB::beginTransaction();
@@ -195,12 +205,24 @@ month(NOW()) as posicion
 from pluviometries
 where sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MONTH), INTERVAL - (DAY(NOW())-1) DAY)  and NOW() >= date_read 
 "));
-        return view('pages.administration.sectors.show_details', compact('result'));
-     //dd($result);
+        //return view('pages.administration.sectors.show_details', compact('result'));
+     return response()->json($result);
     }
 
     public function details(Sector $id){
-         return view('pages.administration.sectors.details', compact('id'));
+        return view('pages.administration.farming.stablishments.sectors_details', compact('id'));
     //return $id->id;
+    }
+
+
+    public function sectorsPDF(){
+        $sectors = Sector::get();
+        $date = date('d-m-Y');
+        $pdf = PDF::loadView('pages.administration.reports.sectors-pdf', compact('sectors', 'date'));
+        return $pdf->stream('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
+    }
+
+    public function sectorsExcel(){       
+        return Excel::download(new SectorsExport, 'sectors-list-'.date('Y-m-d_H:i:s').'.xlsx');
     }
 }

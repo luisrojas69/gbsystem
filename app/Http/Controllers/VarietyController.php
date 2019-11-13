@@ -15,7 +15,7 @@ class VarietyController extends Controller
         $this->middleware('can:variety.create')->only(['create', 'store']);
 
         $this->middleware('can:variety.index')->only(['index']);
-variety
+        
         $this->middleware('can:variety.edit')->only(['edit', 'update']);
 
         $this->middleware('can:variety.show')->only(['show']);
@@ -27,13 +27,13 @@ variety
 	public function index()
     {
         $varieties=Variety::all();
-    	return view('pages.administration.varieties.index', compact('varieties'));
+    	return view('pages.administration.farming.varieties.index', compact('varieties'));
     }
 
 
     public function create(){
         $crops = Crop::orderBy('crop_de', 'ASC')->get();
-    	return view('pages.administration.varieties.create', compact('crops'));
+    	return view('pages.administration.farming.varieties.create', compact('crops'));
     }
 
     
@@ -55,7 +55,7 @@ variety
             $variety->save();
             DB::commit();
             session()->flash('my_message', 'Variedad Creada Correctamente');
-            return redirect('variety');
+            return redirect('supplies/variety');
         } catch (Exception $e) {
             session()->flash('my_error', $e->getMessage());
             DB::rollback();
@@ -72,7 +72,7 @@ variety
         $variety->delete();
         DB::commit();
         session()->flash('my_message', 'Variedad Eliminada Correctamente');
-        return redirect('variety');
+        return redirect('supplies/variety');
         } catch (Exception $e) {
         session()->flash('my_error', $e->getMessage());    
         DB::rollback();
@@ -83,7 +83,7 @@ variety
     public function edit(Variety $variety)
     {
         $crop=Crop::all();
-        return view('pages.administration.varieties.edit', compact('variety','crop'));
+        return view('pages.administration.farming.varieties.edit', compact('variety','crop'));
     }
 
     public function update(Request $request, Variety $variety)
@@ -96,7 +96,7 @@ variety
             $variety->save();
             DB::commit();
             session()->flash('my_message', 'variedad Modificada Correctamente');
-            return redirect('variety');
+            return redirect('supplies/variety');
         } catch (Exception $e) {
             session()->flash('my_error', $e->getMessage());
             DB::rollback();

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model\Permission;
+use Illuminate\Database\Eloquent\Model\Role;
 use App\Activity;
 
 class ActivityController extends Controller
@@ -26,18 +28,18 @@ class ActivityController extends Controller
       public function index()
     {	
     	$activities= Activity::all();
-    	return view('pages.administration.activities.index', compact('activities'));
+    	return view('pages.administration.farming.activities.index', compact('activities'));
 
 	}
 
     public function create()
     {
-    	return view('pages.administration.activities.create');
+    	//En Desuso
     }
 
     public function show(Activity $activity)
     {
-    	return 	redirect('activity');
+    	//En Desuso
    	}
 
     public function store(Request $request)
@@ -77,19 +79,19 @@ class ActivityController extends Controller
 
     public function edit(Activity $activity)
     {
-    	return view('pages.administration.activities.edit', compact('activity'));
+    	//En Desuso
     }
 
-    public function update(Request $request, Activity $activity)
+    public function update(Request $request)
     {
     	try {
-    		$activity = Activity::find($activity->id);
+    		$activity = Activity::findOrFail($request->activity_id);
     		$activity->activity_na = $request->get('activity_na');
     		$activity->activity_de = $request->get('activity_de');
     		DB::beginTransaction();
     		$activity->save();
     		DB::commit();
-    		session()->flash('my_message', 'Variedad Modificado Correctamente');
+    		session()->flash('my_message', 'Actividad Modificada Correctamente');
     		return redirect('activity');
     	} catch (Exception $e) {
     		session()->flash('my_error', $e->getMessage());

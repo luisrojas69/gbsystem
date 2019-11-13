@@ -8,6 +8,21 @@ use App\Activity;
 
 class ActivityController extends Controller
 {
+
+    public function __construct(){
+    
+        $this->middleware('can:activity.create')->only(['create', 'store']);
+
+        $this->middleware('can:activity.index')->only(['index']);
+
+        $this->middleware('can:activity.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:activity.show')->only(['show']);
+
+        $this->middleware('can:activity.destroy')->only(['destroy']);
+
+    }
+     
       public function index()
     {	
     	$activities= Activity::all();

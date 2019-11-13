@@ -9,6 +9,20 @@ use Illuminate\Support\Facades\DB;
 
 class WeighingController extends Controller
 {
+    
+    public function __construct(){
+
+        $this->middleware('can:weighing.create')->only(['create', 'store']);
+
+        $this->middleware('can:weighing.index')->only(['index']);
+
+        $this->middleware('can:weighing.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:weighing.show')->only(['show']);
+
+        $this->middleware('can:weighing.destroy')->only(['destroy']);
+
+    }
     /**
      * Display a listing of the resource.
      *

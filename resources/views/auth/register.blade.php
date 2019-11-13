@@ -7,7 +7,7 @@
 
 <div class="login-box-body">
     <p class="login-box-msg">Iniciar Sesion</p>
-
+    @include('layouts._my_error')
    <form role="form" method="POST" action="{{ route('register') }}" >
       {{ csrf_field() }}
        <div class="form-group has-feedback">

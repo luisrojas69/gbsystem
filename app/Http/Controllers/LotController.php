@@ -9,12 +9,19 @@ use Illuminate\Support\Facades\DB;
 
 class LotController extends Controller
 {
-      public function __construct()
-    {
-        $this->middleware('auth');
-        //$this->middleware('isadmin');
-    }
+    public function __construct(){
 
+        $this->middleware('can:lot.create')->only(['create', 'store']);
+
+        $this->middleware('can:lot.index')->only(['index']);
+
+        $this->middleware('can:lot.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:lot.show')->only(['show']);
+
+        $this->middleware('can:lot.destroy')->only(['destroy']);
+
+    }
 
 	public function index()
     {

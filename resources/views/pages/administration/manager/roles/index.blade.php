@@ -75,10 +75,14 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- Fin Modal -->
-
-<div class="box">
+        
+      <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
+              <a title="Agregar Nuevo Rol"
+                                href="{{ route('role.create') }}" type="button" class="btn btn-primary pull-right" style="margin-right: 5px; ">
+                      <i class="fa fa-plus"></i> Agregar Nuevo de Rol
+              </a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

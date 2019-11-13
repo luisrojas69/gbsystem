@@ -9,6 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class BreedController extends Controller
 {
+        
+        public function __construct(){
+      
+        $this->middleware('can:breed.create')->only(['create', 'store']);
+
+        $this->middleware('can:breed.index')->only(['index']);
+
+        $this->middleware('can:breed.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:breed.show')->only(['show']);
+
+        $this->middleware('can:breed.destroy')->only(['destroy']);
+
+    }
+
     /**
      * Display a listing of the resource.
      *

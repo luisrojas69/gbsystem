@@ -11,12 +11,14 @@ class SpecieController extends Controller
 {
  
     public function __construct(){
-        
+
         $this->middleware('can:specie.create')->only(['create', 'store']);
 
         $this->middleware('can:specie.index')->only(['index']);
 
-        $this->middleware('can:specie.edit')->only(['update']);
+        $this->middleware('can:specie.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:specie.show')->only(['show']);
 
         $this->middleware('can:specie.destroy')->only(['destroy']);
 

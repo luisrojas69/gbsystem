@@ -14,10 +14,18 @@ use App\Sector;
 
 class SectorController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-       //$this->middleware('isadmin');
+    public function __construct(){
+
+        $this->middleware('can:sector.create')->only(['create', 'store']);
+
+        $this->middleware('can:sector.index')->only(['index']);
+
+        $this->middleware('can:sector.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:sector.show')->only(['show']);
+
+        $this->middleware('can:sector.destroy')->only(['destroy']);
+
     }
 
     public function index()

@@ -9,6 +9,19 @@ use App\Crop;
 class CropController extends Controller
 {
 
+    public function __construct(){
+
+        $this->middleware('can:crop.create')->only(['create', 'store']);
+
+        $this->middleware('can:crop.index')->only(['index']);
+
+        $this->middleware('can:crop.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:crop.show')->only(['show']);
+
+        $this->middleware('can:crop.destroy')->only(['destroy']);
+
+    }
 
     public function index()
     {	

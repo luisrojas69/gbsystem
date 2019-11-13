@@ -10,12 +10,19 @@ use App\Sector;
 
 class PlankController extends Controller
 {
-     public function __construct()
-    {
-        $this->middleware('auth');
-        //$this->middleware('isadmin');
-    }
+    public function __construct(){
 
+        $this->middleware('can:plank.create')->only(['create', 'store']);
+
+        $this->middleware('can:plank.index')->only(['index']);
+
+        $this->middleware('can:plank.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:plank.show')->only(['show']);
+
+        $this->middleware('can:plank.destroy')->only(['destroy']);
+
+    }
 
 	public function index()
     {

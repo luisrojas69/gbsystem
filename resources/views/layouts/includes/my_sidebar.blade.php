@@ -5,11 +5,11 @@
       <div class="user-panel">
         <div class="pull-left image">
           @auth
-          <img src="{{ asset('img/avatar06.png') }}" class="img-circle" alt="User Image">
+          <img src="{{ asset('img/'.Auth::user()->avatar) }}" class="img-circle" alt="User Image">
           @endauth
 
           @guest
-          <img src="{{ asset('img/avatar5.png') }}" class="img-circle" alt="User Image">
+          <img src="{{ asset('img/avatar-invitado.png') }}" class="img-circle" alt="User Image">
           @endguest
 
         </div>
@@ -54,7 +54,7 @@
         @endguest
         
         @auth
-
+        @can('capture.index')
         <li class="treeview {{ Request::is('capture*') ? 'active' : ''}}">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Capturas</span>
@@ -67,7 +67,8 @@
             <li class="{{ Request::is('capture') ? 'active' : ''}}"><a href="{{ route('capture.index') }}"><i class="fa fa-list"></i> Ultimas Capturas</a></li>
           </ul>
         </li>
-          @if (Auth::user()->role != 'ADMIN')
+        @endcan
+
         <li class="treeview {{ Request::is('establishments*') ? 'active menu-open' : ''}}">
           <a href="#">
             <i class="fa fa-home"></i> <span>Establecimientos</span>
@@ -76,11 +77,19 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            
+            @can('sector.index')
             <li class="{{ Request::is('establishments/sector') ? 'active' : ''}}"><a href="{{ route('sector.index') }}"><i class="fa fa-clone"></i>Sectores</a></li>
+            @endcan
 
+            @can('lot.index')
             <li class="{{ Request::is('establishments/lot') ? 'active' : ''}}"><a href="{{ route('lot.index') }}"><i class="fa fa-object-ungroup"></i>Lotes</a></li>
+            @endcan
 
+            @can('plank.index')
             <li class="{{ Request::is('establishments/plank') ? 'active' : ''}}"><a href="{{ route('plank.index') }}"><i class="fa fa-object-group"></i>Tablones</a></li>
+            @endcan
+
           </ul>
         </li>
 
@@ -94,56 +103,24 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            
+            @can('crop.index')
             <li class="{{ Request::is('supplies/crop') ? 'active' : ''}}"><a href="{{ route('crop.index') }}"><i class="fa fa-leaf"></i>Cultivos</a></li>
+            @endcan
 
+            @can('variety.index')
             <li class="{{ Request::is('supplies/variety') ? 'active' : ''}}"><a href="{{ route('variety.index') }}"><i class="fa fa-asterisk"></i>Variedades</a></li>
-          </ul>
-        </li>
-     
+            @endcan
 
-        <!-- END Insumos-->
-     
-
-         <li class="treeview {{ Request::is('crop*') ? 'active' : ''}}">
-          <a href="#">
-            <i class="fa fa-leaf"></i> <span>Cultivos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{ Request::is('crop/create') ? 'active' : ''}}"><a href="{{ route('crop.create') }}"><i class="fa fa-plus"></i> Crear Cultivo</a></li>
-            <li class="{{ Request::is('crop') ? 'active' : ''}}"><a href="{{ route('crop.index') }}"><i class="fa fa-list"></i> Lista de Cultivos</a></li>
-          </ul>
-        </li>               
-
-
-         <li class="treeview {{ Request::is('variety*') ? 'active' : ''}}">
-          <a href="#">
-            <i class="fa fa-asterisk"></i> <span>Variedades</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{ Request::is('variety/create') ? 'active' : ''}}"><a href="{{ route('variety.create') }}"><i class="fa fa-plus"></i> Crear Variedad</a></li>
-            <li class="{{ Request::is('variety') ? 'active' : ''}}"><a href="{{ route('variety.index') }}"><i class="fa fa-list"></i> Lista de Variedades</a></li>
-          </ul>
-        </li>
-
-         <li class="treeview {{ Request::is('activity*') ? 'active' : ''}}">
-          <a href="#">
-            <i class="fa fa- fa-tasks"></i> <span>Actividades</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{ Request::is('activity/create') ? 'active' : ''}}"><a href="{{ route('activity.create') }}"><i class="fa fa-plus"></i> Crear Actividad</a></li>
+            @can('activity.index')
             <li class="{{ Request::is('activitity') ? 'active' : ''}}"><a href="{{ route('activity.index') }}"><i class="fa fa-list"></i> Lista de Actividades</a></li>
+            @endcan
           </ul>
-        </li>        
-        @endif
+        </li>
+     
+      
+  
+
         <li class="treeview {{ Request::is('pluviometry*') ? 'active' : ''}}">
           <a href="#">
             <i class="fa fa-umbrella"></i> <span>Pluviometria</span>
@@ -152,8 +129,14 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            @can('pluviometry.index')
             <li class="{{ Request::is('pluviometry/create') ? 'active' : ''}}"><a href="{{ route('pluviometry.create') }}"><i class="fa fa-plus"></i> Insertar Pluviometria</a></li>
+            @endcan
+
+            @can('pluviometry.index')
             <li class="{{ Request::is('pluviometry') ? 'active' : ''}}"><a href="{{ route('pluviometry.index') }}"><i class="fa fa-list"></i> Ultimos Registros</a></li>
+            @endcan
+
           </ul>
         </li>   
 
@@ -169,16 +152,29 @@
           </a>
         
           <ul class="treeview-menu">
+            @can('animals.index')
             <li class="{{ Request::is('animals/animal') ? 'active' : ''}}"><a href="{{ route('animal.index') }}"><i class="fa fa-paw"></i> Animales</a></li>
-            
+            @endcan
+
             @can('rodeo.index')
             <li class="{{ Request::is('animals/rodeo') ? 'active' : ''}}"><a href="{{ route('rodeo.index') }}"><i class="fa fa-database"></i> Rodeos</a></li>
             @endcan
 
+            @can('weighing.index')
             <li class="{{ Request::is('animals/weighing') ? 'active' : ''}}"><a href="{{ route('weighing.index') }}"><i class="fa fa-balance-scale"></i> Pesajes</a></li>
+            @endcan
+
+            @can('paddock.index')
             <li class="{{ Request::is('animals/paddocks') ? 'active' : ''}}"><a href="{{ route('paddock.index') }}"><i class="fa fa-bank"></i> Potreros</a></li>
+            @endcan
+
+            @can('specie.index')
             <li class="{{ Request::is('animals/specie') ? 'active' : ''}}"><a href="{{ route('specie.index') }}"><i class="fa fa-cube"></i> Especies</a></li>
+            @endcan
+
+            @can('breed.index')
             <li class="{{ Request::is('animals/breeds') ? 'active' : ''}}"><a href="{{ route('breed.index') }}"><i class="fa fa-cubes"></i> Razas</a></li>
+            @endcan
 
           </ul>
         </li>        

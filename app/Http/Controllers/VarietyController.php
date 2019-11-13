@@ -10,12 +10,19 @@ use App\Crop;
 
 class VarietyController extends Controller
 {
-      public function __construct()
-    {
-        $this->middleware('auth');
-        //$this->middleware('isadmin');
-    }
+    public function __construct(){
 
+        $this->middleware('can:variety.create')->only(['create', 'store']);
+
+        $this->middleware('can:variety.index')->only(['index']);
+variety
+        $this->middleware('can:variety.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:variety.show')->only(['show']);
+
+        $this->middleware('can:variety.destroy')->only(['destroy']);
+
+    }
 
 	public function index()
     {

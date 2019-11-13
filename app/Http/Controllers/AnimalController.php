@@ -16,6 +16,20 @@ use App\Exports\AnimalsExport;
 
 class AnimalController extends Controller
 {
+    
+        public function __construct(){
+      
+        $this->middleware('can:animal.create')->only(['create', 'store']);
+
+        $this->middleware('can:animal.index')->only(['index']);
+
+        $this->middleware('can:animal.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:animal.show')->only(['show']);
+
+        $this->middleware('can:animal.destroy')->only(['destroy']);
+
+    }
     /**
      * Display a listing of the resource.
      *

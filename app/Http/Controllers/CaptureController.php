@@ -18,9 +18,18 @@ use App\Activity;
 
 class CaptureController extends Controller
 {
-    public function __construct()
-    {
-        
+        public function __construct(){
+
+        $this->middleware('can:capture.create')->only(['create', 'store']);
+
+        $this->middleware('can:capture.index')->only(['index']);
+
+        $this->middleware('can:capture.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:capture.show')->only(['show']);
+
+        $this->middleware('can:capture.destroy')->only(['destroy']);
+
     }
 
     public function index()

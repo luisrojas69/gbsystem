@@ -16,11 +16,19 @@ class PluviometryController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware(['auth']);
-    }
+    public function __construct(){
 
+        $this->middleware('can:pluviometry.create')->only(['create', 'store']);
+
+        $this->middleware('can:pluviometry.index')->only(['index']);
+
+        $this->middleware('can:pluviometry.edit')->only(['edit', 'update']);
+
+        $this->middleware('can:pluviometry.show')->only(['show']);
+
+        $this->middleware('can:pluviometry.destroy')->only(['destroy']);
+
+    }
 
     protected function validatorCreate(array $data)
     {

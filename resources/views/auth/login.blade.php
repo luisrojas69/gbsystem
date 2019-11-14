@@ -36,7 +36,7 @@
 
     <!-- /.social-auth-links -->
 
-    <a href="#">Olvid&eacute; mi Contrase&ntilde;a</a><br>
+    <a href="{{ route('password.request') }}">Olvid&eacute; mi Contrase&ntilde;a</a><br>
     <a class="pull-right" href="{{ route('register') }}">Registrarse</a><br>
 
 </div>

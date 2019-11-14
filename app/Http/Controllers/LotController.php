@@ -26,12 +26,13 @@ class LotController extends Controller
 	public function index()
     {
         $lots=Lot::all();
-    	return view('pages.administration.farming.stablishments.lots.index', compact('lots'));
+        $sectors = Sector::select('id','sector_de', 'sector_co')->orderBy('sector_co', 'ASC')->get();
+    	return view('pages.administration.farming.stablishments.lots.index', compact('lots', 'sectors'));
     }
 
 
     public function create(Sector $sector){
-        $sectors = Sector::orderBy('sector_co', 'ASC')->get();
+        $sectors = Sector::select('id','sector_de')->orderBy('sector_co', 'ASC')->get();
     	return view('pages.administration.farming.stablishments.lots.create', compact('sectors'));
     }
 
@@ -54,7 +55,7 @@ class LotController extends Controller
             $lot->save();
             DB::commit();
             session()->flash('my_message', 'Lote Creado Correctamente');
-            return redirect('establishments/lot/create');
+            return redirect()->back();
         } catch (Exception $e) {
             session()->flash('my_error', $e->getMessage());
             DB::rollback();
@@ -85,10 +86,10 @@ class LotController extends Controller
         return view('pages.administration.farming.stablishments.lots.edit', compact('lot','sector'));
     }
 
-    public function update(Request $request, Lot $lot)
+    public function update(Request $request)
     {
         try {
-            $lot = Lot::find($lot->id);
+            $lot = Lot::findOrFail($request->lot_id);
             $lot->lot_co = $request->get('lot_co');
             $lot->lot_de = $request->get('lot_de');
             DB::beginTransaction();

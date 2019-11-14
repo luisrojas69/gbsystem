@@ -38,23 +38,23 @@ class SectorController extends Controller
 
     }
 
+    
     public function index()
     {
     	$sectors= Sector::all();
     	return view('pages.administration.farming.stablishments.sectors.index', compact('sectors'));
     }
 
+    
     public function create ()
     {
-        $this->middleware('isadmin');
-    	return view('pages.administration.farming.stablishments.sectors.create');
-        
+    	return view('pages.administration.farming.stablishments.sectors.create');   
     }
+
 
     public function show (Sector $sector)
     {
     	return view('pages.administration.farming.stablishments.sectors.show', compact('sector'));
-     
     }
 
      public function store(SectorRequest $request)
@@ -205,7 +205,7 @@ month(NOW()) as posicion
 from pluviometries
 where sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MONTH), INTERVAL - (DAY(NOW())-1) DAY)  and NOW() >= date_read 
 "));
-        //return view('pages.administration.sectors.show_details', compact('result'));
+
      return response()->json($result);
     }
 

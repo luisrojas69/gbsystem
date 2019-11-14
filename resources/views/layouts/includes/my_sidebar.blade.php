@@ -133,10 +133,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @can('pluviometry.index')
-            <li class="{{ Request::is('pluviometry/create') ? 'active' : ''}}"><a href="{{ route('pluviometry.create') }}"><i class="fa fa-plus"></i> Insertar Pluviometria</a></li>
-            @endcan
-
+            
             @can('pluviometry.index')
             <li class="{{ Request::is('pluviometry') ? 'active' : ''}}"><a href="{{ route('pluviometry.index') }}"><i class="fa fa-list"></i> Ultimos Registros</a></li>
             @endcan

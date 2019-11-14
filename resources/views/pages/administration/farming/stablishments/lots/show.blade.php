@@ -31,34 +31,42 @@
                 <tr>
                   <td>{{ $plank->id }}</td>
                   <td>{{ $plank->plank_co }}</td>
-                  <td><a href="{{ route("plank.show", $plank ) }}">{{ $plank->plank_de }}</a></td>
+                  <td>{{ $plank->plank_de }}</td>
                   <td style="text-align: center;"><span class="label label-success">{{ $plank->plank_area }}</span></td>
                   <td style="text-align: center;">
-                        <a href="javascript:void(0)"
-                            title="Editar" 
-                            onclick="event.preventDefault(); 
-                            document.getElementById('form-edit-{{ $plank->id }}').submit()">
-                             <span class="label label-primary"><i class="fa fa-pencil"></i></span>
-                        </a>                    
+                        @can('plank.edit')
+                          <a href=""
+                              title="Editar"
+                              data-toggle="modal"
+                              data-target="#modal-form-update"
+                              data-sector_id="{{ $plank->sector_id }}"
+                              data-sector_de="{{ $plank->sector_de }}"
+                              data-lot_id="{{ $plank->lot_id }}"
+                              data-lot_de="{{ $plank->lot_de }}"
+                              data-plank_id="{{ $plank->id }}"
+                              data-plank_co="{{ $plank->plank_co }}"
+                              data-plank_de="{{ $plank->plank_de }}" 
+                              data-title="Formulario de Edicion - Editar {{ $plank->plank_de }}"
+                              >
+                       <span class="label label-primary"><i class="fa fa-pencil"></i></span>
+                          </a>
 
-                        <form method="GET" 
-                            action="{{ route('plank.edit', $plank) }}"
-                            id="form-edit-{{ $plank->id }}"
-                            style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
+                        @endcan
 
-                        <a href="javascript:void(0)" id="{{ $lot->id }}"
-                        class="btn-delete">
-                        <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+                        @can('plank.destroy')
+                            <a href="javascript:void(0)" id="{{ $plank->id }}"
+                              class="btn-delete"
+                              title="Eliminar">
+                            <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-                     <form method="POST"
-                        id="form-destroy-{{ $lot->id }}" 
-                        action="{{ route('plank.destroy', $plank) }}">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                    </form>
-                    
+                           <form method="POST"
+                              id="form-destroy-{{ $plank->id }}"
+                              action="{{ route('plank.destroy', $plank) }}">
+                              {{ csrf_field() }}
+                              {{ method_field('DELETE') }}
+                          </form>
+                        @endcan
+
                   </td>
                 </tr>
                @endforeach
@@ -67,11 +75,15 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-               <a class="btn btn-primary no-margin pull-right"
-                                title="Crear un nuevo Tablon"
-                                href="{{ route('plank.create') }}">
-                                <i class="fa fa-plus"></i> Agregar Nuevo
-                     </a>
+              @can('plank.create')
+                <button 
+                  type="button" 
+                  class="btn btn-primary no-margin pull-right" 
+                  data-toggle="modal" 
+                  data-target="#modal-form-store">
+                  <i class="fa fa-plus"></i>Agregar Nuevo
+                </button>
+               @endcan    
             </div>
 </div>
 

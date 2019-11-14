@@ -12,8 +12,50 @@
 @endsection
 
 @section('content')
+
+<!--Formulario para Crear un Nuevo Registro-->  
+<div class="modal fade" id="modal-form-store" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Registrar un Nuevo Tablon</h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_plank" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('plank.store') }}">
+                {{ csrf_field() }}        
+          @include('layouts.includes.partials.forms.capture.form_planks')
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Formulario para Editar Registro-->
+<div class="modal fade" id="modal-form-update" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_plank" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('plank.update','test') }}">
+                {{ csrf_field() }}
+                {{ method_field('patch') }} 
+          <input type="hidden" name="plank_id" id="plank_id" value="">             
+          @include('layouts.includes.partials.forms.capture.form_planks')
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
  
- <div class="col-md-6">
+ <div class="col-md-8">
   <div class="box box-info" >
 
             <div class="box-header with-border">
@@ -76,10 +118,103 @@
             <!-- /.box-body -->
 
   </div>
-</div>
+
+  <div class="box box-info" >
+
+            <div class="box-header with-border">
+              <h3 class="box-title">Tabla de Tablones Registrados </h3>
+
+          <a title="Exportar a PDF"
+                                href="{{ route('sectors.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
+            <i class="fa fa-download"></i> Generar PDF
+          </a>
+
+          <a title="Exportar a Excel"
+                                href="{{ route('sectors.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+            <i class="fa fa-download"></i> Generar EXCEL
+          </a>
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" >
+            
+            <table class="table table-bordered">
+                <tbody><tr>
+                  <th style="width: 60px">ID</th>
+                  <th style="width: 120px">Codigo</th>
+                  <th>Descripcion</th>
+                   <th style="width: 100px; text-align: center;">Hectareas</th>
+                  <th style="width: 120px; text-align: center;">Acciones</th>
+                </tr>
+                     @foreach($planks as $plank)
+                <tr>
+                  <td>{{ $plank->id }}</td>
+                  <td>{{ $plank->plank_co }}</td>
+                  <td>{{ $plank->plank_de }}</td>
+                  <td style="text-align: center;"><span class="label label-success">{{ $plank->plank_area }}</span></td>
+                  <td style="text-align: center;">  
+                      @can('plank.edit')
+                          <a href=""
+                              title="Editar"
+                              data-toggle="modal"
+                              data-target="#modal-form-update"
+                              data-sector_id="{{ $plank->sector_id }}"
+                              data-sector_de="{{ $plank->sector_de }}"
+                              data-lot_id="{{ $plank->lot_id }}"
+                              data-lot_de="{{ $plank->lot_de }}"
+                              data-plank_id="{{ $plank->id }}"
+                              data-plank_co="{{ $plank->plank_co }}"
+                              data-plank_de="{{ $plank->plank_de }}" 
+                              data-plank_area="{{ $plank->plank_area }}" 
+                              data-title="Formulario de Edicion - Editar {{ $plank->plank_de }}"
+                              >
+                       <span class="label label-primary"><i class="fa fa-pencil"></i></span>
+                          </a>
+
+                        @endcan
+
+                        @can('plank.destroy')
+                            <a href="javascript:void(0)" id="{{ $plank->id }}"
+                              class="btn-delete"
+                              title="Eliminar">
+                            <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+
+                           <form method="POST"
+                              id="form-destroy-{{ $plank->id }}"
+                              action="{{ route('plank.destroy', $plank) }}">
+                              {{ csrf_field() }}
+                              {{ method_field('DELETE') }}
+                          </form>
+                        @endcan
+
+                  </td>
+                </tr>
+               @endforeach
+
+              </tbody></table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              @can('plank.create')
+                <button 
+                  type="button" 
+                  class="btn btn-primary no-margin pull-right" 
+                  data-toggle="modal" 
+                  data-target="#modal-form-store">
+                  <i class="fa fa-plus"></i>Agregar Nuevo
+                </button>
+               @endcan    
+            </div>
 
 
-  <div class="col-md-6">
+     
+            </div>
+            <!-- /.box-body -->
+
+  </div>
+
+
+  <div class="col-md-4">
 <div class="box box-widget widget-user-2">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-blue">
@@ -141,6 +276,36 @@
 
 @section('additionals-scripts')
 <script type="text/javascript" src="{{ asset('scripts/confirm-delete.js') }}"></script>
+
+
+<script type="text/javascript">
+
+  $(function(){
+        $('#modal-form-update').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var lot_id = button.data('lot_id') // Extract info from data-* attributes
+        var lot_de = button.data('lot_de')
+        var sector_id = button.data('sector_id')
+        var sector_de = button.data('sector_de')
+        var plank_id = button.data('plank_id')
+        var plank_co = button.data('plank_co')
+        var plank_de = button.data('plank_de')
+        var plank_area = button.data('plank_area')
+        var title = button.data('title')
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(title)
+        modal.find('.modal-body #lot_id').val(lot_id)
+        modal.find('.modal-body #plank_id').val(plank_id)
+        modal.find('.modal-body #plank_co').val(plank_co)
+        modal.find('.modal-body #plank_de').val(plank_de)
+        modal.find('.modal-body #plank_area').val(plank_area)
+})
+
+  });
+  
+</script>
 
 
    <script>

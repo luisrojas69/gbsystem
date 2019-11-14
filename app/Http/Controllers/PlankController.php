@@ -28,7 +28,7 @@ class PlankController extends Controller
     {
         $sectors = Sector::with('lots')->get(['id','sector_de']);
         $lots = Lot::with('Sector')->get(['id','lot_de','sector_id']);
-        $planks = Plank::with('Lot')->get(['id','plank_de','lot_id']);
+        $planks = Plank::with('Lot')->get(['id','plank_de', 'plank_area','plank_co','lot_id']);
 
         return view('pages.administration.farming.stablishments.planks.index', compact('lots','planks', 'sectors'));
     }
@@ -119,10 +119,10 @@ class PlankController extends Controller
         return view('pages.administration.farming.stablishments.planks.edit', compact('plank','lot'));
     }
 
-    public function update(Request $request, Plank $plank)
+    public function update(Request $request)
     {
         try {
-            $plank = Plank::find($plank->id);
+            $plank = Plank::findOrFail($request->plank_id);
             $plank->plank_co = $request->get('plank_co');
             $plank->plank_de = $request->get('plank_de');
 			$plank->plank_area = $request->get('plank_area');

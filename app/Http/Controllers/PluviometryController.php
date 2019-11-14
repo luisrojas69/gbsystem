@@ -47,8 +47,8 @@ class PluviometryController extends Controller
     public function index()
     {   
         $pluviometries = Pluviometry::where('archived','=','N')->get();
-        return view('pages.administration.pluviometries.index')
-                    ->with([ 'pluviometries' => $pluviometries ]);
+        $sectors = sector::all();
+        return view('pages.administration.pluviometries.index', compact('pluviometries', 'sectors'));
     }
     
 
@@ -72,7 +72,7 @@ class PluviometryController extends Controller
             $pluviometry->save();
             DB::commit();
             session()->flash('my_message','Registro Pluviometrico Creado!');
-            return redirect()->route('pluviometry.create');
+            return redirect()->back();
             
         } catch (Exception $e) {
             session()->flash('my_error',$e->getMessage());
@@ -95,11 +95,11 @@ class PluviometryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, Pluviometry $pluviometry)
+    public function update(Request $request)
     {
         $this->validatorCreate($request->all())->validate();
         try {
-            $pluviometry = Pluviometry::find($pluviometry->id);
+            $pluviometry = Pluviometry::findOrFail($request->pluviometry_id);
             $pluviometry->date_read = $request->get('date_read');
             $pluviometry->value_mm = (double)$request->get('value_read');
             $pluviometry->sector_id = (int)$request->get('sector_id');

@@ -16,6 +16,49 @@
 @section('content')
 
 <div class="box">
+
+<!--Formulario para Crear un Nuevo Registro-->  
+<div class="modal fade" id="modal-form-store" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Registrar un Nuevo Lote</h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_lot" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('lot.store') }}">
+                {{ csrf_field() }}        
+          @include('layouts.includes.partials.forms.capture.form_lots')
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Formulario para Editar Registro-->
+<div class="modal fade" id="modal-form-update" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_lot" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('lot.update','test') }}">
+                {{ csrf_field() }}
+                {{ method_field('patch') }} 
+          <input type="hidden" name="lot_id" id="lot_id" value="">             
+          @include('layouts.includes.partials.forms.capture.form_lots')
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
             <div class="box-header with-border">
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
             </div>
@@ -34,56 +77,65 @@
                     <tr>
                   <td>{{ $lot->id }}</td>
                   <td>{{ $lot->lot_co }}</td>
-                  <td><a href="{{ route("lot.show", $lot ) }}">{{ $lot->lot_de }}</a></td>
-                  <td style="text-align: center;"><span class="label label-success">{{ count($lot->planks) }}</span></td>
+                  <td>{{ $lot->lot_de }}</td>
+                  <td style="text-align: center;"><span class="label label-success">{{ $lot->numPlanks }}</span></td>
                   <td style="text-align: center;">
-                      @can('lot.edit')  
-                        <a href="javascript:void(0)"
-                            title="Editar" 
-                            onclick="event.preventDefault(); 
-                            document.getElementById('form-edit-{{ $lot->id }}').submit()">
-                             <span class="label label-primary"><i class="fa fa-pencil"></i></span>
-                        </a>                    
 
-                        <form method="GET" 
-                            action="{{ route('lot.edit', $lot) }}"
-                            id="form-edit-{{ $lot->id }}"
-                            style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                      @endcan
+                       @can('lot.show')
+                            <a href="{{ route('lot.show', $lot->id) }}" id="{{ $lot->id }}"
+                              title="Ver detalle del {{ $lot->lot_de }}">
+                            <span class="label label-success"><i class="fa fa-search"></i></span></a>
+                        @endcan
 
-                      @can('lot.destroy')
-                        <a href="javascript:void(0)" id="{{ $lot->id }}"
-                          class="btn-delete  {{ count($lot->planks)>0 ? 'disabled' : '' }}"
-                          title="Eliminar">
-                        <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+                       @can('lot.edit')
+                          <a href=""
+                              title="Editar"
+                              data-toggle="modal"
+                              data-target="#modal-form-update"
+                              data-sector_id="{{ $lot->sector_id }}"
+                              data-lot_co="{{ $lot->lot_co }}"
+                              data-lot_de="{{ $lot->lot_de }}"
+                              data-lot_id="{{ $lot->id }}"
+                              data-title="Formulario de Edicion - Editar {{ $lot->lot_de }}"
+                              data-title="Formulario de Edicion - Editar {{ $lot->lot_de }}"
+                              >
+                       <span class="label label-primary"><i class="fa fa-pencil"></i></span>
+                          </a>
 
-                         <form method="POST"
-                            id="form-destroy-{{ $lot->id }}" 
-                            action="{{ route('lot.destroy', $lot) }}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                        </form>
-                      @endcan
-                    
+                        @endcan
+
+                        @can('lot.destroy')
+                            <a href="javascript:void(0)" id="{{ $lot->id }}"
+                              class="btn-delete  {{ $lot->numPlanks>0 ? 'disabled' : '' }}"
+                              title="Eliminar">
+                            <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+
+                           <form method="POST"
+                              id="form-destroy-{{ $lot->id }}"
+                              action="{{ route('lot.destroy', $lot) }}">
+                              {{ csrf_field() }}
+                              {{ method_field('DELETE') }}
+                          </form>
+                        @endcan
+
                   </td>
-
                 </tr>
                @endforeach
 
               </tbody></table>
             </div>
             <!-- /.box-body -->
-            @can('lot.create')
-              <div class="box-footer clearfix">
-                 <a class="btn btn-primary no-margin pull-right"
-                                  title="Crear un nuevo Lote"
-                                  href="{{ route('lot.create') }}">
-                                  <i class="fa fa-plus"></i> Agregar Nuevo
-                       </a>
-              </div>
-            @endcan
+            <div class="box-footer clearfix">
+              @can('lot.create')
+                <button 
+                  type="button" 
+                  class="btn btn-primary no-margin pull-right" 
+                  data-toggle="modal" 
+                  data-target="#modal-form-store">
+                  <i class="fa fa-plus"></i>Agregar Nuevo
+                </button>
+               @endcan    
+            </div>
 </div>
 
 
@@ -99,4 +151,29 @@
 
 @section('additionals-scripts')
 <script type="text/javascript" src="{{ asset('scripts/confirm-delete.js') }}"></script>
+
+<script type="text/javascript">
+
+  $(function(){
+        $('#modal-form-update').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var lot_de = button.data('lot_de') // Extract info from data-* attributes
+        var lot_co = button.data('lot_co')
+        var lot_id = button.data('lot_id')
+        var sector_id = button.data('sector_id')
+        var title = button.data('title')
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(title)
+        modal.find('.modal-body #sector_id').val(sector_id)
+        modal.find('.modal-body #lot_co').val(lot_co)
+        modal.find('.modal-body #lot_de').val(lot_de)
+        modal.find('.modal-body #lot_id').val(lot_id)
+})
+
+  });
+  
+</script>
+
 @endsection

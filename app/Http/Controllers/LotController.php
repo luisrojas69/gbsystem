@@ -7,6 +7,11 @@ use App\Sector;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+//Laravel-Excel
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\LotsImport;
+
+
 class LotController extends Controller
 {
     public function __construct(){
@@ -101,6 +106,21 @@ class LotController extends Controller
             session()->flash('my_error', $e->getMessage());
             DB::rollback();
         }
+    }
+
+
+    public function import(){
+        return view('pages.administration.farming.stablishments.lots.import');
+    }
+
+
+    public function importExcel(Request $request){
+       $file = $request->file('file');
+
+       Excel::import(new LotsImport, $file);
+
+       session()->flash('my_message', 'Lotes importados Correctamente');
+       return redirect()->back();
     }
 
 

@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lot extends Model
 {
+
+  protected $fillable = [
+        'lot_co', 'lot_de', 'sector_id',
+  ];
+
    public function sector()
    {
    	return $this->belongsTo(Sector::class);

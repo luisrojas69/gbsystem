@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Caffeinated\Shinobi\Concerns\HasRolesAndPermissions;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use App\Notifications\MyResetPassword;
 
 class User extends Authenticatable
 {
@@ -14,6 +15,16 @@ class User extends Authenticatable
     use HasRolesAndPermissions;
     use Notifiable;
     use CanResetPassword;
+
+    /**
+     * Personalizacion de Correo de Recuperacion.
+     *
+     *
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MyResetPassword($token));
+    }
 
     /**
      * The attributes that are mass assignable.

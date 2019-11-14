@@ -19,6 +19,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SectorsExport;
 
 
+use App\Imports\SectorsImport;
+
 use App\Sector;
 
 
@@ -224,5 +226,19 @@ where sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MON
 
     public function sectorsExcel(){       
         return Excel::download(new SectorsExport, 'sectors-list-'.date('Y-m-d_H:i:s').'.xlsx');
+    }
+
+
+    public function import(){
+        return view('pages.administration.farming.stablishments.sectors.import');
+    }
+
+
+    public function importExcel(Request $request){
+       $file = $request->file('file');
+       Excel::import(new SectorsImport, $file);
+
+       session()->flash('my_message', 'Sectores importados Correctamente');
+       return redirect()->back();
     }
 }

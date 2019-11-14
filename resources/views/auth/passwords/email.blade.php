@@ -2,16 +2,18 @@
 
 @section('title-page', "Login - Granja Boraure")
 
-@section('message')
-@include('layouts._my_message')
-@include('layouts._my_error')
-@endsection
-
 @section('content')
 
 <div class="login-box-body">
-    <p class="login-box-msg">Recuperar Contraseñaa</p>
+    <p class="login-box-msg">Recuperar Contraseña</p>
+   
     @include('layouts._my_error')
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
                         {{ csrf_field() }}
 

@@ -88,7 +88,7 @@ class PlankController extends Controller
             $plank->save();
             DB::commit();
             session()->flash('my_message', 'Tablon Creado Correctamente');
-            return redirect('establishments/plank/create');
+            return redirect()->back();
         } catch (Exception $e) {
             session()->flash('my_error', $e->getMessage());
             DB::rollback();
@@ -135,5 +135,19 @@ class PlankController extends Controller
             session()->flash('my_error', $e->getMessage());
             DB::rollback();
         }
+    }
+
+
+    public function import(){
+        return ('En Proceso');
+    }
+
+
+    public function importExcel(Request $request){
+       $file = $request->file('file');
+       Excel::import(new SectorsImport, $file);
+
+       session()->flash('my_message', 'Sectores importados Correctamente');
+       return redirect()->back();
     }
 }

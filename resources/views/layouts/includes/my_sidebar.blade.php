@@ -183,10 +183,12 @@
         <!-- Fin Ganaderia -->     
         <!--Menu Configuraciones-->
         @if(auth()->user()->hasRole('admin'))
+        
+        <!--Configuraciones Principales del Sistema-->
         <li class="header">MENU ADMINISTRADOR</li>
         <li class="treeview {{ Request::is('administration*') ? 'active' : ''}}">
           <a href="#">
-            <i class="fa fa-gear"></i> <span>Configuaciones</span>
+            <i class="fa fa-gear"></i> <span>Configuraciones</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -199,6 +201,26 @@
           </ul>
 
         </li>
+
+        <!--Importaciones Masivas-->
+        <li class="header">CARGAS MASIVAS</li>
+        <li class="treeview {{ Request::is('import*') ? 'active' : ''}}">
+          <a href="#">
+            <i class="fa fa-database"></i> <span>Importaciones</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('import/sectors') ? 'active' : ''}}"><a href="{{ route('sectors.import') }}"><i class="fa fa-clone"></i> Sectores</a></li>
+             <li class="{{ Request::is('import/lots') ? 'active' : ''}}"><a href="{{ route('lots.import') }}"><i class="fa fa-object-ungroup"></i> Lotes</a></li>
+             <li class="{{ Request::is('import/planks') ? 'active' : ''}}"><a href="{{ route('planks.import') }}"><i class="fa fa-object-group"></i> Tablones</a></li>
+          </ul>
+
+        </li>
+
+
         @endif 
 
 

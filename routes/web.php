@@ -69,21 +69,26 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::get ('/report/sectors-excel', 'SectorController@sectorsExcel')->name('sectors.excel');
 
-	Route::get('/sector/import', 'SectorController@import');
+	Route::get('/import/sectors', 'SectorController@import')->name('sectors.import');
 
-	Route::post ('/sector/import', 'SectorController@importExcel')->name('sectors.import.excel');
+	Route::post ('/import/sector', 'SectorController@importExcel')->name('sectors.import.excel');
 
 
 	//Lots
 	Route::resource('establishments/lot', 'LotController');
 
-	Route::get('/lot/import', 'LotController@import');
+	Route::get('/import/lots', 'LotController@import')->name('lots.import');
 
-	Route::post ('/lot/import', 'LotController@importExcel')->name('lots.import.excel');
+	Route::post ('/import/lot', 'LotController@importExcel')->name('lots.import.excel');
 
 
 	//Planks
 	Route::resource('establishments/plank', 'PlankController');
+
+	Route::get('/import/planks', 'PlankController@import')->name('planks.import');
+
+	Route::post ('/import/planks', 'PlankController@importExcel')->name('planks.import.excel');
+
 
 
 	//Crops

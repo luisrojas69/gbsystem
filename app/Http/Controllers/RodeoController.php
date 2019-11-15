@@ -19,7 +19,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 //Laravel-Excel
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\AnimalsExport;
+use App\Exports\RodeosExport;
 
 
 

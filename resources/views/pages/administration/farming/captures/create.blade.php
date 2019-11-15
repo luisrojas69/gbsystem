@@ -480,7 +480,7 @@
 
     function blockButton() {
         alert("ok");
-        return true;\
+        return true;
     }
    </script>
   

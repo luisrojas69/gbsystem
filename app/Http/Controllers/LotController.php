@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 //Laravel-Excel
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LotsExport;
 use App\Imports\LotsImport;
 
 
@@ -28,9 +29,9 @@ class LotController extends Controller
 
     }
 
-	public function index()
+	public function index(Request $request)
     {
-        $lots=Lot::all();
+        $lots=Lot::name($request->name)->get();
         $sectors = Sector::select('id','sector_de', 'sector_co')->orderBy('sector_co', 'ASC')->get();
     	return view('pages.administration.farming.stablishments.lots.index', compact('lots', 'sectors'));
     }
@@ -122,6 +123,13 @@ class LotController extends Controller
        session()->flash('my_message', 'Lotes importados Correctamente');
        return redirect()->back();
     }
+
+
+      //Ejecucion del Metodo que genera el Excel
+    public function lotsExcel(){       
+        return Excel::download(new LotsExport, 'lotes-list-'.date('Y-m-d_H:i:s').'.xlsx');
+    }
+
 
 
 }

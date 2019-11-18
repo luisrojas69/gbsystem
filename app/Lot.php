@@ -26,6 +26,15 @@ class Lot extends Model
 
     public function getNumPlanksAttribute(){
       return count($this->planks);
-    } 
+    }
+
+
+   public function scopeName($query, $name)
+    { 
+      if(trim($name) != "")
+      {
+      $query->where('lot_de', "LIKE", "%$name%");
+      }
+    }   
 }
 

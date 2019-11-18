@@ -8,6 +8,13 @@ use App\Plank;
 use App\Lot;
 use App\Sector;
 
+//Laravel-Excel
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PlanksExport;
+use App\Imports\PlanksImport;
+
+
+
 class PlankController extends Controller
 {
     public function __construct(){
@@ -24,11 +31,11 @@ class PlankController extends Controller
 
     }
 
-	public function index()
+	public function index(Request $request)
     {
         $sectors = Sector::with('lots')->get(['id','sector_de']);
         $lots = Lot::with('Sector')->get(['id','lot_de','sector_id']);
-        $planks = Plank::with('Lot')->get(['id','plank_de', 'plank_area','plank_co','lot_id']);
+        $planks = Plank::with('Lot')->name($request->name)->get(['id','plank_de', 'plank_area','plank_co','lot_id']);
 
         return view('pages.administration.farming.stablishments.planks.index', compact('lots','planks', 'sectors'));
     }
@@ -137,12 +144,6 @@ class PlankController extends Controller
         }
     }
 
-<<<<<<< HEAD
-    public function import(){
-        return ('En Proceso');
-    }
-=======
-
     public function import(){
         return ('En Proceso');
     }
@@ -155,5 +156,12 @@ class PlankController extends Controller
        session()->flash('my_message', 'Sectores importados Correctamente');
        return redirect()->back();
     }
->>>>>>> 67d75cf1496c995f4502dccc78577506dc012b89
+
+
+        //Ejecucion del Metodo que genera el Excel
+    public function planksExcel(){       
+        return Excel::download(new PlanksExport, 'tablones-list-'.date('Y-m-d_H:i:s').'.xlsx');
+    }
+
+
 }

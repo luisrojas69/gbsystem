@@ -124,13 +124,22 @@
             <div class="box-header with-border">
               <h3 class="box-title">Tabla de Tablones Registrados </h3>
 
+           <form action="{{ route('plank.index') }}" method="GET" class="form-inline navbar-form my-2 my-lg-0 pull-right" role="search">
+                <div class="input-group input-group-sm">
+                <input type="text" name="name" class="form-control" placeholder="Nombre del Tablon">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info btn-flat">Buscar</button>
+                    </span>
+              </div>
+            </form> 
+
           <a title="Exportar a PDF"
                                 href="{{ route('sectors.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
             <i class="fa fa-download"></i> Generar PDF
           </a>
 
           <a title="Exportar a Excel"
-                                href="{{ route('sectors.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+                                href="{{ route('planks.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
             <i class="fa fa-download"></i> Generar EXCEL
           </a>
 

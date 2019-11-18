@@ -68,8 +68,6 @@ Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesE
 
 
 
-
-
 	//Sectors
 	Route::get('establishments/sector/{id}/pluviometry', 'SectorController@showPluviometry');
 
@@ -81,45 +79,30 @@ Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesE
 
 	Route::get ('/report/sectors-excel', 'SectorController@sectorsExcel')->name('sectors.excel');
 
-<<<<<<< HEAD
 	Route::get('/sectors/import', 'SectorController@import')->name('sectors.import');;
 
 	Route::post ('/sectors/import', 'SectorController@importExcel')->name('sectors.import.excel');
-=======
-	Route::get('/import/sectors', 'SectorController@import')->name('sectors.import');
-
-	Route::post ('/import/sector', 'SectorController@importExcel')->name('sectors.import.excel');
->>>>>>> 67d75cf1496c995f4502dccc78577506dc012b89
 
 
 	//Lots
 	Route::resource('establishments/lot', 'LotController');
 
-<<<<<<< HEAD
+	Route::get ('/report/lots-excel', 'LotController@lotsExcel')->name('lots.excel');
+
 	Route::get('/lots/import', 'LotController@import')->name('lots.import');;
 
 	Route::post ('/lots/import', 'LotController@importExcel')->name('lots.import.excel');
-=======
-	Route::get('/import/lots', 'LotController@import')->name('lots.import');
-
-	Route::post ('/import/lot', 'LotController@importExcel')->name('lots.import.excel');
->>>>>>> 67d75cf1496c995f4502dccc78577506dc012b89
 
 
 	//Planks
 	Route::resource('establishments/plank', 'PlankController');
 
+	Route::get ('/report/planks-excel', 'PlankController@planksExcel')->name('planks.excel');
+
 	Route::get('/import/planks', 'PlankController@import')->name('planks.import');
-<<<<<<< HEAD
 	
 	Route::post ('/import/planks', 'PlankController@importExcel')->name('planks.import.excel');
 
-=======
-
-	Route::post ('/import/planks', 'PlankController@importExcel')->name('planks.import.excel');
-
-
->>>>>>> 67d75cf1496c995f4502dccc78577506dc012b89
 
 	//Crops
 	Route::resource('supplies/crop', 'CropController')->except(['create','show', 'edit']);
@@ -169,11 +152,15 @@ Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesE
 
 
 	//Animals
-
 	Route::resource('animals/animal', 'AnimalController');
 
 	Route::get ('/report/animals-pdf', 'AnimalController@animalsPDF')->name('animals.pdf');
 
 	Route::get ('/report/animals-excel', 'AnimalController@animalsExcel')->name('animals.excel');
+
+
+	//Reports
+	Route::get ('/report/general', 'ReportController@animalsPDF')->name('animals.pdf');
+
 
 });//Fin Grupo de Rutas con el Middleware Auth ( para forzar el inicio d Sesion)

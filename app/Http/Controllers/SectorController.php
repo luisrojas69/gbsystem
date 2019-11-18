@@ -224,7 +224,7 @@ where sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MON
     }
 
 
-    //Ejecucion del Metodo que Renderiza el PDF
+    //Ejecucion del Metodo que genera el Excel
     public function sectorsExcel(){       
         return Excel::download(new SectorsExport, 'sectors-list-'.date('Y-m-d_H:i:s').'.xlsx');
     }

@@ -17,6 +17,14 @@ class Sector extends Model
 
     public function getNumLotsAttribute(){
     	return count($this->lots);
+    }
+
+    public function scopeName($query, $name)
+    {	
+    	if(trim($name) != "")
+    	{
+    	$query->where('sector_de', "LIKE", "%$name%");
+    	}
     }	
 }
 

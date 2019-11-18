@@ -7,6 +7,12 @@ use DateTime;
 
 class Pluviometry extends Model
 {
+
+	protected $fillable = [
+        'sector_id', 'date_read', 'value_mm',
+ 	];
+
+
     public function Sector ()
     {
     	return $this->belongsTo(Sector::class);

@@ -136,4 +136,8 @@ class PlankController extends Controller
             DB::rollback();
         }
     }
+
+    public function import(){
+        return ('En Proceso');
+    }
 }

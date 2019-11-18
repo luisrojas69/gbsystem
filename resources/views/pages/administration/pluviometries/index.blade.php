@@ -59,6 +59,17 @@
 
             <div class="box-header with-border">
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
+
+                <a title="Exportar a PDF"
+                                      href="{{ route('pluviometries.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
+                  <i class="fa fa-download"></i> Generar PDF
+                </a>
+
+                <a title="Exportar a Excel"
+                                      href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+                  <i class="fa fa-download"></i> Generar EXCEL
+                </a>
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -77,6 +88,7 @@
                   <td>{{ $pluviometry->value_mm }}</td>
                   <td><a href="{{ route('sector.show', $pluviometry->sector_id) }}">{{$pluviometry->Sector->sector_de}}</a></td>
                   <td style="text-align: center;">
+                        
                          @can('pluviometry.edit')
                           <a href=""
                               title="Editar"

@@ -139,7 +139,7 @@
               @can('pluviometry.create')
               <a class="btn btn-primary no-margin pull-right" 
                   title="Agregar un nueva Precipitacion" 
-                  href="{{route('pluviometry.create')}}">
+                  href="#">
                   <i class="fa fa-plus"></i> Precipitacion
               </a>
               @endcan
@@ -195,13 +195,6 @@
                   </ul> 
                 @endcan
 
-                @can('pluviometry.create')
-                  <a class="btn btn-primary no-margin pull-right" 
-                      title="Agregar un nueva Precipitacion" 
-                      href="{{route('pluviometry.create')}}">
-                      <i class="fa fa-plus"></i> Precipitacion
-                  </a>
-                @endcan 
               </div>
             </div>
           </div>

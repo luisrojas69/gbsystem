@@ -8,6 +8,19 @@ use App\Pluviometry;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
+//Shinobi
+use Illuminate\Database\Eloquent\Model\Permission;
+use Illuminate\Database\Eloquent\Model\Role;
+
+//DomPDF
+use Barryvdh\DomPDF\Facade as PDF;
+
+//Laravel-Excel
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PluviometriesExport;
+use App\Imports\PluviometriesImport;
+
+
 class PluviometryController extends Controller
 {
 
@@ -46,9 +59,11 @@ class PluviometryController extends Controller
      */
     public function index()
     {   
-        $pluviometries = Pluviometry::where('archived','=','N')->get();
-        $sectors = sector::all();
+        $pluviometries = Pluviometry::whereYear('date_read', '2019')->orderBy('date_read', 'ASC')->get();
+        //$pluviometries = DB::select(DB::raw("SELECT * FROM pluviometries WHERE YEAR(date_read) = '2019' and archived = 'N' ORDER BY date_read ASC"));
+        $sectors = Sector::all();
         return view('pages.administration.pluviometries.index', compact('pluviometries', 'sectors'));
+
     }
     
 
@@ -136,6 +151,36 @@ class PluviometryController extends Controller
             session()->flash('my_error',$e->getMessage());
             DB::rollback();            
         }
+    }
+
+     //Llamado a la Vista con el Invoice del PDF
+    public function pluviometriesPDF(){
+        $sectors = Sector::get();
+        $date = date('d-m-Y');
+        $pdf = PDF::loadView('pages.administration.reports.pluviometries-pdf', compact('pluviometries', 'date'));
+        return $pdf->stream('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
+    }
+
+
+    //Ejecucion del Metodo que Renderiza el PDF
+    public function pluviometriesExcel(){       
+        return Excel::download(new PluviometriesExport, 'pluviometries-list-'.date('Y-m-d_H:i:s').'.xlsx');
+    }
+
+
+    //Llamado a la vista con el Formulario de la Importacion del Archivo Excel
+    public function import(){
+        return view('pages.administration.pluviometries.import');
+    }
+
+
+    //Ejecucion del metodo que realiza la importacion
+    public function importExcel(Request $request){
+       $file = $request->file('file');
+       Excel::import(new PluviometriesImport, $file);
+
+       session()->flash('my_message', 'pluviometrieses importados Correctamente');
+       return redirect()->back();
     }
 
 

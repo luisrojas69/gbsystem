@@ -63,7 +63,15 @@
             <div class="box-header with-border">
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
 
-               
+              <form action="{{ route('sector.index') }}" method="GET" class="form-inline navbar-form my-2 my-lg-0 pull-right" role="search">
+                <div class="input-group input-group-sm">
+                <input type="text" name="name" class="form-control" placeholder="Nombre del Sector">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info btn-flat">Buscar</button>
+                    </span>
+              </div>
+              </form> 
+                             
 
           <a title="Exportar a PDF"
                                 href="{{ route('sectors.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
@@ -75,9 +83,11 @@
             <i class="fa fa-download"></i> Generar EXCEL
           </a>
 
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+
               <table class="table table-bordered">
                 <tbody><tr>
                   <th style="width: 60px">ID</th>

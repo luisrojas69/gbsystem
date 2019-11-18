@@ -17,8 +17,6 @@ use Barryvdh\DomPDF\Facade as PDF;
 //Laravel-Excel
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SectorsExport;
-
-
 use App\Imports\SectorsImport;
 
 use App\Sector;
@@ -41,9 +39,9 @@ class SectorController extends Controller
     }
 
     
-    public function index()
+    public function index(Request $request)
     {
-    	$sectors= Sector::all();
+    	$sectors= Sector::name($request->name)->get();
     	return view('pages.administration.farming.stablishments.sectors.index', compact('sectors'));
     }
 
@@ -217,6 +215,7 @@ where sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MON
     }
 
 
+    //Llamado a la Vista con el Invoice del PDF
     public function sectorsPDF(){
         $sectors = Sector::get();
         $date = date('d-m-Y');
@@ -224,16 +223,20 @@ where sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MON
         return $pdf->stream('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
     }
 
+
+    //Ejecucion del Metodo que Renderiza el PDF
     public function sectorsExcel(){       
         return Excel::download(new SectorsExport, 'sectors-list-'.date('Y-m-d_H:i:s').'.xlsx');
     }
 
 
+    //Llamado a la vista con el Formulario de la Importacion del Archivo Excel
     public function import(){
         return view('pages.administration.farming.stablishments.sectors.import');
     }
 
 
+    //Ejecucion del metodo que realiza la importacion
     public function importExcel(Request $request){
        $file = $request->file('file');
        Excel::import(new SectorsImport, $file);

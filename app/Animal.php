@@ -37,4 +37,9 @@ class Animal extends Model
     	return $this->hasMany('App\Sanitation');
     }
 
+    public function scopeRodeo($query, $rodeo)
+    { 
+      $query->where('rodeo_id', "%$rodeo%");
+    } 
+
 }

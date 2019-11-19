@@ -84,6 +84,22 @@
 <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
+            
+             <form action="{{ route('user.index') }}" method="GET" class="form-inline navbar-form my-2 my-lg-0 pull-right" role="search">
+                <div class="input-group input-group-sm">
+                <input type="text" name="name" class="form-control" placeholder="Nombre del Usuario">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info btn-flat">Buscar</button>
+                    </span>
+              </div>
+              </form> 
+
+          <a title="Exportar a Excel"
+                                href="{{ route('users.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+            <i class="fa fa-download"></i> Generar EXCEL
+          </a>
+
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">

@@ -11,7 +11,6 @@
 @include('layouts._my_error')
 @endsection
 
-
 @section('content')
 
     <!-- Main content -->
@@ -25,7 +24,7 @@
             <div class="box-body">
               <table class="table table-bordered">
                 <tbody><tr>
-                  <th style="width: 120px; text-align: center;">Seleccione</th>
+                  <th><input type="checkbox" id="selectall"></th>
                   <th style="width: 60px">image</th>
                   <th>Nombre</th>
                   <th>Codigo</th>
@@ -41,7 +40,7 @@
                 <tr>
                   <td style="text-align: center;">
                   
-                      <input type="checkbox" name="ids[]" value="{{ $animal->id }}">
+                      <input class="case" type="checkbox" name="ids[]" value="{{ $animal->id }}">
                       
                   </td>
                   <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/bull.png') }}"></a></td>
@@ -111,5 +110,20 @@
 @section('additionals-scripts')
 
 <script type="text/javascript" src="{{ asset('scripts/confirm-update-rodeo.js') }}"></script>
+
+<script>
+  $("#selectall").on("click", function() {  
+  $(".case").prop("checked", this.checked);  
+});  
+
+  // if all checkbox are selected, check the selectall checkbox and viceversa  
+  $(".case").on("click", function() {  
+    if ($(".case").length == $(".case:checked").length) {  
+      $("#selectall").prop("checked", true);  
+    } else {  
+      $("#selectall").prop("checked", false);  
+    }  
+  });
+</script>
 
 @endsection

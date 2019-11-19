@@ -26,6 +26,15 @@ class User extends Authenticatable
         $this->notify(new MyResetPassword($token));
     }
 
+    
+    public function scopeName($query, $name)
+    {   
+        if(trim($name) != "")
+        {
+        $query->where('name', "LIKE", "%$name%");
+        }
+    }   
+
     /**
      * The attributes that are mass assignable.
      *

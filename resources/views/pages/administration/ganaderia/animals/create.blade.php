@@ -40,7 +40,15 @@
                     action="{{ route('paddock.store') }}">
                     {{ csrf_field() }}  
                   @include('layouts.includes.partials.forms.ganaderia.form_paddocks')
-                </form> 
+                </form>
+
+                <form id="form_species" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('specie.store') }}">
+                    {{ csrf_field() }}  
+                  @include('layouts.includes.partials.forms.ganaderia.form_species')
+                </form>  
                
                </div>
               </div>

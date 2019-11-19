@@ -30,8 +30,12 @@ Route::get('/', 'HomeController@index');
 Route::middleware(['auth'])->group(function () {
 
 	
+	
 	//Usuarios
 	Route::resource('administration/user','UserController')->except(['create']);
+
+	Route::get ('/report/users-excel', 'UserController@usersExcel')->name('users.excel');
+
 
 	//Roles
 	Route::resource('administration/role','RoleController');

@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Caffeinated\Shinobi\Models\Role;
 
+//Laravel-Excel
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+
 use App\User;
 
 
@@ -29,9 +33,9 @@ class UserController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $users= User::get();
+        $users= User::name($request->name)->get();
         return view('pages.administration.manager.users.index', compact('users'));
     }
 
@@ -69,6 +73,11 @@ class UserController extends Controller
         $user->roles()->sync($request->get('roles'));
         session()->flash('my_message', 'Usuario Editado Correctamente');
         return redirect('administration/user');
+    }
+
+    //Ejecucion del Metodo que genera el Excel
+    public function usersExcel(){       
+        return Excel::download(new UsersExport, 'users-list-'.date('Y-m-d_H:i:s').'.xlsx');
     }
 
 }

@@ -117,6 +117,9 @@
               <a href="{{ route('multimovetorodeo') }}" class="btn btn-app">
                 <i class="fa fa-cube"></i> Mover Multiples Animales a otro Rodeo
               </a>
+              <a href="{{ route('multimovetopaddock') }}" class="btn btn-app">
+                <i class="fa fa-bank"></i> Mover Multiples Animales a otro Potrero
+              </a>
               <a href="#" class="btn btn-app">
                 <i class="fa fa-bar-chart"></i> Reporte de Ganado
               </a>

@@ -57,74 +57,74 @@ class SectorController extends Controller
     	return view('pages.administration.farming.stablishments.sectors.show', compact('sector'));
     }
 
-     public function store(SectorRequest $request)
+    public function store(SectorRequest $request)
     {
 
-       try {
-            $sector = new Sector;
-            $sector->sector_co = $request->sector_co;
-            $sector->sector_de = $request->sector_de;
+     try {
+        $sector = new Sector;
+        $sector->sector_co = $request->sector_co;
+        $sector->sector_de = $request->sector_de;
 
-            DB::beginTransaction();
-            $sector->save();
-            DB::commit();
-            session()->flash('my_message', 'Sector Creado Correctamente');
-            return redirect()->back();
-        } catch (Exception $e) {
-            session()->flash('my_error', $e->getMessage());
-            DB::rollback();
-        }
-
+        DB::beginTransaction();
+        $sector->save();
+        DB::commit();
+        session()->flash('my_message', 'Sector Creado Correctamente');
+        return redirect()->back();
+    } catch (Exception $e) {
+        session()->flash('my_error', $e->getMessage());
+        DB::rollback();
     }
 
-    public function destroy(Sector $sector){
-    	try{
-    		$sector =Sector::find($sector->id);
-    		DB::beginTransaction();
-    		$sector->delete();
-    		DB::commit();
-    		session()->flash('my_message', 'Sector Eliminado Correctamente');
-    		return redirect('establishments\sector');
-    	}catch(Exception $e){
-    		session()->flash('my_error', $e->getMessage());
-    		DB::rollback();
-    	}
-    }
+}
 
-    public function edit(Sector $sector){
-    	return view('pages.administration.farming.stablishments.sectors.edit', compact('sector'));
-    }
+public function destroy(Sector $sector){
+   try{
+      $sector =Sector::find($sector->id);
+      DB::beginTransaction();
+      $sector->delete();
+      DB::commit();
+      session()->flash('my_message', 'Sector Eliminado Correctamente');
+      return redirect('establishments\sector');
+  }catch(Exception $e){
+      session()->flash('my_error', $e->getMessage());
+      DB::rollback();
+  }
+}
 
-
-    public function update(Request $request){
-    	try{
-    		$sector = Sector::findOrFail($request->sector_id);
-    		$sector->sector_co = $request->get('sector_co');
-    		$sector->sector_de = $request->get('sector_de');
-    		DB::beginTransaction();
-    		$sector->save();
-    		DB::commit();
-    		session()->flash('my_message', 'Sector Modificado Correctamente');
-    		return redirect('establishments\sector');
-    	}catch(Exception $e){
-    		session()->flash('my_error', $e->getMessage());
-    		DB::rollback();
-    	}
-    }
+public function edit(Sector $sector){
+   return view('pages.administration.farming.stablishments.sectors.edit', compact('sector'));
+}
 
 
-    public function showPluviometry ($id){
-              $result=  DB::select(DB::raw("SELECT IFNULL(SUM(value_mm),0) as total,
+public function update(Request $request){
+   try{
+      $sector = Sector::findOrFail($request->sector_id);
+      $sector->sector_co = $request->get('sector_co');
+      $sector->sector_de = $request->get('sector_de');
+      DB::beginTransaction();
+      $sector->save();
+      DB::commit();
+      session()->flash('my_message', 'Sector Modificado Correctamente');
+      return redirect('establishments\sector');
+  }catch(Exception $e){
+      session()->flash('my_error', $e->getMessage());
+      DB::rollback();
+  }
+}
 
-IFNULL((SELECT SUM(value_mm) from pluviometries where year(date_read) = year(NOW()) and sector_id=$id),0) as total_anio_actual,
 
-IFNULL((SELECT SUM(value_mm) from pluviometries where year(date_read) = year(NOW())-1 and sector_id=$id),0) as total_anio_pasado,
+public function showPluviometry ($id){
+  $result=  DB::select(DB::raw("SELECT IFNULL(SUM(value_mm),0) as total,
 
-IFNULL((SELECT SUM(value_mm) from pluviometries where month(date_read) = month(NOW())-1 and sector_id=$id),0) as mes_pasado,
+    IFNULL((SELECT SUM(value_mm) from pluviometries where year(date_read) = year(NOW()) and sector_id=$id),0) as total_anio_actual,
 
-IFNULL((SELECT SUM(value_mm) from pluviometries where month(date_read) = 
-if(month(NOW()) = 12, 1,month(NOW())+ 1)
-and sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MONTH), INTERVAL - (DAY(NOW())-1) DAY)  and NOW() >= date_read 
+    IFNULL((SELECT SUM(value_mm) from pluviometries where year(date_read) = year(NOW())-1 and sector_id=$id),0) as total_anio_pasado,
+
+    IFNULL((SELECT SUM(value_mm) from pluviometries where month(date_read) = month(NOW())-1 and sector_id=$id),0) as mes_pasado,
+
+    IFNULL((SELECT SUM(value_mm) from pluviometries where month(date_read) = 
+    if(month(NOW()) = 12, 1,month(NOW())+ 1)
+    and sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MONTH), INTERVAL - (DAY(NOW())-1) DAY)  and NOW() >= date_read 
 ),0) as Mes1,
 
 IFNULL((SELECT SUM(value_mm) from pluviometries where month(date_read) =
@@ -206,42 +206,42 @@ from pluviometries
 where sector_id = $id and date_read >= date_add(date_add(NOW(), INTERVAL -11 MONTH), INTERVAL - (DAY(NOW())-1) DAY)  and NOW() >= date_read 
 "));
 
-     return response()->json($result);
-    }
+return response()->json($result);
+}
 
-    public function details(Sector $id){
-        return view('pages.administration.farming.stablishments.sectors_details', compact('id'));
+public function details(Sector $id){
+    return view('pages.administration.farming.stablishments.sectors_details', compact('id'));
     //return $id->id;
-    }
+}
 
 
     //Llamado a la Vista con el Invoice del PDF
-    public function sectorsPDF(){
-        $sectors = Sector::get();
-        $date = date('d-m-Y');
-        $pdf = PDF::loadView('pages.administration.reports.sectors-pdf', compact('sectors', 'date'));
-        return $pdf->stream('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
-    }
+public function sectorsPDF(){
+    $sectors = Sector::get();
+    $date = date('d-m-Y');
+    $pdf = PDF::loadView('pages.administration.reports.sectors-pdf', compact('sectors', 'date'));
+    return $pdf->stream('rodeo-list-'.date('Y-m-d_H:i:s').'.pdf');
+}
 
 
     //Ejecucion del Metodo que genera el Excel
-    public function sectorsExcel(){       
-        return Excel::download(new SectorsExport, 'sectors-list-'.date('Y-m-d_H:i:s').'.xlsx');
-    }
+public function sectorsExcel(){       
+    return Excel::download(new SectorsExport, 'sectors-list-'.date('Y-m-d_H:i:s').'.xlsx');
+}
 
 
     //Llamado a la vista con el Formulario de la Importacion del Archivo Excel
-    public function import(){
-        return view('pages.administration.farming.stablishments.sectors.import');
-    }
+public function import(){
+    return view('pages.administration.farming.stablishments.sectors.import');
+}
 
 
     //Ejecucion del metodo que realiza la importacion
-    public function importExcel(Request $request){
-       $file = $request->file('file');
-       Excel::import(new SectorsImport, $file);
+public function importExcel(Request $request){
+ $file = $request->file('file');
+ Excel::import(new SectorsImport, $file);
 
-       session()->flash('my_message', 'Sectores importados Correctamente');
-       return redirect()->back();
-    }
+ session()->flash('my_message', 'Sectores importados Correctamente');
+ return redirect()->back();
+}
 }

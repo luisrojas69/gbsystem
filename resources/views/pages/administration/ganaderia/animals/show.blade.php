@@ -534,7 +534,7 @@
       method: "GET",
         success: function(datos)
         {
-          console.log(datos.length);
+          console.log(datos);
           getGraphic(datos);
 
         },

@@ -69,7 +69,7 @@ Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesE
 
 	Route::post ('/pluviometries/import', 'PluviometryController@importExcel')->name('pluviometries.import.excel');
 
-
+	Route::get('/pluviometries/pluviometryBySector/{start}/{end}', 'PluviometryController@pluviometryBySector');
 
 
 	//Sectors

@@ -67,10 +67,10 @@
 <div class="box-header with-border">
   <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
 
-  <a title="Exportar a PDF"
+  <!--a title="Exportar a PDF"
   href="{{ route('pluviometries.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
   <i class="fa fa-download"></i> Generar PDF
-</a>
+</a-->
 
 <a title="Exportar a Excel"
 href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
@@ -177,10 +177,18 @@ href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success p
     </div>
   </div>
   <!-- end loading -->
+  <div id="info-graph" class="box-body">
+    <div class="alert alert-info alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-check"></i> Información</h4>
+      Selecciones un Rango de Fechas para Generar Grafico
+    </div>
+  </div>
+  
+  <div id="grafico">
+    <canvas id="barChart" style="height:200px"></canvas>
+  </div>
 
-   <canvas id="barChart" style="height:200px"></canvas>
-   <!--canvas id="lineChart" style="height:200px"></canvas>
-   <canvas id="areaChart" style="height:200px"></canvas-->
   <div class="box-footer no-padding">
 
     <div class="box-footer">
@@ -283,27 +291,30 @@ href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success p
     var url = "/pluviometries/pluviometryBySector/"+start_date+"/"+end_date;
 
     $(document).ready(function(){
-     $.ajax({
-      dataType: 'json',
-      url: url,
-      method: "GET",
-      beforeSend: function() {
-        $("#loading").show();
-      },
-      success: function(datos)
-      {
-        $("#loading").hide();
-        console.log(datos);
-        getGraphic(datos);
-      },
-      timeout:9000,
-      error: function()
-      {
-       console.log("Error Sincronizando");
-     }
+      $('#grafico').hide();  
+      $.ajax({
+        dataType: 'json',
+        url: url,
+        method: "GET",
+        beforeSend: function() {
+          $("#loading").show();
+        },
+        success: function(datos)
+        {
+          $("#info-graph").hide();
+          $("#loading").hide();
+          $("#barChart").hide(300).show(500);
+          console.log(datos);
+          getGraphic(datos);
+        },
+        timeout:9000,
+        error: function()
+        {
+         console.log("Error Sincronizando");
+       }
 
-   });
-   });
+     });
+    });
   }
 
 
@@ -349,7 +360,7 @@ href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success p
     var barChartData                     = areaChartData
     //barChartData.datasets[1].strokeColor = '#00a65a'
    // barChartData.datasets[1].pointColor  = '#00a65a'
-    var barChartOptions                  = {
+   var barChartOptions                  = {
       //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
       scaleBeginAtZero        : true,
       //Boolean - Whether grid lines are shown across the chart

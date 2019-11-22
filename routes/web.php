@@ -25,6 +25,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/home/pluviometryBySector/{start}/{end}', 'HomeController@pluviometryBySector');
+
+
 
 //Grupo de Rutas con el Middleware Auth ( para forzar el inicio d Sesion)
 Route::middleware(['auth'])->group(function () {

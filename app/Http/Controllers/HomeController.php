@@ -45,5 +45,17 @@ class HomeController extends Controller
       //dd($roles);
     }
 
+    //Funcion para generar Grafico de Pluviometrias Separado por Sector
+        public function pluviometryBySector ($start, $end){
+       /* $result = DB::table('pluviometries')
+                    ->join('sectors', 'sectors.id', '=', 'pluviometries.sector_id') 
+                    ->select('sector_de', DB::raw('SUM(value_mm) as total'))            
+                    ->whereBetween('date_read', [$start, $end])
+                    ->(DB::raw('GROUP BY(MONTH(date_read))')
+                    ->get();*/
+        $result=  DB::select(DB::raw("SELECT sector_id, IFNULL(SUM(value_mm),0) as total, month (date_read) from pluviometries WHERE year(date_read) = '2019' GROUP BY month (date_read), sector_id order by  month (date_read)"));
+        return response()->json($result);
+    } 
+
 
 }

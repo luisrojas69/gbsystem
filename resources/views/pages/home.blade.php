@@ -159,7 +159,7 @@
 <script>
 
   $(document).ready(function(){
-    var url = "/home/pluviometryBySector/2019-01-01/2019-12-01";
+    var url = "/home/pluviometryAnualBySector/";
     $('#grafico').hide();  
     $.ajax({
       dataType: 'json',
@@ -173,7 +173,7 @@
         $("#info-graph").hide();
         $("#loading").hide();
         $("#barChart").hide(300).show(500);
-        console.log(datos);
+        //console.log(datos);
         getGraphic(datos);
       },
       timeout:9000,
@@ -191,9 +191,11 @@
 
   var labels = [], data=[];
     datos.forEach(function(datos) {
-      labels.push(datos.sector_de);
-      data.push(datos.total);
+      labels.push(datos.sector_id);
+      data.push(datos.Mar);
+      
     });
+
 
   var color = Chart.helpers.color;
   var barChartData = {
@@ -207,6 +209,8 @@
     }]
 
   };
+
+
 
   
     var ctx = document.getElementById('canvas').getContext('2d');
@@ -224,6 +228,8 @@
         }
       }
     });
+
+
 
   };
 

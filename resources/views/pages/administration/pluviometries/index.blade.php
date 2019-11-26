@@ -184,10 +184,8 @@ href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success p
       Selecciones un Rango de Fechas para Generar Grafico
     </div>
   </div>
-  
-  <div id="grafico">
+
     <canvas id="barChart" style="height:200px"></canvas>
-  </div>
 
   <div class="box-footer no-padding">
 
@@ -251,8 +249,6 @@ href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success p
 
 <script type="text/javascript" src="{{ asset('js/Chart.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('js/Chart.js') }}"></script>
-
 <script>
   $(function () {
 
@@ -303,7 +299,6 @@ href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success p
         {
           $("#info-graph").hide();
           $("#loading").hide();
-          $("#barChart").hide(300).show(500);
           console.log(datos);
           getGraphic(datos);
         },

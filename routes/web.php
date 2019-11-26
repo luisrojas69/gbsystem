@@ -27,6 +27,13 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/home/pluviometryBySector/{start}/{end}', 'HomeController@pluviometryBySector');
 
+Route::get('/home/pluviometryAnualBySector', 'HomeController@pluviometryAnualBySector');
+
+Route::get('/example', function () {
+    return view('pages.administration.pluviometries.example_bar_graph');
+});
+
+
 
 
 //Grupo de Rutas con el Middleware Auth ( para forzar el inicio d Sesion)
@@ -42,6 +49,15 @@ Route::middleware(['auth'])->group(function () {
 
 	//Roles
 	Route::resource('administration/role','RoleController');
+
+
+	//Pozos
+	Route::resource('well','WellController')->except(['show', 'edit']);;
+
+	Route::get ('/report/wells-pdf', 'WellController@wellsPDF')->name('wells.pdf');
+
+	Route::get ('/report/wells-excel', 'WellController@wellsExcel')->name('wells.excel');
+
 
 
 	//Rodeos

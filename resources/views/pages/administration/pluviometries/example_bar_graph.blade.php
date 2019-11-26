@@ -18,6 +18,11 @@
   <div id="container" style="width: 75%;">
     <canvas id="canvas"></canvas>
   </div>
+  <button id="randomizeData">Randomize Data</button>
+  <button id="addDataset">Add Dataset</button>
+  <button id="removeDataset">Remove Dataset</button>
+  <button id="addData">Add Data</button>
+  <button id="removeData">Remove Data</button>
   <script>
     var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var color = Chart.helpers.color;
@@ -74,6 +79,66 @@
 
     };
 
+    document.getElementById('randomizeData').addEventListener('click', function() {
+      var zero = Math.random() < 0.2 ? true : false;
+      barChartData.datasets.forEach(function(dataset) {
+        dataset.data = dataset.data.map(function() {
+          return zero ? 0.0 : randomScalingFactor();
+        });
+
+      });
+      window.myBar.update();
+    });
+
+    var colorNames = Object.keys(window.chartColors);
+    document.getElementById('addDataset').addEventListener('click', function() {
+      var colorName = colorNames[barChartData.datasets.length % colorNames.length];
+      var dsColor = window.chartColors[colorName];
+      var newDataset = {
+        label: 'Luis ' + (barChartData.datasets.length + 1),
+        backgroundColor: color(dsColor).alpha(0.5).rgbString(),
+        borderColor: dsColor,
+        borderWidth: 1,
+        data: []
+      };
+
+      for (var index = 0; index < barChartData.labels.length; ++index) {
+        newDataset.data.push(randomScalingFactor());
+      }
+
+      barChartData.datasets.push(newDataset);
+      window.myBar.update();
+    });
+
+    document.getElementById('addData').addEventListener('click', function() {
+      if (barChartData.datasets.length > 0) {
+        var month = MONTHS[barChartData.labels.length % MONTHS.length];
+        alert(month);
+        barChartData.labels.push(month);
+
+        for (var index = 0; index < barChartData.datasets.length; ++index) {
+          // window.myBar.addData(randomScalingFactor(), index);
+          barChartData.datasets[index].data.push(randomScalingFactor());
+        }
+
+        window.myBar.update();
+      }
+    });
+
+    document.getElementById('removeDataset').addEventListener('click', function() {
+      barChartData.datasets.pop();
+      window.myBar.update();
+    });
+
+    document.getElementById('removeData').addEventListener('click', function() {
+      barChartData.labels.splice(-1, 1); // remove the label first
+
+      barChartData.datasets.forEach(function(dataset) {
+        dataset.data.pop();
+      });
+
+      window.myBar.update();
+    });
   </script>
 </body>
 

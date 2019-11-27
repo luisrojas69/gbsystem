@@ -588,5 +588,37 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
 
+        //Horometros
+        Permission::create([
+            'name'          =>  'Navegar Horometros',
+            'slug'          =>  'horometer.index',
+            'description'   =>  'Lista y Navega Todos los Horometros del Sistema',
+        ]);
+
+        Permission::create([
+            'name'          =>  'Ver detalle de Horometro',
+            'slug'          =>  'horometer.show',
+            'description'   =>  'Ver en Datalle Cada Horometro del Sistema',
+        ]);
+
+        Permission::create([
+            'name'          =>  'Creacion de Horometros',
+            'slug'          =>  'horometer.create',
+            'description'   =>  'Crear un Horometro en el Sistema',
+        ]);
+
+        Permission::create([
+            'name'          =>  'Edicion de Horometros',
+            'slug'          =>  'horometer.edit',
+            'description'   =>  'Editar Cualquier dato de una Horometro del Sistema',
+        ]);
+
+        Permission::create([
+            'name'          =>  'Eliminar Horometros',
+            'slug'          =>  'horometer.destroy',
+            'description'   =>  'Eliminar Cualquier Horometro del Sistema',
+        ]);
+
+
     }
 }

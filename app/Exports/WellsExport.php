@@ -2,28 +2,29 @@
 
 namespace App\Exports;
 
-use App\Sector;
+use App\Well;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class SectorsExport implements FromCollection, WithHeadings, ShouldAutoSize
+
+class WellsExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
-    
-		public function headings(): array
+   
+   public function headings(): array
     {
         return [
             '#',
-            'Codigo',
-            'Descripcion',
+            'Nombre',
+            'Tipo',
+            'Status',
         ];
     }
-    /**
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-    return Sector::select('id', 'sector_co', 'sector_de')->orderBy('id', 'asc')->get();
+      return Well::select('id', 'well_na', 'type', 'status')->orderBy('id', 'asc')->get();
     }
 }

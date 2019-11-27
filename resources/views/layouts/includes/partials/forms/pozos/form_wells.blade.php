@@ -11,12 +11,12 @@
 
                   <div class="col-sm-10 btn-group btn-group-toggle">
                     <label class="btn btn-xs btn-warning active">
-                      <input type="radio" name="type" id="sumergible" autocomplete="off" value="sumergible" checked=""> 
+                      <input type="radio" name="type" id="sumergible" autocomplete="off" value="sumergible"> 
                       <i class="fa fa-sort-desc"></i>
                       SUMERGIBLE
                     </label>
                     <label class="btn btn-xs btn-primary">
-                      <input type="radio" name="type" id="turbina" autocomplete="off" value="turbina"> 
+                      <input type="radio" name="type" id="turbina" autocomplete="off" value="turbina"  checked=""> 
                       <i class="fa fa-sort-up"></i>
                       TURBINA
                     </label>

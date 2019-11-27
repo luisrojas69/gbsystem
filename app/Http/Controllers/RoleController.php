@@ -46,7 +46,7 @@ class RoleController extends Controller
 
         $role->permissions()->sync($request->get('permissions'));
         session()->flash('my_message', 'Rol Agregado Correctamente');
-        return redirect('administration/role');
+        return redirect()->back();
     }
 
 

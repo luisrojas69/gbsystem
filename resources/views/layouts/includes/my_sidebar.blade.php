@@ -180,7 +180,27 @@
           </ul>
         </li>        
 
-        <!-- Fin Ganaderia -->     
+        <!-- Fin Ganaderia -->
+
+        <!--Pozos-->
+          
+          <li class="treeview {{ Request::is('well*') ? 'active' : ''}}">
+          <a href="#">
+            <i class="fa fa-stack-exchange"></i> <span>Pozos</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        
+          <ul class="treeview-menu">
+            @can('animals.index')
+            <li class="{{ Request::is('well') ? 'active' : ''}}"><a href="{{ route('well.index') }}"><i class="fa fa-list"></i> Listado de Pozos</a></li>
+            @endcan
+          </ul>
+        </li>        
+
+        <!-- Fin Pozos --> 
+
         <!--Menu Configuraciones-->
         @if(auth()->user()->hasRole('admin'))
         

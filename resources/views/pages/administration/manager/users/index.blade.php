@@ -195,6 +195,7 @@
              },
             success: function(datos)
             {
+             $("#list-roles").text("");
              $("#loading").hide();
              $("#user-name").html(datos[0].name);
              $("#user-email").html(datos[0].email);

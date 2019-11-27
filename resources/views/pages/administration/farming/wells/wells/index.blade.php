@@ -50,13 +50,37 @@
                     action="{{ route('well.update','test') }}">
                 {{ csrf_field() }}
                 {{ method_field('patch') }} 
-          <input type="hidden" name="sector_id" id="sector_id" value="">             
+          <input type="hidden" name="well_id" id="well_id" value="">             
           @include('layouts.includes.partials.forms.pozos.form_wells')
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
+<!--Formulario para Insertar Hormometro-->
+<div class="modal fade" id="modal-form-horometer" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_sector" class="form-horizontal"
+                    role="form"
+                    method="POST"
+                    action="{{ route('horometer.store') }}">
+                {{ csrf_field() }}
+          <input type="hidden" name="well_id" id="well_id" value="">             
+          <input type="hidden" name="name_pozo" id="name_pozo" value="">             
+          @include('layouts.includes.partials.forms.pozos.form_horometers')
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   
 
@@ -90,28 +114,58 @@
 
               <table class="table table-bordered">
                 <tbody><tr>
-                  <th style="width: 60px">ID</th>
-                  <th style="width: 120px">Codigo</th>
-                  <th>Descripcion</th>
-                   <th style="width: 60px; text-align: center;">Lotes</th>
-                  <th style="width: 120px; text-align: center;">Acciones</th>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th style="text-align: center;">Tipo</th>
+                  <th style="text-align: center;">Status</th>
+                  <th>Horometro</th>
+                  <th>Observaciones</th>
+                  <th style="text-align: center;">Accion Hrm</th>
+                  <th style="text-align: center;">Acciones</th>
                 </tr>
                     @foreach($wells as $well)
                 <tr>
                   <td>{{ $well->id }}</td>
                   <td>{{ $well->well_na }}</td>
-                  <td><a href="{{ route('well.show', $well ) }}">{{ $well->sector_de }}</a></td>
-                  <td style="text-align: center;"><span class="label label-success">{{ count($well->lots) }}</span></td>
-                   
-                  <td style="text-align: center;">
+                  <td style="text-align: center;"><span class="label {{ $well->type=="sumergible" ? 'label-warning' : 'label-primary' }}">{{ $well->type }}</td>
+                  <td style="text-align: center;"><span class="label {{ $well->status=="parado" ? 'label-danger' : 'label-success' }}">{{ $well->status }}</span></td>
+                  <td>{{ $well->numHorometers>0 ? 'Con Lecturas' : 'Sin Lectura' }}</td>
+                  <td>{{ $well->comment }}</td>
+                  
+                                           
+                      @can('horometer.create')
+                      <td style="text-align: center;">
+                          <a href=""
+                              title="Insertar Lectura de Horometro al Pozo {{ $well->well_na }}"
+                              data-toggle="modal"
+                              data-target="#modal-form-horometer"
+                              data-well_id="{{ $well->id }}"
+                              data-well_na="{{ $well->well_na }}"
+                              data-title="Insertar Lectura de Horometro al Pozo {{ $well->well_na }}"
+                              >
+                       <span class="badge badge-dark"><i class="fa fa-tachometer"></i></span>
+                          </a>
+                      </td>    
+                      @endcan
+
+                    <td style="text-align: center;">
+                      
+                      @can('well.show')
+                        <a href="{{ route('well.show', $well->id) }}" id="{{ $well->id }}" class="button_show">
+                          <span class="label label-default"><i class="fa fa-search"></i></span>
+                        </a>
+                      @endcan
+
                       @can('well.edit')
                           <a href=""
                               title="Editar"
                               data-toggle="modal"
                               data-target="#modal-form-update"
+                              data-well_id="{{ $well->id }}"
                               data-well_na="{{ $well->well_na }}"
                               data-type="{{ $well->type }}"
                               data-status="{{ $well->status }}"
+                              data-comment="{{ $well->comment }}"
                               data-title="Formulario de Edicion - Editar {{ $well->well_na }}"
                               >
                        <span class="label label-primary"><i class="fa fa-pencil"></i></span>
@@ -172,17 +226,59 @@
   $(function(){
         $('#modal-form-update').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
-        var codSector = button.data('well_na') // Extract info from data-* attributes
-        var well = button.data('sector_de')
-        var idSector = button.data('sector_id')
+        var NameWell = button.data('well_na') // Extract info from data-* attributes
+        var StatusWell = button.data('status')
+        var TypeWell = button.data('type')
+        var Comment = button.data('comment')
         var title = button.data('title')
+        var WellId = button.data('well_id')
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
         modal.find('.modal-title').text(title)
-        modal.find('.modal-body #well_na').val(codSector)
-        modal.find('.modal-body #sector_de').val(well)
-        modal.find('.modal-body #sector_id').val(idSector)
+        modal.find('.modal-body #well_na').val(NameWell)
+        modal.find('.modal-body #comment').val(Comment)
+        modal.find('.modal-body #well_id').val(WellId)
+
+        //Verificamos si es Sumergible o de Turbina para Marcar el Radio Button
+        if (TypeWell == 'sumergible')
+        {
+           modal.find('.modal-body #sumergible').prop('checked', true)
+        }
+        else
+        {
+           modal.find('.modal-body #turbina').prop('checked', true)
+        }
+
+        //Verificamos si esta Operativo o Parado para Marcar el Radio Button
+        if (StatusWell == 'parado')
+        {
+           modal.find('.modal-body #parado').prop('checked', true)
+        }
+        else
+        {
+           modal.find('.modal-body #operativo').prop('checked', true)
+        }
+
+
+
+});
+
+{{-- modal Form for Insert Hrometers --}}
+
+        $('#modal-form-horometer').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var NameWell = button.data('well_na') // Extract info from data-* attributes
+        var title = button.data('title')
+        var WellId = button.data('well_id')
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(title)
+        modal.find('.modal-body #well_na').val(NameWell).prop('disabled', true);
+        modal.find('.modal-body #name_pozo').val(NameWell);
+        modal.find('.modal-body #well_id').val(WellId)
+
 })
 
   });

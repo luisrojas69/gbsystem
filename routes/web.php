@@ -52,12 +52,21 @@ Route::middleware(['auth'])->group(function () {
 
 
 	//Pozos
-	Route::resource('well','WellController')->except(['show', 'edit']);;
+	Route::resource('well','WellController')->except(['create', 'edit']);;
 
 	Route::get ('/report/wells-pdf', 'WellController@wellsPDF')->name('wells.pdf');
 
 	Route::get ('/report/wells-excel', 'WellController@wellsExcel')->name('wells.excel');
 
+
+	//Horometros de Pozos
+	Route::resource('horometer','HorometerController')->except(['show', 'create', 'edit']);;
+
+	Route::get ('/report/wells-pdf', 'WellController@wellsPDF')->name('wells.pdf');
+
+	Route::get ('/report/wells-excel', 'WellController@wellsExcel')->name('wells.excel');
+
+	
 
 
 	//Rodeos
@@ -183,7 +192,7 @@ Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesE
 
 
 	//Reports
-	Route::get ('/report/general', 'ReportController@animalsPDF')->name('animals.pdf');
+	Route::get ('/report/general', 'ReportController@animalsPDF')->name('reports.pdf');
 
 
 });//Fin Grupo de Rutas con el Middleware Auth ( para forzar el inicio d Sesion)

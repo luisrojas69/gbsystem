@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ asset ('css/jquery-confirm.css') }}">
 @endsection
 
-@section('title-page', "Lotes del Sector  $sector->sector_de")
+@section('title-page', "Mantenimientos del Pozo  $well->well_na")
 
 @section('message')
 @include('layouts._my_message')
@@ -18,7 +18,7 @@
   <div class="box box-info" >
 
             <div class="box-header with-border">
-              <h3 class="box-title">Lotes del Sector <strong>{{ $sector->sector_de }} - ({{ $sector->sector_co }})</strong></h3>
+              <h3 class="box-title">Mantenimientos del Pozo <strong>{{ $well->well_na }})</strong></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body" >
@@ -30,73 +30,34 @@
                    <th style="width: 60px; text-align: center;">Tablones</th>
                   <th style="width: 120px; text-align: center;">Acciones</th>
                 </tr>
-                     @foreach($sector->lots as $lot)
-                <tr>
-                  <td>{{ $lot->id }}</td>
-                  <td>{{ $lot->lot_co }}</td>
-                  <td><a href="{{ route("lot.show", $lot ) }}">{{ $lot->lot_de }}</a></td>
-                  <td style="text-align: center;"><span class="label label-success">{{ count($lot->planks) }}</span></td>
-                 
-                  @if (Auth::user()->role == 'ADMIN')
-                  <td style="text-align: center;">
-                        <a href="javascript:void(0)"
-                            title="Editar" 
-                            onclick="event.preventDefault(); 
-                            document.getElementById('form-edit-{{ $sector->id }}').submit()">
-                             <span class="label label-primary"><i class="fa fa-pencil"></i></span>
-                        </a>                    
-
-                        <form method="GET" 
-                            action="{{ route('lot.edit', $lot) }}"
-                            id="form-edit-{{ $sector->id }}"
-                            style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-
-                        <a href="javascript:void(0)" id="{{ $sector->id }}"
-                        class="btn-delete">
-                        <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
-
-                     <form method="POST"
-                        id="form-destroy-{{ $sector->id }}" 
-                        action="{{ route('lot.destroy', $lot) }}">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                    </form>
                     
-                  </td>
-                  @else
+                <tr>
+                  <td>Loremp Ipsum</td>
+                  <td>Loremp Ipsum</td>
+                  <td>Loremp Ipsum</td>
+                  <td style="text-align: center;"><span class="label label-success"></span>Loremp Ipsum</td>
+                 
                   <td style="text-align: center;">
-                    <a href="javascript:void(0)" id="normal_user"
-                    title="Editar" 
-                        class="normal_user">
-                    <span class="label label-primary"><i class="fa fa-pencil"></i></span></a>
-
-                    <a href="javascript:void(0)" id="normal_user"
-                    title="Eliminar" 
-                        class="normal_user">
-                    <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+                      Loremp Ipsum
                   </td>
-
-                  @endif
 
                 </tr>
-               @endforeach
+               
 
               </tbody></table>
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-              @can('sector.create')
+              @can('well.create')
                <a class="btn btn-primary no-margin pull-right"
-                                title="Crear un nuevo Sector"
-                                href="{{ route('lot.create') }}">
+                                title="Crear un nuevo Pozo"
+                                href="{{ route('well.index') }}">
                                 <i class="fa fa-plus"></i> Agregar Nuevo
                 </a>
               @endcan  
-              @can('sector.index')
+              @can('well.index')
               <ul class="list-inline">
-                <li><a href="{{ route('sector.index') }}" class="link-black text-sm"><i class="fa fa-bars"></i> Ir a Tabla de Sectores</a></li>
+                <li><a href="{{ route('well.index') }}" class="link-black text-sm"><i class="fa fa-bars"></i> Ir a Tabla de Pozos</a></li>
               </ul> 
               @endcan
             </div>
@@ -112,16 +73,16 @@
                 <img class="img-circle" src="{{asset ('img/logo.png') }}" alt="User Avatar">
               </div>
               <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">{{ $sector->sector_de }}</h3>
-              <h5 class="widget-user-desc">Datos Generales del Sector</h5>
+              <h3 class="widget-user-username">{{ $well->well_na }}</h3>
+              <h5 class="widget-user-desc">Datos Generales del Pozo</h5>
             </div>
             <div class="box-footer no-padding">
               <ul class="nav nav-stacked">
 
-                <li><a href="#">C&oacute;digo <span class="pull-right badge bg-aqua">{{ $sector->sector_co }}</span></a></li>
-                <li><a href="#">Perimetro <span class="pull-right badge bg-aqua">31</span></a></li>
-                <li><a href="#">Superficie <span class="pull-right badge bg-green">5</span></a></li>
-                <li><a href="{{ route('lot.index') }}" title="Haga click para listar tabla de Lotes">N&uacute;mero de Lotes <span class="pull-right badge bg-yellow">{{ count($sector->lots) }}</span></a></li>
+                <li><a href="#">Nombre <span class="pull-right badge bg-aqua">{{ $well->well_na }}</span></a></li>
+                <li><a href="#">Tipo <span class="pull-right badge {{ $well->type=="turbina" ? 'bg-blue' : 'bg-yellow' }}">{{ $well->type }}</span></a></li>
+                <li><a href="#">Status <span class="pull-right badge {{ $well->status=="parado" ? 'bg-red' : 'bg-green' }}">{{ $well->status }}</span></a></li>
+                <li><a href="{{ route('well.index') }}" title="Haga click para listar tabla de Mantenimientos">N&uacute;mero de Mantenimientos <span class="pull-right badge bg-yellow">12</span></a></li>
                 </ul>
             </div>
           </div>
@@ -134,7 +95,7 @@
     <div class="col-md-8">
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Precipitaciones en el {{$sector->sector_de}}</h3>
+              <h3 class="box-title">Horometro del Pozo {{$well->well_na}}</h3>
               
               @can('pluviometry.create')
               <a class="btn btn-primary no-margin pull-right" 
@@ -163,8 +124,8 @@
                 <img class="img-circle" src="{{ asset ('img/logo-lluvia.png') }}" alt="User Avatar">
               </div>
               <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">{{$sector->sector_de}}</h3>
-              <h5 class="widget-user-desc">Resumen de Precipitaciones</h5>
+              <h3 class="widget-user-username">{{$well->well_na}}</h3>
+              <h5 class="widget-user-desc">Resumen del Horometro</h5>
             </div>
 
      
@@ -189,9 +150,9 @@
 
                 <div class="box-footer">
                 
-                @can('sector.index')
+                @can('well.index')
                   <ul class="list-inline">
-                    <li><a href="{{ route('sector.index') }}" class="link-black text-sm"><i class="fa fa-bars"></i> Ir a Tabla de Sectores</a></li>
+                    <li><a href="{{ route('well.index') }}" class="link-black text-sm"><i class="fa fa-bars"></i> Ir a Tabla de Sectores</a></li>
                   </ul> 
                 @endcan
 
@@ -220,7 +181,7 @@
 
 <script type="text/javascript">
 
-   var url = "/establishments/sector/{{ $sector->id }}/pluviometry";
+   var url = "/establishments/well/{{ $well->id }}/pluviometry";
     $(document).ready(function(){
      $.ajax({
       dataType: 'json',
@@ -396,7 +357,7 @@ var temp_f;
 $.ajax({
    type: "GET",
    //url: "http://samples.openweathermap.org/data/2.5/weather?id=2172797&appid=b6907d289e10d714a6e88b30761fae22",
-   url: "/sector/1/pluviometry"
+   url: "/well/1/pluviometry"
    dataType: "json",
    
       success: function (data) {

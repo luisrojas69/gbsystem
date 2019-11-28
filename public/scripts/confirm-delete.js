@@ -52,9 +52,9 @@
               });
 
 
-              //Aviso para usuarios sin permisos administrativos
+    //Aviso para usuarios sin permisos administrativos
 
-                            $('.normal_user').on('click', function(){
+        $('.normal_user').on('click', function(){
                 
                 var id=(this.id);
               //alert(id);
@@ -82,6 +82,39 @@
                         });
            
               });
+
+
+            //Aviso para usuarios sin permisos administrativos
+
+        $('.pozoParado').on('click', function(){
+                
+                var id=(this.id);
+              //alert(id);
+                $.confirm({
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'scale',
+                            type: 'orange',
+                            title: 'Accion no Permitida',
+                            content: 'No puede agregar Lecturas de Horometros a Pozos Parados. <br/><br/> Por Favor cambie el estatus del Pozo antes de Proceder a Ingresar la Lectura',
+                            icon: 'fa fa-warning',
+                            animation: 'scale',
+                            closeAnimation: 'scale',
+                            opacity: 0.5,
+                            buttons: {
+                                'confirm': {
+                                    text: 'Aceptar',
+                                    btnClass: 'btn-orange',
+                                    action: function () {
+
+                                    }
+                                },
+                               
+                            }
+                        });
+           
+              });
+
 
 
 

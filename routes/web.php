@@ -59,12 +59,11 @@ Route::middleware(['auth'])->group(function () {
 	Route::get ('/report/wells-excel', 'WellController@wellsExcel')->name('wells.excel');
 
 
+
 	//Horometros de Pozos
 	Route::resource('horometer','HorometerController')->except(['show', 'create', 'edit']);;
 
-	Route::get ('/report/wells-pdf', 'WellController@wellsPDF')->name('wells.pdf');
-
-	Route::get ('/report/wells-excel', 'WellController@wellsExcel')->name('wells.excel');
+	Route::get ('/horometer/HorometersByWells/{id}', 'HorometerController@HorometersByWells');
 
 	
 

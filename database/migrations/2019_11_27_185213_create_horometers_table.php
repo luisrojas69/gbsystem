@@ -18,7 +18,7 @@ class CreateHorometersTable extends Migration
             $table->integer('well_id')->unsigned();
             $table->date('date_read');
             $table->integer('value');
-            $table->string('comment',100)->nullable();
+            $table->string('comment',100)->default('Sin Observaciones')->nullable();
             $table->timestamps();
 
             $table->foreign('well_id')->references('id')->on('wells');

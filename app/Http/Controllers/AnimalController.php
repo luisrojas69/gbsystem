@@ -111,7 +111,7 @@ class AnimalController extends Controller
         $rodeos = Rodeo::where("id","!=",$animal->rodeo_id)->get();
         $species = Specie::where("id","!=",$animal->specie_id)->get();
         $breeds = Breed::where("id","!=",$animal->breed_id)->get();
-        //Determinamos si el Animal ha Tenido mas pesajes luego de haber ingreado
+        //Determinamos si el Animal ha Tenido mas pesajes luego de haber ingresado
         if((Weighing::where("animal_id", $animal->id )->count() > 0) ){
             $query=Weighing::where("animal_id", $animal->id )->orderBy('id', 'DESC')->first();
             $weight=$query->weight;

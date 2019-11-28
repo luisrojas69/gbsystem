@@ -6,7 +6,7 @@
                     <input type="text" class="form-control" name="well_na" id="well_na" placeholder="Nombre del Pozo" required>
                   </div>
                   <div class="col-sm-5">
-                    <p class="text-green">Ultima Lectura: 18965</p>
+                    <p class="text-green">Ultima Lectura:  <span class="badge bg-orange" id="infoLastHorometer"></span></p>
                   </div>
                 </div>
                 <div class="form-group">

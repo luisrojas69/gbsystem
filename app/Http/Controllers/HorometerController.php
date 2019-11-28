@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Horometer;
+use App\Well;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -97,5 +98,17 @@ class HorometerController extends Controller
     public function destroy(Horometer $horometer)
     {
         //
+    }
+
+
+    public function HorometersByWells($id){
+        $well = Well::findOrFail($id);
+        $query=Horometer::where("well_id", $well->id )->orderBy('id', 'DESC')->first();
+        if($query != null){
+            $lastHorometer=$query->value;
+        }else{
+            $lastHorometer=0;
+        }
+        return response()->json($lastHorometer);
     }
 }

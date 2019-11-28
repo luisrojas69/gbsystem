@@ -18,7 +18,7 @@ class CreateWellsTable extends Migration
             $table->string('well_na',50);
             $table->enum('type',['sumergible','turbina']);
             $table->enum('status',['operativo','parado'])->default('operativo')->nullable();
-            $table->string('comment',80)->nullable();
+            $table->string('comment',80)->default('Sin Observaciones')->nullable();
             $table->timestamps();
         });
     }

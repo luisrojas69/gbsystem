@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::get ('/horometer/HorometersByWells/{id}', 'HorometerController@HorometersByWells');
 
-	
+	Route::get ('/report/horometers-excel', 'HorometerController@horometersExcel')->name('horometers.excel');
 
 
 	//Rodeos

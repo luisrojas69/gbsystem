@@ -7,6 +7,10 @@ use App\Well;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+//Laravel-Excel
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\HorometersExport;
+
 class HorometerController extends Controller
 {
     /**
@@ -15,19 +19,17 @@ class HorometerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+
+        $wells = Well::with(['horometers' => function ($query) {
+           $query->latest()->take(2);
+        }])->get();
+
+        $horometers = Horometer::all();
+        //$wells = Well::where('status', '!=', 'parado')->get();
+        return view("pages.administration.farming.wells.horometers.index", compact('horometers', 'wells'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -37,45 +39,25 @@ class HorometerController extends Controller
      */
     public function store(Request $request)
     {
-       try {
+     try {
         $horometer = new Horometer;
         $horometer->well_id = $request->well_id;
         $horometer->date_read = $request->date_read;
         $horometer->value = $request->value;
         $horometer->comment = $request->comment;
 
-          DB::beginTransaction();
-          $horometer->save();
-          DB::commit();
-          session()->flash('my_message', 'Lectura de Horometro Ingresada Correctamente al Pozo '.$request->name_pozo);
-          return redirect()->back();
-      } catch (Exception $e) {
-          session()->flash('my_error', $e->getMessage());
-          DB::rollback();
-      }
+        DB::beginTransaction();
+        $horometer->save();
+        DB::commit();
+        session()->flash('my_message', 'Lectura de Horometro Ingresada Correctamente al Pozo '.$request->name_pozo);
+        return redirect()->back();
+    } catch (Exception $e) {
+      session()->flash('my_error', $e->getMessage());
+      DB::rollback();
   }
+}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Horometer  $horometer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Horometer $horometer)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Horometer  $horometer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Horometer $horometer)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -110,5 +92,11 @@ class HorometerController extends Controller
             $lastHorometer=0;
         }
         return response()->json($lastHorometer);
+    }
+
+
+    //Ejecucion del Metodo que genera el Excel
+    public function horometersExcel(){       
+        return Excel::download(new HorometersExport, 'horometros-list-'.date('Y-m-d_H:i:s').'.xlsx');
     }
 }

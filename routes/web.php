@@ -29,6 +29,10 @@ Route::get('/home/pluviometryBySector/{start}/{end}', 'HomeController@pluviometr
 
 Route::get('/home/pluviometryAnualBySector', 'HomeController@pluviometryAnualBySector');
 
+Route::get('/home/wellsByStatus', 'HomeController@wellsByStatus');
+
+Route::get('/home/wellsByType', 'HomeController@wellsByType');
+
 Route::get('/example', function () {
     return view('pages.administration.pluviometries.example_bar_graph');
 });

@@ -1,7 +1,7 @@
               <div class="box-body">
 
                 <div class="form-group">
-                  <div class="alert alert-info alert-dismissible">
+                  <div class="alert alert-info alert-dismissible" id="divInfoPozosParados">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4><i class="icon fa fa-info"></i> Informacion!</h4>
                     Los Pozos con Status <strong>"PARADO"</strong>, NO aparecerán en la Siguiente Lista Desplegable
@@ -18,7 +18,7 @@
                       @endforeach                    
                     </select>
                   </div>
-                  <div class="col-sm-5">
+                  <div class="col-sm-5" id="divInfoHorometer">
                     <p class="text-green">Ultima Lectura:  <span class="badge bg-orange" id="infoLastHorometer"></span></p>
                   </div>
                 </div>
@@ -34,7 +34,7 @@
                   <label class="col-sm-2 control-label">Valor: </label>
 
                   <div class="col-sm-4">
-                    <input type="number" min="0" step="1" class="form-control" name="value" id="value" placeholder="Horas Leidas" required >
+                    <input type="number" min="0" step="1" class="form-control" name="value" id="value" placeholder="Horas Leidas" required disabled="" >
                   </div>
                 </div>
 

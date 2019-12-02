@@ -20,13 +20,12 @@ class HorometerController extends Controller
      */
     public function index()
     {   
-
-        $wells = Well::with(['horometers' => function ($query) {
+        $wellsWithHorometers = Well::with(['horometers' => function ($query) {
            $query->latest()->take(2);
-        }])->get();
+       }])->get();
 
         $horometers = Horometer::all();
-        //$wells = Well::where('status', '!=', 'parado')->get();
+        $wells = Well::where('status', '!=', 'parado')->get();
         return view("pages.administration.farming.wells.horometers.index", compact('horometers', 'wells'));
     }
 
@@ -66,10 +65,23 @@ class HorometerController extends Controller
      * @param  \App\Horometer  $horometer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Horometer $horometer)
+    public function update(Request $request)
     {
-        //
-    }
+        try{
+          $horometer = Horometer::findOrFail($request->horometer_id);
+          $horometer->value = $request->get('value');
+          $horometer->date_read = $request->get('date_read');
+          $horometer->comment = $request->get('comment');
+          DB::beginTransaction();
+          $horometer->save();
+          DB::commit();
+          session()->flash('my_message', 'Lectura de Horometro Modificad Correctamente');
+          return redirect()->back();
+      }catch(Exception $e){
+          session()->flash('my_error', $e->getMessage());
+          DB::rollback();
+      }
+  }
 
     /**
      * Remove the specified resource from storage.
@@ -79,7 +91,17 @@ class HorometerController extends Controller
      */
     public function destroy(Horometer $horometer)
     {
-        //
+        try{
+            $horometer =Horometer::find($horometer->id);
+            DB::beginTransaction();
+            $horometer->delete();
+            DB::commit();
+            session()->flash('my_message', 'Lectura de Horometro Eliminada Correctamente');
+            return redirect()->back();
+        }catch(Exception $e){
+            session()->flash('my_error', $e->getMessage());
+            DB::rollback();
+        }
     }
 
 

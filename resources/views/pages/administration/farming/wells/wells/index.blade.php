@@ -282,49 +282,6 @@ href="{{ route('wells.excel') }}" type="button" class="btn btn-success pull-righ
 
      });
 
-    {{-- modal Form for Insert Hrometers --}}
-
-    $('#modal-form-horometer').on('show.bs.modal', function (event) {
-
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var NameWell = button.data('well_na') // Extract info from data-* attributes
-        var title = button.data('title')
-        var WellId = button.data('well_id')
-
-        var url = "/horometer/HorometersByWells/"+WellId;
-        $(document).ready(function(){
-         $.ajax({
-          dataType: 'json',
-          url: url,
-          method: "GET",
-          beforeSend: function() {
-            $("#loading").show();
-          },
-          success: function(datos)
-          {
-           $("#loading").hide();console.log(datos);
-           modal.find('.modal-body #value').prop('min' , datos);
-           modal.find('.modal-body #infoLastHorometer').text(datos);         
-         },
-         timeout:9000,
-         error: function()
-         {
-           console.log("Error Sincronizando");
-         }
-
-       });
-       }); 
-        
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text(title)
-        modal.find('.modal-body #well_na').val(NameWell).prop('disabled', true);
-        modal.find('.modal-body #name_pozo').val(NameWell);
-        modal.find('.modal-body #well_id').val(WellId)
-
-      })
-
   });
   
 </script>

@@ -30,7 +30,9 @@ class HomeController extends Controller
    ->groupBy('cultivo') 
    ->get();
 
-   return view('pages.home', compact('sectors','lots','planks','result'));
+   $lastWells = DB::table('wells')->orderBy('id', 'desc')->take(4)->get();
+
+   return view('pages.home', compact('sectors','lots','planks','result','lastWells'));
 
  }
 
@@ -80,8 +82,26 @@ public function pluviometryBySector ($start, $end){
                     return response()->json($result);
                   }
 
+    // Funcion para realizar conteo de Pozos segun su estatus
+    public function wellsByStatus(){
+      $result = DB::table('wells')
+                     ->select(DB::raw('count(*) as numPozos, status'))
+                     ->groupBy('status')
+                     ->get();        
 
+      return response()->json($result);
+    }
 
-                }
+        // Funcion para realizar conteo de Pozos segun su estatus
+    public function wellsByType(){
+      $result = DB::table('wells')
+                     ->select(DB::raw('count(*) as num, type'))
+                     ->groupBy('type')
+                     ->get();        
+
+      return response()->json($result);
+    }
+
+}
 
 

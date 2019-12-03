@@ -153,7 +153,7 @@
           </a>
         
           <ul class="treeview-menu">
-            @can('animals.index')
+            @can('animal.index')
             <li class="{{ Request::is('animals/animal') ? 'active' : ''}}"><a href="{{ route('animal.index') }}"><i class="fa fa-paw"></i> Animales</a></li>
             @endcan
 
@@ -193,8 +193,12 @@
           </a>
         
           <ul class="treeview-menu">
-            @can('animals.index')
+            @can('well.index')
             <li class="{{ Request::is('well') ? 'active' : ''}}"><a href="{{ route('well.index') }}"><i class="fa fa-list"></i> Listado de Pozos</a></li>
+            @endcan
+
+            @can('horometer.index')
+            <li class="{{ Request::is('wells/horometer') ? 'active' : ''}}"><a href="{{ route('horometer.index') }}"><i class="fa fa-tachometer"></i> Horometros</a></li>
             @endcan
           </ul>
         </li>        

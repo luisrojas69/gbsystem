@@ -454,6 +454,7 @@ function getGraphicByStatus(datos){
       label    : 'Operativos'
     },
   ];
+  
   var pieOptions     = {
     // Boolean - Whether we should show a stroke on each segment
     segmentShowStroke    : true,

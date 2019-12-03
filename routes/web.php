@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 	//Horometros de Pozos
-	Route::resource('horometer','HorometerController')->except(['show', 'create', 'edit']);;
+	Route::resource('/wells/horometer','HorometerController')->except(['show', 'create', 'edit']);;
 
 	Route::get ('/horometer/HorometersByWells/{id}', 'HorometerController@HorometersByWells');
 

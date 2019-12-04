@@ -84,7 +84,7 @@ public function destroy(Sector $sector){
       $sector->delete();
       DB::commit();
       session()->flash('my_message', 'Sector Eliminado Correctamente');
-      return redirect('establishments\sector');
+      return redirect()->back();
   }catch(Exception $e){
       session()->flash('my_error', $e->getMessage());
       DB::rollback();

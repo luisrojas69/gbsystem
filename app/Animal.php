@@ -7,6 +7,7 @@ use App\Sanitation;
 use App\Paddock;
 use App\Rodeo;
 use App\Specie;
+use App\LotAnimal;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,11 @@ class Animal extends Model
    public function breed()
    {
    	return $this->belongsTo(Breed::class);
+   }
+
+   public function lotAnimal()
+   {
+    return $this->belongsTo(LotAnimal::class);
    }
 
    public function paddock()

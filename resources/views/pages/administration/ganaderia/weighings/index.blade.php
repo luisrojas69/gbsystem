@@ -85,11 +85,14 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
 
-              <ul class="list-inline">
-                      <li><a href="{{ route('animal.create') }}" class="link-black text-sm"><i class="fa fa-plus-circle"></i> Nuevo Animal</a></li>
-                      <li><a href="{{ route('animal.index') }}" class="link-black text-sm"><i class="fa fa-bars"></i> Ir a Tabla de Animales</a></li>
-              </ul> 
-              
+               <ul class="list-inline">
+                  @can('animal.create')
+                  <li><a href="{{ route('animal.create') }}" class="link-black text-sm"><i class="fa fa-plus-circle"></i> Nuevo Animal</a></li>
+                  @endcan
+                  @can('animal.index')
+                  <li><a href="{{ route('animal.index') }}" class="link-black text-sm"><i class="fa fa-bars"></i> Ir a Tabla de Animales</a></li>
+                  @endcan
+                </ul> 
                <a class="btn btn-primary no-margin pull-right"
                                 title="Insertar un nuevo Nuevo"
                                 href="{{ route('new_weighing') }}">

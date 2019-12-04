@@ -146,7 +146,7 @@
           
           <li class="treeview {{ Request::is('animal*') ? 'active' : ''}}">
           <a href="#">
-            <i class="fa fa-umbrella"></i> <span>Ganader&iacute;a</span>
+            <i class="fa fa-map-signs"></i> <span>Ganader&iacute;a</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -166,7 +166,7 @@
             @endcan
 
             @can('paddock.index')
-            <li class="{{ Request::is('animals/paddocks') ? 'active' : ''}}"><a href="{{ route('paddock.index') }}"><i class="fa fa-bank"></i> Potreros</a></li>
+            <li class="{{ Request::is('animals/paddock') ? 'active' : ''}}"><a href="{{ route('paddock.index') }}"><i class="fa fa-bank"></i> Potreros</a></li>
             @endcan
 
             @can('specie.index')
@@ -174,7 +174,11 @@
             @endcan
 
             @can('breed.index')
-            <li class="{{ Request::is('animals/breeds') ? 'active' : ''}}"><a href="{{ route('breed.index') }}"><i class="fa fa-cubes"></i> Razas</a></li>
+            <li class="{{ Request::is('animals/breed') ? 'active' : ''}}"><a href="{{ route('breed.index') }}"><i class="fa fa-cubes"></i> Razas</a></li>
+            @endcan
+
+            @can('lotsAnimals.index')
+            <li class="{{ Request::is('animals/lotsAnimals') ? 'active' : ''}}"><a href="{{ route('lotsAnimals.index') }}"><i class="fa fa-object-group"></i> Lotes</a></li>
             @endcan
 
           </ul>

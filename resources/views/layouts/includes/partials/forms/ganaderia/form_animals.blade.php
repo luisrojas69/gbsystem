@@ -77,7 +77,14 @@
             <div class="form-group">
                   <label class="col-sm-2 control-label">Lote: </label>
                   <div class="col-sm-5">
-                    <input type="number" step="1" min="1" class="form-control" name="lot_id" id="lot_id" placeholder="Lote en el que llegó (Requerido)" required="">
+                    <select class="form-control" name="lot_animal_id" id="lot_animal_id" required>
+                        <option value=''>Seleccione un Lote</option>
+                          @foreach($lotsAnimals as $lotAnimal)
+                              <option value="{{$lotAnimal->id}}">
+                                {{ $lotAnimal->lot_co }} - {{ $lotAnimal->lot_de }}
+                              </option>
+                          @endforeach
+                    </select>
                   </div>
 
                   <label class="col-sm-2 control-label"></label>

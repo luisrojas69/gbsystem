@@ -7,6 +7,7 @@ use App\Specie;
 use App\Breed;
 use App\Paddock;
 use App\Rodeo;
+use App\LotAnimal;
 use App\Weighing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,7 +62,8 @@ class AnimalController extends Controller
         $breeds = Breed::all();
         $paddocks = Paddock::all();
         $rodeos = Rodeo::all();
-        return view('pages.administration.ganaderia.animals.create', compact('species','breeds', 'paddocks', 'rodeos'));
+        $lotsAnimals = LotAnimal::All();
+        return view('pages.administration.ganaderia.animals.create', compact('species','breeds', 'paddocks', 'rodeos', 'lotsAnimals'));
     }
 
     /**
@@ -79,7 +81,7 @@ class AnimalController extends Controller
             $animal->animal_na = $request->animal_na;
             $animal->animal_col = $request->animal_col;
             $animal->gender = $request->gender;
-            $animal->lot_id = $request->lot_id;
+            $animal->lot_animal_id = $request->lot_animal_id;
             $animal->breed_id = $request->breed_id;
             $animal->date_in = $request->date_in;
             $animal->weight_in = $request->weight_in;

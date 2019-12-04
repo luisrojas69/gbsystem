@@ -32,7 +32,8 @@ class BreedController extends Controller
     public function index()
     {
         $breeds = Breed::all();
-        return view('pages.administration.ganaderia.breeds.index', compact('breeds'));
+        $species = Specie::all();
+        return view('pages.administration.ganaderia.breeds.index', compact('breeds', 'species'));
     }
 
     /**
@@ -53,7 +54,7 @@ class BreedController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
         try {
             $breed = new Breed;
             $breed->breed_na = $request->breed_na;
@@ -70,27 +71,6 @@ class BreedController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Breed  $breed
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Breed $breed)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Breed  $breed
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Breed $breed)
-    {
-        return view('pages.administration.ganaderia.breeds.edit', compact('breed'));   
-    }
 
     /**
      * Update the specified resource in storage.
@@ -99,10 +79,10 @@ class BreedController extends Controller
      * @param  \App\Breed  $breed
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Breed $breed)
+    public function update(Request $request)
     {
         try {
-            $breed = Breed::find($breed->id);
+            $breed = Breed::findOrFail($request->breed_id);
             $breed->breed_na = $request->breed_na;
             $breed->breed_de = $request->breed_de;
             $breed->specie_id = $request->specie_id;
@@ -110,7 +90,7 @@ class BreedController extends Controller
             $breed->save();
             DB::commit();
             session()->flash('my_message', 'Raza Modificada Correctamente');
-            return redirect ('animals/breed');
+            return redirect()->back();
         } catch (Exception $e) {
             session()->flash('my_error', $e->getMessage());
             DB::rollback(); 

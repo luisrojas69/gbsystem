@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 	//Horometros de Pozos
-	Route::resource('/wells/horometer','HorometerController')->except(['show', 'create', 'edit']);;
+	Route::resource('/wells/horometer','HorometerController')->except(['show', 'create', 'edit']);
 
 	Route::get ('/horometer/HorometersByWells/{id}', 'HorometerController@HorometersByWells');
 
@@ -94,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::get ('/report/pluviometries-pdf', 'PluviometryController@pluviometriesPDF')->name('pluviometries.pdf');
 
-Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesExcel')->name('pluviometries.excel');
+	Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesExcel')->name('pluviometries.excel');
 
 	Route::get('/pluviometries/import', 'PluviometryController@import');
 
@@ -186,6 +186,14 @@ Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesE
 	Route::get('animal/{id}/getweighins', 'AnimalController@getWeighins');
 
 
+	//Lots Animals
+	Route::resource('animals/lotsAnimals', 'LotAnimalController')->except(['create', 'edit']);;
+
+	Route::get ('/report/lots-animals-pdf', 'LotAnimalController@lotsAnimalsPDF')->name('lots-animals.pdf');
+
+	Route::get ('/report/lots-animals-excel', 'LotAnimalController@lotsAnimalsExcel')->name('lots-animals.excel');
+
+
 	//Animals
 	Route::resource('animals/animal', 'AnimalController');
 
@@ -194,8 +202,10 @@ Route::get ('/report/pluviometries-excel', 'PluviometryController@pluviometriesE
 	Route::get ('/report/animals-excel', 'AnimalController@animalsExcel')->name('animals.excel');
 
 
+
+
 	//Reports
-	Route::get ('/report/general', 'ReportController@animalsPDF')->name('reports.pdf');
+	//Route::get ('/report/general', 'ReportController@animalsPDF')->name('reports.pdf');
 
 
 });//Fin Grupo de Rutas con el Middleware Auth ( para forzar el inicio d Sesion)

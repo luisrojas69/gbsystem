@@ -20,8 +20,7 @@
                   </div>
 
                   <div class="col-sm-5">
-                    <select class="form-control" name="animal_col" id="animal_col">
-                          <option value=''>Seleccione un Color (Opcional)</option>
+                    <select class="form-control" name="animal_col" id="animal_col" required="">
                           <option value='Negro'>Negro</option>
                           <option value='Blanco'>Blanco</option>
                           <option value='Blanco y Negro'>Blanco y Negro</option>

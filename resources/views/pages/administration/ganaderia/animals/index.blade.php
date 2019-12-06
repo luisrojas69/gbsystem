@@ -42,6 +42,7 @@
             <th>Especie</th>
             <th>Raza</th>
             <th>Potrero</th>
+            <th>Lote</th>
             <th style="width: auto">Ingreso</th>
             <th style="width: 60px; text-align: center;">Acciones</th>
           </tr>
@@ -53,6 +54,7 @@
             <td>{{ $animal->breed->specie->specie_na }}</td>
             <td>{{ $animal->breed->breed_na }}</td>
             <td>{{ $animal->paddock->paddock_na }}</td>
+            <td>{{ $animal->lotAnimal->lot_co }}</td>
             <td>{{ $animal->date_in }}</td>
             <td style="text-align: center;">
               <a href="javascript:void(0)"

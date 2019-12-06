@@ -44,9 +44,10 @@ class AnimalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $animals_active = Animal::where('rodeo_id', '=', 1)->get();
+        $animals_active=Animal::name($request->name)->where('rodeo_id', '=', 1)->paginate(10);
+        //$animals_active = Animal::where('rodeo_id', '=', 1)->get();
         $animals_inactive = Animal::where('rodeo_id', '!=', 1)->get();
         return view('pages.administration.ganaderia.animals.index', compact('animals_active', 'animals_inactive'));
     }

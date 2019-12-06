@@ -22,80 +22,105 @@
         <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title">Administracion de @yield('title-page') (Activos)</h3>
-            <a title="Exportar a PDF"
-            href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
-            <i class="fa fa-download"></i> Generar PDF
-          </a>
 
-          <a title="Exportar a Excel"
-          href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
-          <i class="fa fa-download"></i> Generar EXCEL
-        </a>
-      </div>
+            <form action="{{ route('animal.index') }}" method="GET" class="form-inline navbar-form my-2 my-lg-0 pull-right" role="search">
+              <div class="input-group input-group-sm">
+                <input type="text" name="name" class="form-control" placeholder="Nombre o Codigo del Animal">
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-info btn-flat">Buscar</button>
+                </span>
+              </div>
+            </form> 
 
-      <div class="box-body">
-        <table class="table table-bordered">
-          <tbody><tr>
-            <th style="width: 50px">image</th>
-            <th style="width: auto">Nombre</th>
-            <th style="width: auto">Cod</th>
-            <th>Especie</th>
-            <th>Raza</th>
-            <th>Potrero</th>
-            <th>Lote</th>
-            <th style="width: auto">Ingreso</th>
-            <th style="width: 60px; text-align: center;">Acciones</th>
+          </div>
+
+          <div class="box-body">
+            <table class="table table-bordered">
+              <tbody><tr>
+                <th style="width: 50px">image</th>
+                <th style="width: auto">Nombre</th>
+                <th style="width: auto">Cod</th>
+                <th>Especie</th>
+                <th>Raza</th>
+                <th>Potrero</th>
+                <th>Lote</th>
+                <th>U. Pesaje</th>
+                <th style="width: auto">Ingreso</th>
+                <th style="width: 60px; text-align: center;">Acciones</th>
+              </tr>
+              @foreach($animals_active as $animal)
+              <tr>
+                <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/bull.png') }}"></a></td>
+                <td><a href="{{ route('animal.show', $animal->id) }}">{{ $animal->animal_na }}</a></td>
+                <td>{{ $animal->animal_cod }}</td>
+                <td>{{ $animal->breed->specie->specie_na }}</td>
+                <td>{{ $animal->breed->breed_na }}</td>
+                <td>{{ $animal->paddock->paddock_na }}</td>
+                <td>{{ $animal->lotAnimal->lot_co }}</td>
+
+                <td style="text-align: center;">
+                  @if($animal->numWeighings>0)   
+                  <span class="label label-info">{{ $animal->weighings->last()->weight }} Kgs</span>
+                  @else
+                  <span class="label bg-maroon">{{ $animal->weight_in }} Kgs</span>
+                  @endif  
+                </td>
+
+                <td>{{ $animal->date_in }}</td>
+                <td style="text-align: center;">
+                  <a href="javascript:void(0)"
+                  title="Editar"
+                  onclick="event.preventDefault();
+                  document.getElementById('form-edit-{{ $animal->id }}').submit()">
+                  <span class="label label-primary"><i class="fa fa-pencil"></i></span>
+                </a>
+
+                <form method="GET"
+                action="{{ route('animal.edit', $animal) }}"
+                id="form-edit-{{ $animal->id }}"
+                style="display: none;">
+                {{ csrf_field() }}
+              </form>
+
+              <a href="javascript:void(0)" id="{{ $animal->id }}"
+                class="btn-delete"
+                title="Eliminar">
+                <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+
+                <form method="POST"
+                id="form-destroy-{{ $animal->id }}"
+                action="{{ route('animal.destroy', $animal) }}">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+              </form>
+
+            </td>
           </tr>
-          @foreach($animals_active as $animal)
-          <tr>
-            <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/bull.png') }}"></a></td>
-            <td><a href="{{ route('animal.show', $animal->id) }}">{{ $animal->animal_na }}</a></td>
-            <td>{{ $animal->animal_cod }}</td>
-            <td>{{ $animal->breed->specie->specie_na }}</td>
-            <td>{{ $animal->breed->breed_na }}</td>
-            <td>{{ $animal->paddock->paddock_na }}</td>
-            <td>{{ $animal->lotAnimal->lot_co }}</td>
-            <td>{{ $animal->date_in }}</td>
-            <td style="text-align: center;">
-              <a href="javascript:void(0)"
-              title="Editar"
-              onclick="event.preventDefault();
-              document.getElementById('form-edit-{{ $animal->id }}').submit()">
-              <span class="label label-primary"><i class="fa fa-pencil"></i></span>
-            </a>
+          @endforeach
 
-            <form method="GET"
-            action="{{ route('animal.edit', $animal) }}"
-            id="form-edit-{{ $animal->id }}"
-            style="display: none;">
-            {{ csrf_field() }}
-          </form>
+        </tbody></table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        
+        {{ $animals_active->links() }}
 
-          <a href="javascript:void(0)" id="{{ $animal->id }}"
-            class="btn-delete"
-            title="Eliminar">
-            <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-            <form method="POST"
-            id="form-destroy-{{ $animal->id }}"
-            action="{{ route('animal.destroy', $animal) }}">
-            {{ csrf_field() }}
-            {{ method_field('DELETE') }}
-          </form>
+        <a title="Exportar a PDF"
+        href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
+        <i class="fa fa-download"></i> Generar PDF
+      </a>
 
-        </td>
-      </tr>
-      @endforeach
+      <a title="Exportar a Excel"
+      href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+      <i class="fa fa-download"></i> Generar EXCEL
+    </a>  
 
-    </tbody></table>
-  </div>
-  <!-- /.box-body -->
-  <div class="box-footer clearfix">
-   <a class="btn btn-primary no-margin pull-right"
-   title="Crear un nueva animal"
-   href="{{ route('animal.create') }}">
-   <i class="fa fa-plus"></i> Agregar Nuevo
- </a>
+    <a class="btn btn-primary no-margin pull-right"
+    title="Crear un nueva animal"
+    href="{{ route('animal.create') }}">
+    <i class="fa fa-plus"></i> Agregar Nuevo
+  </a>
 </div>
 
 </div>

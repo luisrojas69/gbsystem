@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Especie: </label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">Raza: </label>
                   <div class="col-sm-5">
                     <select class="form-control" name="breed_id" id="breed_id" required value="{{ old('breed_id') }}">
                       <option value=''>Seleccione una Raza (Requerido)</option>
@@ -50,16 +50,18 @@
                   </div>
 
                   <label class="col-sm-2 control-label"></label>
-                  <div class="col-sm-5 btn-group btn-group-toggle" data-toggle="buttons">
-                      <label class="btn btn-xs btn-default active">
+                  <div class="col-sm-5 btn-group btn-group-toggle">
+                      <label class="btn btn-xs btn-danger">
                         <i class="fa fa-male"></i>
                         <input type="radio" name="gender" id="macho" autocomplete="off" value="m" checked=""> MACHO
                       </label>
-                      <label class="btn btn-xs btn-default">
+                      <label class="btn btn-xs btn-success">
                         <i class="fa fa-female"></i>
                         <input type="radio" name="gender" id="hembra" autocomplete="off" value="f"> HEMBRA
                       </label>
                   </div>
+
+
                 </div>
 
                 <div class="form-group">
@@ -87,12 +89,12 @@
                   </div>
 
                   <label class="col-sm-2 control-label"></label>
-                  <div class="col-sm-5 btn-group btn-group-toggle" data-toggle="buttons">
-                      <label class="btn btn-xs btn-default active">
+                  <div class="col-sm-5 btn-group btn-group-toggle">
+                      <label class="btn btn-xs btn-warning">
                         <i class="fa fa-bank"></i>
                         <input type="radio" name="condition" id="propio" autocomplete="off" value="propia" checked=""> PROPIO
                       </label>
-                      <label class="btn btn-xs btn-default">
+                      <label class="btn btn-xs btn-primary">
                         <i class="fa fa-cut"></i>
                         <input type="radio" name="condition" id="mediania" autocomplete="off" value="mediania"> MEDIANIA
                       </label>

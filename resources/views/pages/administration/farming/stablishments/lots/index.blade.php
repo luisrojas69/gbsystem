@@ -117,7 +117,6 @@
                               data-lot_de="{{ $lot->lot_de }}"
                               data-lot_id="{{ $lot->id }}"
                               data-title="Formulario de Edicion - Editar {{ $lot->lot_de }}"
-                              data-title="Formulario de Edicion - Editar {{ $lot->lot_de }}"
                               >
                        <span class="label label-primary"><i class="fa fa-pencil"></i></span>
                           </a>

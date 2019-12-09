@@ -49,7 +49,12 @@ class AnimalController extends Controller
         $animals_active=Animal::name($request->name)->where('rodeo_id', '=', 1)->paginate(10);
         //$animals_active = Animal::where('rodeo_id', '=', 1)->get();
         $animals_inactive = Animal::where('rodeo_id', '!=', 1)->get();
-        return view('pages.administration.ganaderia.animals.index', compact('animals_active', 'animals_inactive'));
+        $species = Specie::all();
+        $breeds = Breed::all();
+        $paddocks = Paddock::all();
+        $rodeos = Rodeo::all();
+        $lotsAnimals = LotAnimal::All();
+        return view('pages.administration.ganaderia.animals.index', compact('species','breeds', 'paddocks', 'rodeos', 'lotsAnimals', 'animals_active', 'animals_inactive'));
     }
 
     /**
@@ -125,34 +130,23 @@ class AnimalController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Animal  $animal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Animal $animal)
-    {
-        return ("Funcionalidad de Edicion en Construccion");
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Animal  $animal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Animal $animal)
+    public function update(Request $request)
     {
-       // dd($request->all());
+       //dd($request->all());
 
         try {
-            $animal = Animal::find($animal->id);
+            $animal = Animal::findOrFail($request->animal_id);
             $animal->animal_cod = $request->animal_cod;
             $animal->animal_na = $request->animal_na;
             $animal->animal_col = $request->animal_col;
             $animal->gender = $request->gender;
-            $animal->lot_id = $request->lot_id;
+            $animal->lot_animal_id = $request->lot_animal_id;
             $animal->breed_id = $request->breed_id;
             $animal->date_in = $request->date_in;
             $animal->weight_in = $request->weight_in;

@@ -13,6 +13,53 @@
 @endsection
 @section('content')
 
+
+<!--Formulario para Editar Registro-->
+<div class="modal fade" id="modal-form-update" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_animal" class="form-horizontal"
+        role="form"
+        method="POST"
+        action="{{ route('animal.update','test') }}">
+        {{ csrf_field() }}
+        {{ method_field('patch') }} 
+        <input type="hidden" name="animal_id" id="animal_id" value="">             
+        @include('layouts.includes.partials.forms.ganaderia.form_animals')
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!--Formulario para Insertar Pesaje-->
+<div class="modal fade" id="modal-form-weighing" tabindex="-1" role="dialog" aria-labelledby="modal-formLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="form_weighinf" class="form-horizontal"
+        role="form"
+        method="POST"
+        action="{{ route('weighing.store') }}">
+        {{ csrf_field() }}
+        <input type="hidden" name="animal_id" id="animal_id" value="">             
+        <input type="hidden" name="name_animal" id="name_animal" value="">             
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
 <section class="content">
   <div class="row">
 
@@ -68,60 +115,74 @@
 
                 <td>{{ $animal->date_in }}</td>
                 <td style="text-align: center;">
-                  <a href="javascript:void(0)"
+
+                  @can('animal.edit')
+                  <a href=""
                   title="Editar"
-                  onclick="event.preventDefault();
-                  document.getElementById('form-edit-{{ $animal->id }}').submit()">
+                  data-toggle="modal"
+                  data-target="#modal-form-update"
+                  data-animal_na="{{ $animal->animal_na }}"
+                  data-animal_id="{{ $animal->id }}"
+                  data-animal_cod="{{ $animal->animal_cod }}"
+                  data-animal_breed="{{ $animal->breed_id }}"
+                  data-animal_lot="{{ $animal->lot_animal_id }}"
+                  data-animal_col="{{ $animal->animal_col }}"
+                  data-animal_gender="{{ $animal->gender }}"
+                  data-animal_date="{{ $animal->date_in }}"
+                  data-animal_weight_in="{{ $animal->weight_in }}"
+                  data-animal_condition="{{ $animal->condition }}"
+                  data-animal_paddock_id="{{ $animal->paddock_id }}"
+                  data-animal_rodeo_id="{{ $animal->rodeo_id }}"
+                  data-animal_comment="{{ $animal->comment }}"
+                  data-title="Formulario de Edicion - Editar {{ $animal->animal_na }}"
+
+                  >
                   <span class="label label-primary"><i class="fa fa-pencil"></i></span>
                 </a>
+                @endcan
 
-                <form method="GET"
-                action="{{ route('animal.edit', $animal) }}"
-                id="form-edit-{{ $animal->id }}"
-                style="display: none;">
-                {{ csrf_field() }}
-              </form>
+                @can('animal.destroy')
+                <a href="javascript:void(0)" id="{{ $animal->id }}"
+                  class="btn-delete"
+                  title="Eliminar">
+                  <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-              <a href="javascript:void(0)" id="{{ $animal->id }}"
-                class="btn-delete"
-                title="Eliminar">
-                <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+                  <form method="POST"
+                  id="form-destroy-{{ $animal->id }}"
+                  action="{{ route('animal.destroy', $animal) }}">
+                  {{ csrf_field() }}
+                  {{ method_field('DELETE') }}
+                </form>
+                @endcan 
 
-                <form method="POST"
-                id="form-destroy-{{ $animal->id }}"
-                action="{{ route('animal.destroy', $animal) }}">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-              </form>
+              </td>
+            </tr>
+            @endforeach
 
-            </td>
-          </tr>
-          @endforeach
+          </tbody></table>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix">
 
-        </tbody></table>
-      </div>
-      <!-- /.box-body -->
-      <div class="box-footer clearfix">
-        
-        {{ $animals_active->links() }}
+          {{ $animals_active->links() }}
 
 
-        <a title="Exportar a PDF"
-        href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
-        <i class="fa fa-download"></i> Generar PDF
-      </a>
+          <a title="Exportar a PDF"
+          href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
+          <i class="fa fa-download"></i> Generar PDF
+        </a>
 
-      <a title="Exportar a Excel"
-      href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
-      <i class="fa fa-download"></i> Generar EXCEL
-    </a>  
+        <a title="Exportar a Excel"
+        href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+        <i class="fa fa-download"></i> Generar EXCEL
+      </a>  
 
-    <a class="btn btn-primary no-margin pull-right"
-    title="Crear un nueva animal"
-    href="{{ route('animal.create') }}">
-    <i class="fa fa-plus"></i> Agregar Nuevo
-  </a>
-</div>
+      <a class="btn btn-primary no-margin pull-right"
+      title="Crear un nueva animal"
+      href="{{ route('animal.create') }}">
+      <i class="fa fa-plus"></i> Agregar Nuevo
+    </a>
+  </div>
 
 </div>
 
@@ -256,4 +317,69 @@
 
 @section('additionals-scripts')
 <script type="text/javascript" src="{{ asset('scripts/confirm-delete.js') }}"></script>
+
+<script type="text/javascript">
+
+  $(function(){
+    $('#modal-form-update').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var animal_id = button.data('animal_id')
+        var animal_cod = button.data('animal_cod') // Extract info from data-* attributes
+        var animal_na = button.data('animal_na')
+        var animal_breed  = button.data('animal_breed' )
+        var animal_lot  = button.data('animal_lot' )
+        var animal_col = button.data('animal_col')
+        var animal_gender = button.data('animal_gender')
+        var animal_date = button.data('animal_date')
+        var animal_weight_in = button.data('animal_weight_in')
+        var animal_condition = button.data('animal_condition')
+        var animal_paddock_id = button.data('animal_paddock_id')
+        var animal_rodeo_id = button.data('animal_rodeo_id')
+        var animal_comment = button.data('animal_comment')
+        var title = button.data('title')
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(title)
+        modal.find('.modal-body #animal_id').val(animal_id)
+        modal.find('.modal-body #animal_cod').val(animal_cod)
+        modal.find('.modal-body #animal_na').val(animal_na)
+        modal.find('.modal-body #breed_id').val(animal_breed)
+        modal.find('.modal-body #lot_animal_id').val(animal_lot)
+        modal.find('.modal-body #animal_col').val(animal_col)
+        //modal.find('.modal-body #gender').val(animal_gender)
+        modal.find('.modal-body #date_in').val(animal_date)
+        modal.find('.modal-body #weight_in').val(animal_weight_in)
+        //modal.find('.modal-body #condition').val(animal_condition)
+        modal.find('.modal-body #paddock_id').val(animal_paddock_id)
+        modal.find('.modal-body #rodeo_id').val(animal_rodeo_id)
+        modal.find('.modal-body #comment').val(animal_comment)
+       
+             //Verificamos el Genero para Marcar el Radio Button
+        if (animal_gender == 'm')
+        {
+         modal.find('.modal-body #macho').prop('checked', true)
+       }
+       else
+       {
+         modal.find('.modal-body #hembra').prop('checked', true)
+       }
+
+        //Verificamos la Condicion del Animal (Propio o Mediania) para Marcar el Radio Button
+        if (animal_condition == 'propia')
+        {
+         modal.find('.modal-body #propio').prop('checked', true)
+       }
+       else
+       {
+         modal.find('.modal-body #mediania').prop('checked', true)
+       }
+
+
+      })
+
+  });
+  
+</script>
+
 @endsection

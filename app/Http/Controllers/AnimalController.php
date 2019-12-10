@@ -48,8 +48,8 @@ class AnimalController extends Controller
     {
         $animals_active=Animal::name($request->name)->where('rodeo_id', '=', 1)->paginate(10);
         //$animals_active = Animal::where('rodeo_id', '=', 1)->get();
-        $animals_inactive = Animal::where('rodeo_id', '!=', 1)->get();
-        $species = Specie::all();
+        $animals_inactive = Animal::where('rodeo_id', '!=', 1)->paginate(10);
+        $species = Specie::select('id', 'specie_de')->orderBy('id', 'asc')->get();
         $breeds = Breed::all();
         $paddocks = Paddock::all();
         $rodeos = Rodeo::all();

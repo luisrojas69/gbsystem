@@ -66,7 +66,7 @@
 
     <div class="box-body">
       <!-- left column -->  
-      <div class="col-md-8">
+      <div class="col-md-9">
         <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title">Administracion de @yield('title-page') (Activos)</h3>
@@ -85,16 +85,16 @@
           <div class="box-body">
             <table class="table table-bordered">
               <tbody><tr>
-                <th style="width: 50px">image</th>
-                <th style="width: auto">Nombre</th>
-                <th style="width: auto">Cod</th>
+                <th>image</th>
+                <th>Nombre</th>
+                <th>Cod</th>
                 <th>Especie</th>
                 <th>Raza</th>
                 <th>Potrero</th>
                 <th>Lote</th>
                 <th>U. Pesaje</th>
-                <th style="width: auto">Ingreso</th>
-                <th style="width: 60px; text-align: center;">Acciones</th>
+                <th>Ingreso</th>
+                <th style="width: auto; text-align: center;">Acciones</th>
               </tr>
               @foreach($animals_active as $animal)
               <tr>
@@ -198,11 +198,16 @@
         <i class="fa fa-download"></i> Generar EXCEL
       </a>  
 
-      <a class="btn btn-primary no-margin pull-right"
+      @can('animal.create')
+      <a class="btn btn-primary pull-right"
       title="Crear un nueva animal"
+      style="margin-right: 5px;"
       href="{{ route('animal.create') }}">
       <i class="fa fa-plus"></i> Agregar Nuevo
-    </a>
+      </a>
+      @endcan
+
+
   </div>
 
 </div>
@@ -211,7 +216,7 @@
 <!-- END left column -->
 
 <!-- right column -->
-<div class="col-md-4">
+<div class="col-md-3">
   <!-- Horizontal Form -->
   <div class="box box-warning">
     <div class="box-header with-border">
@@ -220,9 +225,6 @@
     <!-- /.box-header -->
     <!-- form start -->
     <div class="box-body">
-      <a href="{{ route('animal.create') }}" class="btn btn-app">
-        <i class="fa fa-paw"></i> Nuevo Animal
-      </a>
       <a href="{{ route('multimovetorodeo') }}" class="btn btn-app">
         <i class="fa fa-cube"></i> Mover Multiples Animales a otro Rodeo
       </a>

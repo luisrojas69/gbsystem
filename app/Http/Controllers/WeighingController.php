@@ -126,6 +126,16 @@ class WeighingController extends Controller
      */
     public function destroy(Weighing $weighing)
     {
-        //
+        try {
+        $lot=Weighing::find($weighing->id);
+        DB::beginTransaction();
+        $lot->delete();
+        DB::commit();
+        session()->flash('my_message', 'Pesaje Eliminado Correctamente');
+        return redirect()->back();
+        } catch (Exception $e) {
+        session()->flash('my_error', $e->getMessage());    
+        DB::rollback();
+        }
     }
 }

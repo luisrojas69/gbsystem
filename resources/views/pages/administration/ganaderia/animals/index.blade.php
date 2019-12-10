@@ -51,7 +51,8 @@
         action="{{ route('weighing.store') }}">
         {{ csrf_field() }}
         <input type="hidden" name="animal_id" id="animal_id" value="">             
-        <input type="hidden" name="name_animal" id="name_animal" value="">             
+        <input type="hidden" name="name_animal" id="name_animal" value="">
+        @include('layouts.includes.partials.forms.ganaderia.form_weighings2')             
       </form>
     </div>
   </div>
@@ -140,6 +141,26 @@
                   <span class="label label-primary"><i class="fa fa-pencil"></i></span>
                 </a>
                 @endcan
+
+                @can('weighing.store')
+                  <a href=""
+                  title="Insertar Pesaje para el Animal: {{ $animal->animal_na }}"
+                  data-toggle="modal"
+                  data-target="#modal-form-weighing"
+                  data-animal_na="{{ $animal->animal_na }}"
+                  data-animal_id="{{ $animal->id }}"
+                  @if($animal->numWeighings>0)   
+                  data-animal_lw="{{ $animal->weighings->last()->weight }} Kgs"
+                  @else
+                  data-animal_lw="{{ $animal->weight_in }} Kgs"
+                  @endif
+                  data-title="Insertar Pesaje para el Animal: {{ $animal->animal_na }}"
+
+                  >
+                  <span class="label label-warning"><i class="fa fa-balance-scale"></i></span>
+                </a>
+                @endcan
+
 
                 @can('animal.destroy')
                 <a href="javascript:void(0)" id="{{ $animal->id }}"
@@ -376,6 +397,28 @@
        }
 
 
+      })
+
+  });
+  
+</script>
+
+<script type="text/javascript">
+
+  $(function(){
+    $('#modal-form-weighing').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var animal_id = button.data('animal_id')
+        var animal_na = button.data('animal_na')
+        var lastWeight = button.data('animal_lw')
+        var title = button.data('title')
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(title)
+        modal.find('.modal-body #animal_id').val(animal_id)
+        modal.find('.modal-body #animal_na').val(animal_na)
+        modal.find('.modal-body #infoLastWeight').text(lastWeight)
       })
 
   });

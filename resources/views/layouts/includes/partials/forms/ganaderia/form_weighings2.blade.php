@@ -3,18 +3,21 @@
 
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Animal: </label>
-                  <div class="col-sm-10">
-                     <select autofocus="autofocus" class="form-control" name="animal_id" id="animal_id" required>
-                        <option value="{{ $animal->id }}">{{ $animal->animal_na }} - ({{ $animal->id }})</option>
-                      </select>
+                  <div class="col-sm-5">
+                     <input type="text" class="form-control" name="animal_na" id="animal_na" placeholder="Nombre del Animal" required readonly="">
                   </div>
+
+                  <div class="col-sm-5">
+                    <p class="text-green">Ultimo Peso:  <span class="badge bg-orange" id="infoLastWeight"></span></p>
+                  </div>
+
                 </div>
 
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Fecha: </label>
 
                   <div class="col-sm-6">
-                    <input type="date" min="{{ $animal->date_in }}" max="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>" class="form-control" name="date_read" id="date_read" required>
+                    <input type="date" min="" max="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>" class="form-control" name="date_read" id="date_read" required>
                   </div>
                 </div>
                 <div class="form-group">

@@ -80,7 +80,7 @@
         <div class="icon">
           <i class="fa fa-umbrella"></i>
         </div>
-        <a href="#" class="small-box-footer">Ver detalle de Precipitaciones <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{ route('pluviometry.index') }}" class="small-box-footer">Ver detalle de Precipitaciones <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
@@ -88,12 +88,12 @@
 
 
   <div class="row">
-    <div class="col-xs-12">
+    <!--div class="col-xs-12">
       <div class="box">
         <div class="box-header">
           <h3 class="box-title">Tabla Resumen - Control Hect&aacute;reas</h3>
         </div>
-        <!-- /.box-header -->
+
         <div class="box-body">
           <table id="example2" class="table table-bordered table-hover">
             <thead>
@@ -126,10 +126,152 @@
 
           </table>
         </div>
-        <!-- /.box-body -->
+
       </div>
-      <!-- /.box -->
+
+    </div-->
+
+    <div class="col-md-3">
+      <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">Animales Segun su Condicion</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="chart-responsive">
+                    <canvas id="pieChartCondition" height="180" width="151" style="width: 151px; height: 180px;"></canvas>
+                  </div>
+                  <!-- ./chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3">
+                  <ul class="chart-legend clearfix">
+                    <li><i class="fa fa-circle-o text-red"></i> Med.</li>
+                    <li><i class="fa fa-circle-o text-green"></i> Prop.</li>
+                  </ul>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                <li><a href="#">Animales Propios <span class="pull-right text-green" id="propios"></span></a>
+                </li>
+                <li><a href="#">Animales en Mediania
+                  <span class="pull-right text-red" id="medianias"></span></a></li>
+                  <li><a href="#">Total Animales Activos Registrados
+                  <span class="pull-right text-blue" id="totalCondition"></span></a></li>
+              </ul>
+            </div>
+            <!-- /.footer -->
+          </div>
     </div>
+
+
+  <!--Tabla de Potreros-->
+    <div class="col-xs-3">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Potreros definidos en el sistema</h3>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-bordered">
+                <tbody><tr>
+                  <th>Nombre del Potrero</th>
+                  <th style="width: 60px; text-align: center"># Anim</th>
+                </tr>
+                @foreach($paddocks as $paddock)
+                <tr>
+                  <td>{{ $paddock->paddock_na }}</td>
+                  <td style="text-align: center"><span class="badge {{ $paddock->num_animals>0 ? 'bg-green' : 'bg-red' }}">{{ $paddock->num_animals }}</span></td>
+                </tr>
+                @endforeach
+              </tbody></table>
+        </div>
+        <div class="box-footer text-center">
+              <a href="{{ route('paddock.index') }}" class="uppercase">Ir a Tabla de Potreros</a>
+        </div>
+      
+      </div>
+    </div>
+    <!--FIN Tabla de Potreros--> 
+
+    <!--Tabla de Rodeos-->
+    <div class="col-xs-3">
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Rodeos definidos en el sistema</h3>
+        </div>
+
+        <div class="box-body">
+          <table class="table table-bordered">
+                <tbody><tr>
+                  <th>Nombre del Rodeo</th>
+                  <th style="width: 60px; text-align: center"># Anim</th>
+                </tr>
+                @foreach($rodeos as $rodeo)
+                <tr>
+                  <td>{{ $rodeo->rodeo_na }}</td>
+                  <td style="text-align: center"><span class="badge {{ $rodeo->num_animals>0 ? 'bg-green' : 'bg-red' }}">{{ $rodeo->num_animals }}</span></td>
+                </tr>
+                @endforeach
+              </tbody></table>
+        </div>
+        <div class="box-footer text-center">
+              <a href="{{ route('rodeo.index') }}" class="uppercase">Ir a Tabla de Rodeos</a>
+        </div>
+      
+      </div>
+    </div>
+    <!--FIN Tabla de Rodeos-->
+
+
+        <div class="col-md-3">
+      <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Ultimos Animales Agregados</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <ul class="products-list product-list-in-box">
+                @foreach($lastAnimals as $animal)
+                <li class="item">
+                  <div class="product-img">
+                    <img src="{{ asset('img/IconoVaca.png') }}" alt="Product Image">
+                  </div>
+                  <div class="product-info">
+                    <a href="{{ route('animal.show', $animal->id) }}" class="product-title">
+                      {{ $animal->animal_na }}
+                      <span class="pull-right label {{ $animal->condition=="mediania" ? 'label-danger' : 'label-success' }}">{{ $animal->condition }}</span></a>
+                      
+                    <span class="product-description">
+                          Fecha de Ingreso {{ $animal->date_in }}
+                        </span>
+                  </div>
+                </li>
+                @endforeach
+                <!-- /.item -->  
+              </ul>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-center">
+              <a href="{{ route('animal.index') }}" class="uppercase">Ir a Tabla de Animales</a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+    </div>   
+
 
     <div class="col-md-4">
       <div class="box box-default">
@@ -379,6 +521,36 @@
    });
   }); 
 
+
+
+    $(document).ready(function(){
+    var url = "/home/animalsByCondition/";
+    $.ajax({
+      dataType: 'json',
+      url: url,
+      method: "GET",
+      beforeSend: function() {
+        $("#loading").show();
+      },
+      success: function(datos)
+      {
+        console.log(datos);
+        
+        var total = datos[0].numAnimals + datos[1].numAnimals;
+        $('#propios').text(datos[1].numAnimals);
+        $('#medianias').text(datos[0].numAnimals);
+        $('#totalCondition').text(total);
+        getGraphicAnimalsByCondition(datos);
+      },
+      timeout:9000,
+      error: function()
+      {
+       console.log("Error Sincronizando");
+     }
+
+   });
+  }); 
+
  //--------------------------------------------------------------------------------------------------------------
  /*function getGraphic(datos){
 
@@ -488,6 +660,62 @@ function getGraphicByStatus(datos){
   // - END PIE CHART -
   // -----------------
 }
+
+
+
+function getGraphicAnimalsByCondition(datos){
+
+  var pieChartCanvas = $('#pieChartCondition').get(0).getContext('2d');
+  var pieChart       = new Chart(pieChartCanvas);
+  var PieData        = [
+    {
+      value    : datos[0].numAnimals,
+      color    : '#f56954',
+      highlight: '#f56954',
+      label    : 'Medianias'
+    },
+    {
+      value    : datos[1].numAnimals,
+      color    : '#00a65a',
+      highlight: '#00a65a',
+      label    : 'Propios'
+    },
+  ];
+  
+  var pieOptions     = {
+    // Boolean - Whether we should show a stroke on each segment
+    segmentShowStroke    : true,
+    // String - The colour of each segment stroke
+    segmentStrokeColor   : '#fff',
+    // Number - The width of each segment stroke
+    segmentStrokeWidth   : 1,
+    // Number - The percentage of the chart that we cut out of the middle
+    percentageInnerCutout: 50, // This is 0 for Pie charts
+    // Number - Amount of animation steps
+    animationSteps       : 100,
+    // String - Animation easing effect
+    animationEasing      : 'easeOutBounce',
+    // Boolean - Whether we animate the rotation of the Doughnut
+    animateRotate        : true,
+    // Boolean - Whether we animate scaling the Doughnut from the centre
+    animateScale         : false,
+    // Boolean - whether to make the chart responsive to window resizing
+    responsive           : true,
+    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+    maintainAspectRatio  : false,
+    // String - A legend template
+    legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+    // String - A tooltip template
+    tooltipTemplate      : '<%=value %> Animales <%=label%>'
+  };
+  // Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  pieChart.Doughnut(PieData, pieOptions);
+  // -----------------
+  // - END PIE CHART -
+  // -----------------
+}
+
 
 
   //SELECT COUNT(*) as numero, status from `wells`GROUP BY status

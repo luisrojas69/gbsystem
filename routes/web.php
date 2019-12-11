@@ -33,6 +33,8 @@ Route::get('/home/wellsByStatus', 'HomeController@wellsByStatus');
 
 Route::get('/home/wellsByType', 'HomeController@wellsByType');
 
+Route::get('/home/animalsByCondition', 'HomeController@animalsByCondition');
+
 Route::get('/example', function () {
     return view('pages.administration.pluviometries.example_bar_graph');
 });

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Sector;
 use App\lot;
 use App\Plank;
+use App\Rodeo;
+use App\Paddock;
 
 class HomeController extends Controller
 {	
@@ -31,8 +33,14 @@ class HomeController extends Controller
    ->get();
 
    $lastWells = DB::table('wells')->orderBy('id', 'desc')->take(4)->get();
+   
+   $lastAnimals = DB::table('animals')->orderBy('id', 'desc')->take(4)->get();
 
-   return view('pages.home', compact('sectors','lots','planks','result','lastWells'));
+  $rodeos = Rodeo::all();
+
+  $paddocks = Paddock::all();
+
+   return view('pages.home', compact('sectors','lots','planks','result','lastWells', 'lastAnimals', 'rodeos', 'paddocks'));
 
  }
 
@@ -97,6 +105,18 @@ public function pluviometryBySector ($start, $end){
       $result = DB::table('wells')
                      ->select(DB::raw('count(*) as num, type'))
                      ->groupBy('type')
+                     ->get();        
+
+      return response()->json($result);
+    }
+
+
+    // Funcion para realizar conteo de Pozos segun su estatus
+    public function animalsByCondition(){
+      $result = DB::table('animals')
+                     ->select(DB::raw('count(*) as numAnimals'))
+                     ->groupBy('condition')
+                     ->where('rodeo_id', 1)
                      ->get();        
 
       return response()->json($result);

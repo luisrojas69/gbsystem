@@ -110,7 +110,7 @@ href="{{ route('rodeos.excel') }}" type="button" class="btn btn-success pull-rig
 
       @can('rodeo.destroy')
       <a href="javascript:void(0)" id="{{ $rodeo->id }}"
-        class="btn-delete  {{ count($rodeo->animals)>0 ? 'disabled' : '' }}"
+        class="btn-delete  {{ $rodeo->num_animals>0 ? 'disabled' : '' }}"
         title="Eliminar">
         <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 

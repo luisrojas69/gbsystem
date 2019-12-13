@@ -142,7 +142,7 @@
                 </a>
                 @endcan
 
-                @can('weighing.store')
+                @can('weighing.create')
                   <a href=""
                   title="Insertar Pesaje para el Animal: {{ $animal->animal_na }}"
                   data-toggle="modal"

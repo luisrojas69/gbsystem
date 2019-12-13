@@ -83,7 +83,7 @@
           </a>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
+            <div class="box-body table-responsive">
               <table class="table table-bordered table-hover">
                 <tbody><tr>
                   <th style="width: 60px">ID</th>

@@ -204,6 +204,8 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::get ('/report/animals-pdf', 'AnimalController@animalsPDF')->name('animals.pdf');
 
+	Route::get ('/report/act-animals-pdf/{id}', 'AnimalController@actAnimalsPDF')->name('act_animals.pdf');
+
 	Route::get ('/report/animals-excel', 'AnimalController@animalsExcel')->name('animals.excel');
 
 

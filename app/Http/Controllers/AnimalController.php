@@ -72,6 +72,7 @@ class AnimalController extends Controller
         return view('pages.administration.ganaderia.animals.create', compact('species','breeds', 'paddocks', 'rodeos', 'lotsAnimals'));
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
@@ -303,6 +304,16 @@ class AnimalController extends Controller
         return $pdf->download('animals-list-'.date('Y-m-d_H:i:s').'.pdf');
         //return view('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
     }
+
+    //Funcion para Generar Reporte de Animales Activos en PDF
+     public function actAnimalsPDF($id){
+        $date = date('d-m-Y');
+        $animal = Animal::findOrFail($id);
+        $pdf = PDF::loadView('pages.administration.reports.act-animals-pdf', compact('animal', 'date'));
+        return $pdf->download('acta-de-defuncion-'.date('Y-m-d_H:i:s').'.pdf');
+        //return view('pages.administration.reports.rodeos-pdf', compact('rodeos', 'date'));
+    }
+
 
 
 

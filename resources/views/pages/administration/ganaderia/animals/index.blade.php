@@ -82,7 +82,7 @@
 
           </div>
 
-          <div class="box-body table-responsive no-padding">
+          <div class="box-body table-responsive">
             <table class="table table-bordered table-hover">
               <tbody><tr>
                 <th>#</th>
@@ -143,72 +143,72 @@
                 @endcan
 
                 @can('weighing.create')
-                  <a href=""
-                  title="Insertar Pesaje para el Animal: {{ $animal->animal_na }}"
-                  data-toggle="modal"
-                  data-target="#modal-form-weighing"
-                  data-animal_na="{{ $animal->animal_na }}"
-                  data-animal_id="{{ $animal->id }}"
-                  @if($animal->numWeighings>0)   
-                  data-animal_lw="{{ $animal->weighings->last()->weight }} Kgs"
-                  @else
-                  data-animal_lw="{{ $animal->weight_in }} Kgs"
-                  @endif
-                  data-title="Insertar Pesaje para el Animal: {{ $animal->animal_na }}"
+                <a href=""
+                title="Insertar Pesaje para el Animal: {{ $animal->animal_na }}"
+                data-toggle="modal"
+                data-target="#modal-form-weighing"
+                data-animal_na="{{ $animal->animal_na }}"
+                data-animal_id="{{ $animal->id }}"
+                @if($animal->numWeighings>0)   
+                data-animal_lw="{{ $animal->weighings->last()->weight }} Kgs"
+                @else
+                data-animal_lw="{{ $animal->weight_in }} Kgs"
+                @endif
+                data-title="Insertar Pesaje para el Animal: {{ $animal->animal_na }}"
 
-                  >
-                  <span class="label label-warning"><i class="fa fa-balance-scale"></i></span>
-                </a>
-                @endcan
-
-
-                @can('animal.destroy')
-                <a href="javascript:void(0)" id="{{ $animal->id }}"
-                  class="btn-delete"
-                  title="Eliminar">
-                  <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
-
-                  <form method="POST"
-                  id="form-destroy-{{ $animal->id }}"
-                  action="{{ route('animal.destroy', $animal) }}">
-                  {{ csrf_field() }}
-                  {{ method_field('DELETE') }}
-                </form>
-                @endcan 
-
-              </td>
-            </tr>
-            @endforeach
-
-          </tbody></table>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer clearfix">
-
-          {{ $animals_active->links() }}
+                >
+                <span class="label label-warning"><i class="fa fa-balance-scale"></i></span>
+              </a>
+              @endcan
 
 
-          <a title="Exportar a PDF"
-          href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
-          <i class="fa fa-download"></i> Generar PDF
-        </a>
+              @can('animal.destroy')
+              <a href="javascript:void(0)" id="{{ $animal->id }}"
+                class="btn-delete"
+                title="Eliminar">
+                <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-        <a title="Exportar a Excel"
-        href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
-        <i class="fa fa-download"></i> Generar EXCEL
-      </a>  
+                <form method="POST"
+                id="form-destroy-{{ $animal->id }}"
+                action="{{ route('animal.destroy', $animal) }}">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+              </form>
+              @endcan 
 
-      @can('animal.create')
-      <a class="btn btn-primary pull-right"
-      title="Crear un nueva animal"
-      style="margin-right: 5px;"
-      href="{{ route('animal.create') }}">
-      <i class="fa fa-plus"></i> Agregar Nuevo
+            </td>
+          </tr>
+          @endforeach
+
+        </tbody></table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+
+        {{ $animals_active->links() }}
+
+
+        <a title="Exportar a PDF"
+        href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
+        <i class="fa fa-download"></i> Generar PDF
       </a>
-      @endcan
+
+      <a title="Exportar a Excel"
+      href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
+      <i class="fa fa-download"></i> Generar EXCEL
+    </a>  
+
+    @can('animal.create')
+    <a class="btn btn-primary pull-right"
+    title="Crear un nueva animal"
+    style="margin-right: 5px;"
+    href="{{ route('animal.create') }}">
+    <i class="fa fa-plus"></i> Agregar Nuevo
+  </a>
+  @endcan
 
 
-  </div>
+</div>
 
 </div>
 
@@ -273,7 +273,7 @@
       <th>Rodeo</th>
       <th>Potrero</th>
       <th style="width: auto">Ingreso</th>
-      <th style="width: 80px; text-align: center;">Acciones</th>
+      <th style="width: 120px; text-align: center;">Acciones</th>
     </tr>
     @foreach($animals_inactive as $animal)
     <tr>
@@ -286,6 +286,14 @@
       <td>{{ $animal->paddock->paddock_na }}</td>
       <td>{{ $animal->date_in }}</td>
       <td style="text-align: center;">
+
+        {{-- Si pertenece a Animales Muertos habilitamos el boton del acta de defuncion --}}
+        @if($animal->rodeo_id == 2)
+        <a href="{{ route('act_animals.pdf', $animal->id ) }}" id="{{ $animal->id }}"
+          title="Generar Acta de Defuncion para el Animal {{ $animal->animal_na }}">
+          <span class="label bg-maroon"><i class="fa fa-book"></i></span></a>
+        @endif
+
         <a href="javascript:void(0)"
         title="Editar"
         onclick="event.preventDefault();
@@ -377,16 +385,16 @@
         modal.find('.modal-body #paddock_id').val(animal_paddock_id)
         modal.find('.modal-body #rodeo_id').val(animal_rodeo_id)
         modal.find('.modal-body #comment').val(animal_comment)
-       
+
              //Verificamos el Genero para Marcar el Radio Button
-        if (animal_gender == 'm')
-        {
-         modal.find('.modal-body #macho').prop('checked', true)
-       }
-       else
-       {
-         modal.find('.modal-body #hembra').prop('checked', true)
-       }
+             if (animal_gender == 'm')
+             {
+               modal.find('.modal-body #macho').prop('checked', true)
+             }
+             else
+             {
+               modal.find('.modal-body #hembra').prop('checked', true)
+             }
 
         //Verificamos la Condicion del Animal (Propio o Mediania) para Marcar el Radio Button
         if (animal_condition == 'propia')
@@ -399,7 +407,7 @@
        }
 
 
-      })
+     })
 
   });
   

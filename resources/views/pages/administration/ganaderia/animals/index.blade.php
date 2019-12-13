@@ -82,10 +82,10 @@
 
           </div>
 
-          <div class="box-body">
-            <table class="table table-bordered">
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-bordered table-hover">
               <tbody><tr>
-                <th>image</th>
+                <th>#</th>
                 <th>Nombre</th>
                 <th>Cod</th>
                 <th>Especie</th>
@@ -98,7 +98,7 @@
               </tr>
               @foreach($animals_active as $animal)
               <tr>
-                <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/bull.png') }}"></a></td>
+                <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/IconoVaca2_28x28.png') }}"></a></td>
                 <td><a href="{{ route('animal.show', $animal->id) }}">{{ $animal->animal_na }}</a></td>
                 <td>{{ $animal->animal_cod }}</td>
                 <td>{{ $animal->breed->specie->specie_na }}</td>
@@ -247,7 +247,7 @@
 
 </div>
 <!-- Animales Inactivos column -->  
-<div class="box-body">
+<div class="box-body table-responsive no-padding">
   <div class="box box-danger">
     <div class="box-header with-border">
       <h3 class="box-title">Administracion @yield('title-page') (Inactivos)</h3>
@@ -265,7 +265,7 @@
 <div class="box-body">
   <table class="table table-bordered">
     <tbody><tr>
-      <th style="width: 50px">image</th>
+      <th style="width: 50px">#</th>
       <th style="width: auto">Nombre</th>
       <th style="width: auto">Cod</th>
       <th>Especie</th>
@@ -277,7 +277,7 @@
     </tr>
     @foreach($animals_inactive as $animal)
     <tr>
-      <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/bull.png') }}"></a></td>
+      <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/IconoVacaInactiva28x28.png') }}"></a></td>
       <td><a href="{{ route('animal.show', $animal->id) }}">{{ $animal->animal_na }}</a></td>
       <td>{{ $animal->animal_cod }}</td>
       <td>{{ $animal->breed->specie->specie_na }}</td>

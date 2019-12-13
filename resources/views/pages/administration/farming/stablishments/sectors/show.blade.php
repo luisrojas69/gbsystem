@@ -21,8 +21,8 @@
       <h3 class="box-title">Lotes del Sector <strong>{{ $sector->sector_de }} - ({{ $sector->sector_co }})</strong></h3>
     </div>
     <!-- /.box-header -->
-    <div class="box-body" >
-      <table class="table table-bordered" >
+    <div class="box-body table-responsive no-padding" >
+      <table class="table table-bordered table-hover" >
         <tbody><tr>
           <th style="width: 60px">ID</th>
           <th style="width: 120px">Codigo</th>

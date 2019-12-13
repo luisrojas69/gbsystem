@@ -56,6 +56,9 @@ Route::middleware(['auth'])->group(function () {
 	//Roles
 	Route::resource('administration/role','RoleController');
 
+	//Permisos
+	Route::resource('administration/permission','PermissionController');
+
 
 	//Pozos
 	Route::resource('well','WellController')->except(['create', 'edit']);;

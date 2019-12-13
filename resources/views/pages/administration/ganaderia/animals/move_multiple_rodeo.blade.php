@@ -21,8 +21,8 @@
               <h3 class="box-title">Administración de @yield('title-page')</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <table class="table table-bordered">
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-bordered table-hover">
                 <tbody><tr>
                   <th><input type="checkbox" id="selectall"></th>
                   <th style="width: 60px">image</th>

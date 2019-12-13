@@ -26,7 +26,7 @@
               <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body table-responsive no-padding">
 
             <table id="t_lots" class="table table-hover table-striped" style="font-size: 12px;">
                      <thead>

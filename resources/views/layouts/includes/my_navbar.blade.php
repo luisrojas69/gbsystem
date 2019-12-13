@@ -131,7 +131,7 @@
                 </div>
                 <div class="pull-right">
                 
-                  <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-default btn-flat">Cerrar Sesi&oacute;n</a>
+                  <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form2').submit();" class="btn btn-default btn-flat">Cerrar Sesi&oacute;n</a>
                   
                 </div>
               </li>
@@ -139,10 +139,10 @@
           </li>
           <!-- Control Sidebar Toggle Button -->
           <li>
-            <a title="Cerrar Sesi&oacute;n" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-toggle="control-sidebar"><i class="fa fa-sign-out"></i></a>
+            <a title="Cerrar Sesi&oacute;n" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form2').submit();" data-toggle="control-sidebar"><i class="fa fa-sign-out"></i></a>
           </li>
 
-          <form id="logout-form" 
+          <form id="logout-form2" 
                         action="{{ route('logout') }}" 
                         method="POST" 
                         style="display: none;">

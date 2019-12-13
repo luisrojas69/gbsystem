@@ -79,8 +79,8 @@ href="{{ route('pluviometries.excel') }}" type="button" class="btn btn-success p
 
 </div>
 <!-- /.box-header -->
-<div class="box-body">
-  <table class="table table-bordered">
+<div class="box-body table-responsive no-padding">
+  <table class="table table-bordered table-hover">
     <tbody><tr>
      <th style="text-align: center;">Fecha</th>
      <th>MM</th>

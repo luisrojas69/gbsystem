@@ -21,21 +21,30 @@
               <h3 class="box-title">Administración de @yield('title-page')</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <table class="table table-bordered">
-                <tbody><tr>
-                  <th><input type="checkbox" id="selectall"></th>
-                  <th style="width: 60px">image</th>
+            <div class="box-body table-responsive">
+              <form action="{{ url('multimovetopaddock') }}" method="post" id="LuisRojas">
+                @csrf
+                
+              <table data-maintain-meta-data="true" id="t_animals" class="table table-bordered table-hover table-striped">
+                <thead>
+
+                  <tr>
+                  <th><input type="checkbox" id="selectall2"></th>
+                  <th style="width: 60px; text-align: center">#</th>
                   <th>Nombre</th>
-                  <th>Codigo</th>
+                  <th style="text-align: center;">Codigo</th>
                   <th>Especie</th>
                   <th>Raza</th>
                   <th>Rodeo</th>
                   <th>Potrero</th>
                   <th>Fecha Ingreso</th>
                 </tr>
+
+              </thead>
+              <tbody>
+
                     @foreach($animals as $animal)
-              <form action="{{ url('multimovetopaddock') }}" method="post" id="multiple">
+             
                 @csrf
                 <tr>
                   <td style="text-align: center;">
@@ -43,7 +52,7 @@
                       <input class="case" type="checkbox" name="ids[]" value="{{ $animal->id }}">
                       
                   </td>
-                  <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/bull.png') }}"></a></td>
+                  <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/IconoVaca2_28x28.png') }}"></a></td>
                   <td><a href="{{ route('animal.show', $animal->id) }}">{{ $animal->animal_na }}</a></td>
                   <td>{{ $animal->animal_cod }}</td>
                   <td>{{ $animal->breed->specie->specie_na }}</td>
@@ -55,6 +64,7 @@
                 </tr>
                
                @endforeach
+             </tbody>
 
                <tr>
                   <td colspan="4">
@@ -67,20 +77,21 @@
                               </option>
                           @endforeach
                     </select>
+                     
                   </div>
                 </td>
               </tr>
               <tr>
                 <td colspan="5">
-                <input class="btn btn-primary no-margin pull-right" type="submit" name="enviar" value="Procesar Movimiento"> 
+                 <input class="btn btn-primary no-margin pull-right" type="submit" name="enviar" value="Procesar Movimiento"> 
                  
-                 </form>  
+                 
 
                   </td>
                </tr>
 
-              </tbody>
             </table>
+            </form> 
             </div>
             
            
@@ -111,6 +122,38 @@
 
 <script type="text/javascript" src="{{ asset('scripts/confirm-update-rodeo.js') }}"></script>
 
+
+<script src="{{ asset('js/datatables.min.js') }}"></script>
+   <script>
+      $(function () 
+      {
+         var table = $('#t_animals').DataTable(
+         {
+            "paging": false,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": true,
+            "columnDefs": [ { "visible": false, "targets": 3 } ],
+            "order": [[ 3, 'asc' ]],
+            //"displayLength": 10,
+            "drawCallback": function ( settings ) 
+            {
+               var api = this.api();
+               var rows = api.rows( {page:'current'} ).nodes();
+               var last = null;
+
+            }            
+         });
+
+
+
+      });
+   </script> 
+
+
+<!--Funcion para seleccionar todos los animales-->
 <script>
   $("#selectall").on("click", function() {  
   $(".case").prop("checked", this.checked);  
@@ -125,5 +168,6 @@
     }  
   });
 </script>
+
 
 @endsection

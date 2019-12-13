@@ -62,8 +62,8 @@
   <h3 class="box-title">Administraci&oacute;n de @yield('title-page')</h3>
 </div>
 <!-- /.box-header -->
-<div class="box-body">
-  <table class="table table-bordered">
+<div class="box-body table-responsive no-padding">
+  <table class="table table-bordered table-hover">
     <tbody><tr>
       <th style="width: 60px">ID</th>
       <th style="width: 180px">Nombre</th>

@@ -36,7 +36,8 @@
                   <td style="text-align: center;">{{ $capture->area }}</td>
                   <td style="text-align: center;">{{ $capture->fecha }}</td>
                   <td style="text-align: center;">
-                  @can('capture.edit')  
+
+                      @can('capture.edit')  
                         <a href="javascript:void(0)"
                             title="Editar" 
                             onclick="event.preventDefault(); 
@@ -45,26 +46,27 @@
                         </a>                    
 
                         <form method="GET" 
-                            action="{{ route('capture.edit', $capture) }}"
+                            action="{{ route('capture.edit', $capture->id) }}"
                             id="form-edit-{{ $capture->id }}"
                             style="display: none;">
                             {{ csrf_field() }}
                         </form>
                       @endcan
 
-                      @can('capture.destroy')
-                        <a href="javascript:void(0)" id="{{ $capture->id }}"
-                          class="btn-delete"
-                          title="Eliminar">
-                        <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+                     @can('capture.destroy')
+                            <a href="javascript:void(0)" id="{{ $capture->id }}"
+                              class="btn-delete"
+                              title="Eliminar">
+                            <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-                         <form method="POST"
-                            id="form-destroy-{{ $capture->id }}" 
-                            action="{{ route('capture.destroy', $capture) }}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                        </form>
-                      @endcan
+                           <form method="POST"
+                              id="form-destroy-{{ $capture->id }}"
+                              action="{{ route('capture.destroy', $capture->id) }}">
+                              {{ csrf_field() }}
+                              {{ method_field('DELETE') }}
+                          </form>
+                        @endcan
+
                     
                   </td>
 

@@ -1,3 +1,4 @@
+        
         @foreach($crops as $item)  
        	@if(count($item->varieties))   
         crops.push( { "id": "{{$item->id}}",
@@ -5,3 +6,5 @@
                      });
          @endif             
         @endforeach
+
+       

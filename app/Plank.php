@@ -18,4 +18,9 @@ class Plank extends Model
     	$query->where('plank_de', "LIKE", "%$name%");
     	}
     }	
+
+    public function captures()
+    {
+        return $this->hasMany('App\Capture');
+    }
 }

@@ -170,7 +170,7 @@
 
                 <form method="POST"
                 id="form-destroy-{{ $animal->id }}"
-                action="{{ route('animal.destroy', $animal) }}">
+                action="{{ route('animal.destroy', $animal->id) }}">
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}
               </form>
@@ -250,83 +250,89 @@
 <div class="box-body table-responsive no-padding">
   <div class="box box-danger">
     <div class="box-header with-border">
-      <h3 class="box-title">Administracion @yield('title-page') (Inactivos)</h3>
-      <a title="Exportar a PDF"
-      href="{{ route('animals.pdf') }}" type="button" class="btn btn-danger pull-right" style="margin-right: 5px; ">
-      <i class="fa fa-download"></i> Generar PDF
-    </a>
+      <h3 class="box-title">Administracion @yield('title-page') (Inactivos)</h3>              
+    </div>
 
-    <a title="Exportar a Excel"
-    href="{{ route('animals.excel') }}" type="button" class="btn btn-success pull-right" style="margin-right: 5px; ">
-    <i class="fa fa-download"></i> Generar EXCEL
-  </a>                
-</div>
+    <div class="box-body">
+      <table class="table table-bordered">
+        <tbody><tr>
+          <th style="width: 50px">#</th>
+          <th style="width: auto">Nombre</th>
+          <th style="width: auto">Cod</th>
+          <th>Especie</th>
+          <th>Raza</th>
+          <th>Rodeo</th>
+          <th>Potrero</th>
+          <th style="width: auto">Ingreso</th>
+          <th style="width: 120px; text-align: center;">Acciones</th>
+        </tr>
+        @foreach($animals_inactive as $animal)
+        <tr>
+          <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/IconoVacaInactiva28x28.png') }}"></a></td>
+          <td><a href="{{ route('animal.show', $animal->id) }}">{{ $animal->animal_na }}</a></td>
+          <td>{{ $animal->animal_cod }}</td>
+          <td>{{ $animal->breed->specie->specie_na }}</td>
+          <td>{{ $animal->breed->breed_na }}</td>
+          <td>{{ $animal->rodeo->rodeo_na }}</td>
+          <td>{{ $animal->paddock->paddock_na }}</td>
+          <td>{{ $animal->date_in }}</td>
+          <td style="text-align: center;">
 
-<div class="box-body">
-  <table class="table table-bordered">
-    <tbody><tr>
-      <th style="width: 50px">#</th>
-      <th style="width: auto">Nombre</th>
-      <th style="width: auto">Cod</th>
-      <th>Especie</th>
-      <th>Raza</th>
-      <th>Rodeo</th>
-      <th>Potrero</th>
-      <th style="width: auto">Ingreso</th>
-      <th style="width: 120px; text-align: center;">Acciones</th>
-    </tr>
-    @foreach($animals_inactive as $animal)
-    <tr>
-      <td><a href="{{ route('animal.show', $animal->id) }}"><img src="{{ asset('img/IconoVacaInactiva28x28.png') }}"></a></td>
-      <td><a href="{{ route('animal.show', $animal->id) }}">{{ $animal->animal_na }}</a></td>
-      <td>{{ $animal->animal_cod }}</td>
-      <td>{{ $animal->breed->specie->specie_na }}</td>
-      <td>{{ $animal->breed->breed_na }}</td>
-      <td>{{ $animal->rodeo->rodeo_na }}</td>
-      <td>{{ $animal->paddock->paddock_na }}</td>
-      <td>{{ $animal->date_in }}</td>
-      <td style="text-align: center;">
+            {{-- Si pertenece a Animales Muertos habilitamos el boton del acta de defuncion --}}
+            @if($animal->rodeo_id == 2)
+            <a href="{{ route('act_animals.pdf', $animal->id ) }}" id="{{ $animal->id }}"
+              title="Generar Acta de Defuncion para el Animal {{ $animal->animal_na }}">
+              <span class="label bg-maroon"><i class="fa fa-book"></i></span></a>
+              @endif
 
-        {{-- Si pertenece a Animales Muertos habilitamos el boton del acta de defuncion --}}
-        @if($animal->rodeo_id == 2)
-        <a href="{{ route('act_animals.pdf', $animal->id ) }}" id="{{ $animal->id }}"
-          title="Generar Acta de Defuncion para el Animal {{ $animal->animal_na }}">
-          <span class="label bg-maroon"><i class="fa fa-book"></i></span></a>
-        @endif
+              @can('animal.edit')
+              <a href=""
+              title="Editar"
+              data-toggle="modal"
+              data-target="#modal-form-update"
+              data-animal_na="{{ $animal->animal_na }}"
+              data-animal_id="{{ $animal->id }}"
+              data-animal_cod="{{ $animal->animal_cod }}"
+              data-animal_breed="{{ $animal->breed_id }}"
+              data-animal_lot="{{ $animal->lot_animal_id }}"
+              data-animal_col="{{ $animal->animal_col }}"
+              data-animal_gender="{{ $animal->gender }}"
+              data-animal_date="{{ $animal->date_in }}"
+              data-animal_weight_in="{{ $animal->weight_in }}"
+              data-animal_condition="{{ $animal->condition }}"
+              data-animal_paddock_id="{{ $animal->paddock_id }}"
+              data-animal_rodeo_id="{{ $animal->rodeo_id }}"
+              data-animal_comment="{{ $animal->comment }}"
+              data-title="Formulario de Edicion - Editar {{ $animal->animal_na }}"
 
-        <a href="javascript:void(0)"
-        title="Editar"
-        onclick="event.preventDefault();
-        document.getElementById('form-edit-{{ $animal->id }}').submit()">
-        <span class="label label-primary"><i class="fa fa-pencil"></i></span>
-      </a>
+              >
+              <span class="label label-primary"><i class="fa fa-pencil"></i></span>
+            </a>
+            @endcan
 
-      <form method="GET"
-      action="{{ route('animal.edit', $animal) }}"
-      id="form-edit-{{ $animal->id }}"
-      style="display: none;">
-      {{ csrf_field() }}
-    </form>
+            @can('animal.destroy')
+            <a href="javascript:void(0)" id="{{ $animal->id }}"
+              class="btn-delete"
+              title="Eliminar">
+              <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
-    <a href="javascript:void(0)" id="{{ $animal->id }}"
-      class="btn-delete"
-      title="Eliminar">
-      <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
+              <form method="POST"
+              id="form-destroy-{{ $animal->id }}"
+              action="{{ route('animal.destroy', $animal) }}">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+            </form>
+            @endcan 
 
-      <form method="POST"
-      id="form-destroy-{{ $animal->id }}"
-      action="{{ route('animal.destroy', $animal) }}">
-      {{ csrf_field() }}
-      {{ method_field('DELETE') }}
-    </form>
+          </form>
 
-  </td>
-</tr>
-@endforeach
+        </td>
+      </tr>
+      @endforeach
 
-</tbody></table>
-</div>
-<!-- /.box-body -->
+    </tbody></table>
+  </div>
+  <!-- /.box-body -->
 
 </div>
 

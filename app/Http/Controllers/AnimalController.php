@@ -46,7 +46,7 @@ class AnimalController extends Controller
      */
     public function index(Request $request)
     {
-        $animals_active=Animal::name($request->name)->where('rodeo_id', '=', 1)->paginate(10);
+        $animals_active=Animal::name($request->name)->where('rodeo_id', '=', 1)->paginate(5);
         //$animals_active = Animal::where('rodeo_id', '=', 1)->get();
         $animals_inactive = Animal::where('rodeo_id', '!=', 1)->paginate(10);
         $species = Specie::select('id', 'specie_de')->orderBy('id', 'asc')->get();

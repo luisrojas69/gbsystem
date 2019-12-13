@@ -34,35 +34,37 @@ class CaptureController extends Controller
 
     public function index()
     {
-    	$captures= DB::table('captures')
-    	->join('planks', 'planks.id', '=', 'captures.plank_id')
-    	->join('activities', 'activities.id', '=', 'captures.activity_id')
-    	->join('crops', 'crops.id', '=', 'captures.crop_id')
-    	->select('captures.activity_date as fecha', 'captures.area', 'planks.*', 'crops.crop_na', 'activities.activity_na')
+        $captures= DB::table('captures')
+        ->join('planks', 'planks.id', '=', 'captures.plank_id')
+        ->join('activities', 'activities.id', '=', 'captures.activity_id')
+        ->join('crops', 'crops.id', '=', 'captures.crop_id')
+        ->select('captures.id','captures.activity_date as fecha', 'captures.area', 'planks.*', 'crops.crop_na', 'activities.activity_na')
         ->orderBy('fecha', 'desc')
-    	->get();
-    	//$captures= Capture::all();
-    	return view('pages.administration.farming.captures.index', compact('captures'));
-    	//dd($captures);
+        ->get();
+        //$captures= Capture::all();
+        return view('pages.administration.farming.captures.index', compact('captures'));
+        //dd($captures);
     }
+
 
     public function create ()
     {	
+
         $sectors = Sector::with('lots')->get(['id','sector_de']);
     	$lots = Lot::with('Sector')->get(['id','lot_de','sector_id']);
         $planks = Plank::with('Lot')->get(['id','plank_de','lot_id']);
     	$crops = Crop::get(['id','crop_de']);
-        $varieties = Variety::get(['id', 'variety_na']);
+        $varieties = Variety::get(['id', 'variety_na', 'crop_id']);
     	return view('pages.administration.farming.captures.create', compact('lots','planks', 'varieties', 'crops', 'sectors'));
     }
 
     public function show (Capture $capture){
-    	return view('pages.administration.captures.show', compact('capture'));
+    	        return ('k');
     }
 
      public function store(Request $request)
     {
-
+        //dd($request->all());
         try {
         	$capture =new Capture;
       		$capture->plank_id = $request->plank_id;
@@ -76,7 +78,7 @@ class CaptureController extends Controller
       		$capture->save();
       		DB::commit();
       		session()->flash('my_message', 'Capture Registrado Correctamente'); 
-      		return redirect('capture'); 	
+      		return redirect()->back(); 	
         } catch (Exception $e) {
         	session()->flash('my_error', $e->getMessage());
         	DB::rollback();
@@ -85,13 +87,14 @@ class CaptureController extends Controller
     }
 
     public function destroy(Capture $capture){
+
     	try{
     		$capture =Capture::find($capture->id);
     		DB::beginTransaction();
     		$capture->delete();
     		DB::commit();
     		session()->flash('my_message', 'capture Eliminado Correctamente');
-    		return redirect('capture');
+    		return redirect()->back();
     	}catch(Exception $e){
     		session()->flash('my_error', $e->getMessage());
     		DB::rollback();

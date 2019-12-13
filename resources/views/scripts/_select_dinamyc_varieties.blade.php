@@ -1,6 +1,8 @@
-     @foreach($varieties as $item)     
-        varieties.push( { "id": "{{$item->id}}",
-                       "crop_id": "{{$item->crop_id }}",
-                       "html": "<option value='{{$item->id}}'>{{ $item->variety_de }}</option>" 
-                     });
-        @endforeach
+@foreach($varieties as $variety)
+varieties.push({ 
+"id": "{{$variety->id}}",
+"crop_id": "{{$variety->crop_id }}",
+"html": "<option value='{{$variety->id}}'>{{ $variety->variety_na }}</option>" 
+});
+
+@endforeach

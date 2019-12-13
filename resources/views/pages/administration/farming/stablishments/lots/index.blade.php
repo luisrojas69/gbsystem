@@ -122,7 +122,7 @@
                           </a>
 
                         @endcan
-
+                        {{ $lot }}
                         @can('lot.destroy')
                             <a href="javascript:void(0)" id="{{ $lot->id }}"
                               class="btn-delete  {{ $lot->numPlanks>0 ? 'disabled' : '' }}"

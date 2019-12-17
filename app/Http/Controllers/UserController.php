@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Caffeinated\Shinobi\Models\Role;
+use App\Http\Requests\UserProfileRequest;
+use Image;
 
 //Laravel-Excel
 use Maatwebsite\Excel\Facades\Excel;
@@ -19,7 +21,7 @@ class UserController extends Controller
 {
     public function __construct(){
 
-        
+
         //$this->middleware('can:users.create')->only(['create', 'store']);
 
         $this->middleware('can:user.index')->only(['index']);
@@ -79,6 +81,51 @@ class UserController extends Controller
     public function usersExcel(){       
         return Excel::download(new UsersExport, 'users-list-'.date('Y-m-d_H:i:s').'.xlsx');
     }
+
+    public function myProfile(){
+        return view('pages.administration.users.index');
+    }
+
+    public function updateProfile(UserProfileRequest $request){
+        //dd($request->all());
+
+     try{
+        $user = User::findOrFail(Auth::id());
+        $user->name = $request->get('name');
+        $user->password = bcrypt($request->get('password'));
+
+
+        if($request->hasFile('avatar')) {
+
+          $image = $request->file('avatar');
+
+          $input['imagename'] = Auth::id().'_'.time().'.'.$image->getClientOriginalExtension();
+
+          $destinationPath = public_path('img/uploads/avatars/thumbnail');
+          $img = Image::make($image->getRealPath());
+          $img->resize(160, 160, function ($constraint) {
+           // $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$input['imagename']);
+
+          $destinationPath = public_path('img/uploads/avatars');
+          $image->move($destinationPath, $input['imagename']);
+
+         // $this->postImage->add($input);
+
+          $user->avatar = $input['imagename'];
+      }
+
+
+      DB::beginTransaction();
+      $user->save();
+      DB::commit();
+      session()->flash('my_message', 'Su Perfil fue Modificado Correctamente');
+      return redirect()->back();
+  }catch(Exception $e){
+      session()->flash('my_error', $e->getMessage());
+      DB::rollback();
+  }
+}
 
 }
 

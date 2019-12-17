@@ -5,7 +5,7 @@
       <div class="user-panel">
         <div class="pull-left image">
           @auth
-          <img src="{{ asset('img/'.Auth::user()->avatar) }}" class="img-circle" alt="User Image">
+          <img src="{{ asset ('img/uploads/avatars/thumbnail/'.Auth::user()->avatar) }}" class="img-circle" alt="User Image">
           @endauth
 
           @guest

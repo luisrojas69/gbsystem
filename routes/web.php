@@ -42,10 +42,15 @@ Route::get('/example', function () {
 
 
 
+
 //Grupo de Rutas con el Middleware Auth ( para forzar el inicio d Sesion)
 Route::middleware(['auth'])->group(function () {
 
-	
+	//Rutas de Usuario
+	Route::get ('/user/profile', 'UserController@myProfile')->name('user.profile');
+
+	Route::post ('/user/profile', 'UserController@updateProfile')->name('update.profile');
+
 	
 	//Usuarios
 	Route::resource('administration/user','UserController')->except(['create']);

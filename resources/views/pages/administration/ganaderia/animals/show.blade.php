@@ -281,7 +281,7 @@
 
   <div class="row">
     
-        <div class="col-md-3">
+        <div class="col-md-4">
 
           <!-- Profile Image -->
           <div class="box box-primary">
@@ -308,7 +308,6 @@
 
                 </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -316,7 +315,7 @@
 
         </div>
         <!-- /.col -->
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#activity" data-toggle="tab">Menu Animal</a></li>

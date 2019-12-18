@@ -107,8 +107,8 @@ class UserController extends Controller
            // $constraint->aspectRatio();
         })->save($destinationPath.'/'.$input['imagename']);
 
-          $destinationPath = public_path('img/uploads/avatars');
-          $image->move($destinationPath, $input['imagename']);
+          //$destinationPath = public_path('img/uploads/avatars');
+          //$image->move($destinationPath, $input['imagename']);
 
          // $this->postImage->add($input);
 

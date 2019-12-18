@@ -51,8 +51,10 @@ class HomeController extends Controller
       //auth()->user()->removeRoles('Admin');
       //auth()->user()->assignRoles('Supervisor');
       //auth()->user()->syncRoles('Admin');
+      //$isEditor = auth()->user()->hasRole('admin');
 
-      //dd($roles);
+      //dd($isEditor);
+    return redirect()->back();
 }
 
     //Funcion para generar Grafico de Pluviometrias Separado por Sector

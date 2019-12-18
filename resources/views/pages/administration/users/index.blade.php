@@ -16,7 +16,7 @@
     <!-- Profile Image -->
     <div class="box box-primary">
       <div class="box-body box-profile">
-        <img class="profile-user-img img-responsive img-circle" src="{{asset ('img/uploads/avatars/thumbnail/'.Auth::user()->avatar) }}" alt="User Picture Default">
+        <img class="profile-user-img img-responsive img-circle" src="{{ asset ('img/uploads/avatars/thumbnail/'.Auth::user()->avatar) }}" alt="User Picture">
 
         <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
 

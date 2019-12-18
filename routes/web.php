@@ -23,6 +23,9 @@ Auth::routes();
 //Home
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/home/roles', 'HomeController@getRolesTest');
+
+
 Route::get('/', 'HomeController@index');
 
 Route::get('/home/pluviometryBySector/{start}/{end}', 'HomeController@pluviometryBySector');

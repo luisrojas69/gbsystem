@@ -109,7 +109,7 @@
               <!-- Profile Image -->
                 <div class="box box-primary">
                   <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="{{ asset('img/'.$user->avatar) }}" alt="Avatar del Usuario {{ $user->name }}">
+                    <img class="profile-user-img img-responsive img-circle" src="{{ asset('img/uploads/avatars/thumbnail/'.$user->avatar) }}" alt="Avatar del Usuario {{ $user->name }}">
 
                     <h3 class="profile-username text-center">{{ $user->name }}</h3>
 
@@ -199,7 +199,8 @@
              $("#loading").hide();
              $("#user-name").html(datos[0].name);
              $("#user-email").html(datos[0].email);
-             $("#user-avatar").html(datos[0].avatar);
+             $("#user-avatar").prop('src', '../img/uploads/avatars/thumbnail/'+datos[0].avatar);
+             //console.log(datos[0].avatar);
 
              console.log(datos[1]);
               if(datos[1].length > 0){ 

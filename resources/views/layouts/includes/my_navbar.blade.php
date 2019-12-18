@@ -59,7 +59,7 @@
 
                 <p>
                   
-                  {{ Auth::user()->name }} - {{ Auth::user('ADMIN') ? 'Administrador' : 'Usuario'}}
+                  {{ Auth::user()->name }} - {{ auth()->user()->hasRole('admin') ? 'Administrador' : 'Usuario'}}
                   <small>Miembro desde el {{ Auth::user()->created_at->format('d/m/Y') }}</small>
                 </p>
               </li>

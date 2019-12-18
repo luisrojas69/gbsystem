@@ -128,8 +128,10 @@ class PlankController extends Controller
 
     public function update(Request $request)
     {
+        //dd($request->all());
         try {
             $plank = Plank::findOrFail($request->plank_id);
+            $plank->lot_id = $request->get('lot_id');
             $plank->plank_co = $request->get('plank_co');
             $plank->plank_de = $request->get('plank_de');
 			$plank->plank_area = $request->get('plank_area');

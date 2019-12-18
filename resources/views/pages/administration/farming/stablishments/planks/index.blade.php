@@ -21,7 +21,7 @@
         <h4 class="modal-title">Registrar un Nuevo Tablon</h4>
       </div>
       <div class="modal-body">
-        <form id="form_plank" class="form-horizontal"
+        <form id="form_plank_register" class="form-horizontal"
         role="form"
         method="POST"
         action="{{ route('plank.store') }}">
@@ -41,7 +41,7 @@
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <form id="form_plank" class="form-horizontal"
+        <form id="form_plank_edit" class="form-horizontal"
         role="form"
         method="POST"
         action="{{ route('plank.update','test') }}">
@@ -78,7 +78,7 @@
         <div class="col-sm-10">
           <select class="form-control" 
           name="lot_id"
-          id="lot_id"
+          id="lot_id2"
           required
           value="{{ old('lot_id') }}">
           <option value=''>Seleccione un Lote</option>
@@ -103,7 +103,7 @@
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-2 control-label">Tablon: </label>
       <div class="col-sm-10">
-       <select class="form-control" name="plank_id" id="plank_id" value="{{ old('plank_id') }}" required>
+       <select class="form-control" name="plank_id2" id="plank_id2" value="{{ old('plank_id') }}" required>
         <option value="">Seleccione un Tablon</option>       
       </select>
     </div>
@@ -326,24 +326,26 @@
 
    @include('scripts._select_dinamyc_planks')
 
-   $('#lot_id').on('change', function()
+   $('#lot_id2').on('change', function()
    {
     var lot = $(this).val();
 
     var selects = "<option value=''>Seleccione un Tablon</option>" ;
 
+    
     $.each(planks, function(index, value) 
     {
+
       if(value.lot_id == lot) { 
         selects += value.html; 
       }
     });
 
-    $("#plank_id").html(selects);
+    $("#plank_id2").html(selects);
   });
 
 
-   $("#plank_id").on('change',function()
+   $("#plank_id2").on('change',function()
    {
 
     var plank_id=$(this).val();

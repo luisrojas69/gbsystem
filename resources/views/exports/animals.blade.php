@@ -55,23 +55,30 @@ if($daysDiff == 0)
 }
 
 @endphp
-    
 
-    <td style="text-align: center;">  
+    <td style="text-align: center;">
+    {{-- Ultimo Pesaje en Kgs --}}  
       {{ $animal->weighings->last()->weight }} Kgs
   </td>
 
-  <td style="text-align: center;">  
+  <td style="text-align: center;">
+  {{-- Total Ganacia de Peso--}}  
     {{ $animal->weighings->last()->weight - $animal->weight_in }} Kgs
 </td>
 
-<td>{{ $animal->weighings->last()->date_read}}</td> 
+<td>
+    {{-- Fecha del Ultimo Pesaje --}}
+    {{ Carbon\Carbon::parse($animal->weighings->last()->date_read)->format('d-m-Y') }}
+
+</td> 
 
 <td>
+    {{-- Dias Transcurridos desde el Ultimo Pesaje --}}
 Hace {{ $daysDiff }} dia(s)
 </td>
 
-<td style="text-align: center;">  
+<td style="text-align: center;">
+{{-- Ganancia de Peso Diaria en Kgs --}}  
     {{ ($animal->weighings->last()->weight - $animal->weight_in)  / $dias }}
 </td> 
 
@@ -112,7 +119,9 @@ Hace {{ $daysDiff }} dia(s)
 
 @endif  
 
-<td>{{ $animal->date_in }}</td>  
+<td>
+    {{-- Fecha del Ingreso --}}
+    {{ Carbon\Carbon::parse($animal->date_in)->format('d-m-Y') }}</td>  
 <td>{{ $animal->comment }}</td>
 
 </tr>

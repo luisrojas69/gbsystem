@@ -129,7 +129,7 @@
                             <span class="label label-danger"><i class="fa fa-trash"></i></span></a>
 
                            <form method="POST"
-                              id="form-destroy-{{ $lot->id }}"
+                        y      id="form-destroy-{{ $lot->id }}"
                               action="{{ route('lot.destroy', $lot) }}">
                               {{ csrf_field() }}
                               {{ method_field('DELETE') }}

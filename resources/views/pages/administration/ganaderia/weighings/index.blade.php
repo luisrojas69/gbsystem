@@ -35,18 +35,16 @@
                            <th>Fecha de Pesaje</th>
                            <th>Peso</th>
                            <th>Animal</th>
-                           <th>Creado</th>
-                           <th>Acciones</th>
+                           <th style="text-align: center;">Acciones</th>
                         </tr>
                      </thead>
                      <tbody>
                         @foreach($weighings as $weighing)
                         <tr>
                         <td>{{$weighing->id}}</td>
-                        <td>{{$weighing->date_read}}</td>
+                        <td>{{ Carbon\Carbon::parse($weighing->date_read)->format('d-m-Y') }}</td>
                         <td>{{$weighing->weight}}</td>
                         <td><a href="{{ route('animal.show', $weighing->animal->id) }}">{{$weighing->animal->animal_cod}}, {{$weighing->animal->animal_na}}</a></td>
-                        <td>{{ $weighing->created_at }}</td>
                         <!-- Actions -->
                         <td style="text-align: center;">
                         <a href="javascript:void(0)"

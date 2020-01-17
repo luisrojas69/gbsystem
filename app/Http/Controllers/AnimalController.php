@@ -124,10 +124,12 @@ class AnimalController extends Controller
         if((Weighing::where("animal_id", $animal->id )->count() > 0) ){
             $query=Weighing::where("animal_id", $animal->id )->orderBy('id', 'DESC')->first();
             $weight=$query->weight;
+            $last_date = $animal->weighings->last()->date_read;
         }else{
             $weight=$animal->weight_in;
+            $last_date = $animal->date_in;
         }
-        return view('pages.administration.ganaderia.animals.show', compact('animal', 'rodeos', 'paddocks', 'species','breeds', 'weight'));
+        return view('pages.administration.ganaderia.animals.show', compact('animal', 'rodeos', 'paddocks', 'species','breeds', 'weight', 'last_date'));
     }
 
     /**

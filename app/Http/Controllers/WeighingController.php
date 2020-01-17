@@ -51,7 +51,7 @@ class WeighingController extends Controller
     public function new_weighing()
     {
         $animals = Animal::where('rodeo_id', '1')->get();
-         if (!is_array($animals)){
+         if (count($animals)<=0){
             session()->flash('my_error', 'No se encontraron Animales en Rodeos "Machos para Engorde"');
             return redirect()->back();
             }else{

@@ -168,6 +168,8 @@ Route::middleware(['auth'])->group(function () {
 	//Captures
 	Route::resource('capture', 'CaptureController');
 
+	Route::get ('/report/captures-excel', 'CaptureController@capturesExcel')->name('captures.excel');
+
 	//Species
 	Route::resource('animals/specie', 'SpecieController')->except(['create','show', 'edit']);
 

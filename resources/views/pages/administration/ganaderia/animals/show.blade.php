@@ -311,11 +311,11 @@
 
           {{-- Calcuamos la cantidad de dias transcurridos desde su ingreso --}}
           @php
-//convertimos la fecha 1 a objeto Carbon
+          //convertimos la fecha 1 a objeto Carbon
           $carbon1 = new \Carbon\Carbon($animal->date_in);
-//convertimos la fecha 2 a objeto Carbon
+          //convertimos la fecha 2 a objeto Carbon
           $carbon2 = new \Carbon\Carbon(date("Y-m-d"));
-//de esta manera sacamos la diferencia en minutos
+          //de esta manera sacamos la diferencia en minutos
           $daysDiff=$carbon1->diffInDays($carbon2);
 
           if($daysDiff == 0)
@@ -330,9 +330,15 @@
           <li><a href="#">Dias Transcurridos<span class="pull-right badge bg-purple">{{ $daysDiff }} dia(s)</span></a></li>
 
 
-          <li><a href="#">Ganancia Diaria<span class="pull-right badge bg-purple">
-            {{ round( ($weight - $animal->weight_in)  / $dias , 2) }} Kgs
-          </span></a></li>
+          <li>
+            <a href="#">Ganancia Diaria
+
+
+              <span class="pull-right badge {{ round( ($weight - $animal->weight_in)  / $dias , 2) < 1 ? 'bg-red' : 'bg-green' }}">
+                <i class="fa fa-fw fa-angle-double-{{ round( ($weight - $animal->weight_in)  / $dias , 2) < 1 ? 'down' : 'up' }}"></i> {{ round( ($weight - $animal->weight_in)  / $dias , 2) }} Kgs
+              </span>
+            </a>
+          </li>
 
 
 

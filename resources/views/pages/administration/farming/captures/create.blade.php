@@ -280,13 +280,13 @@ $("#plank_id").on('change',function()
         getGraphic(data);
         $("#activity_id").prop("disabled",false);
         $("#area").val("");  
-        $("#area").prop("max",data[0].disponible); 
-        $('#info_area_disponible').html(data[0].disponible);
-        $('#info_capacidad').html(data[0].capacidad_tablon);
-        $('#info_area_cosechada').html(data[0].total_cosechado);
-        $('#info_area_sembrada').html(data[0].total_sembrado);
-        $('#info_area_sembrada_actual').html(data[0].sembrado_actual);
-        $('#info_area_total_ajustado').html(data[0].total_ajustado);
+        $("#area").prop("max",Number((data[0].disponible).toFixed(2)));
+        $('#info_area_disponible').html(Number((data[0].disponible).toFixed(2)));
+        $('#info_capacidad').html(Number((data[0].capacidad_tablon).toFixed(2)));
+        $('#info_area_cosechada').html(Number((data[0].total_cosechado).toFixed(2)));
+        $('#info_area_sembrada').html(Number((data[0].total_sembrado).toFixed(2)));
+        $('#info_area_sembrada_actual').html(Number((data[0].sembrado_actual).toFixed(2)));
+        $('#info_area_total_ajustado').html(Number((data[0].total_ajustado).toFixed(2)));
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -347,7 +347,7 @@ error: function()
            });
 
             $('#area').val('');
-            $('#area').prop('max', data[0].capacidad_tablon);
+            $('#area').prop('max', Number((data[0].capacidad_tablon).toFixed(2)));
             $("#crop_id").html("<option value='"+data[0].id_cultivo+"'>"+data[0].cultivo+"</option>");
             break;
 
@@ -369,15 +369,15 @@ error: function()
              switch(activity_id) {
                         case '1':// Si es Siembra
                         $('#area').val('');
-                        $('#area').prop('max', data[0].disponible);
+                        $('#area').prop('max', Number((data[0].disponible).toFixed(2)));
                         break;
                         case '2':// Si es Cosecha
                         $('#area').val('');
-                        $('#area').prop('max', data[0].sembrado_actual);
+                        $('#area').prop('max', Number((data[0].sembrado_actual).toFixed(2)));
                         break;
                         case '3'://Si es Ajuste
                         $('#area').val('');
-                        $('#area').prop('max', data[0].sembrado_actual);
+                        $('#area').prop('max', Number((data[0].sembrado_actual).toFixed(2)));
                         $('#comment').val('');
                         $('#comment').prop('required', true);
                         break;
@@ -400,7 +400,7 @@ error: function()
              $('#area').val('');
              $('#variety_id').val('');
 
-             $('#area').prop('max', data[0].capacidad_tablon);
+             $('#area').prop('max', Number((data[0].capacidad_tablon).toFixed(2)));
                  get_crops();//Obetenemos los Rubros
                });
 
@@ -484,19 +484,19 @@ function blockButton() {
     var pieChart       = new Chart(pieChartCanvas);
     var PieData        = [
     {
-      value    : datos[0].capacidad_tablon,
+      value    :  Number(datos[0].capacidad_tablon).toFixed(2),
       color    : '#00a65a',
       highlight: '#00a65a',
       label    : 'Capacidad'
     },
     {
-      value    : datos[0].sembrado_actual,
+      value    :  Number(datos[0].sembrado_actual).toFixed(2),
       color    : '#00c0ef',
       highlight: '#00c0ef',
       label    : 'Sembrado Actual'
     },
     {
-      value    : datos[0].disponible,
+      value    : Number(datos[0].disponible).toFixed(2),
       color    : '#f56954',
       highlight: '#f56954',
       label    : 'Total Disponible'

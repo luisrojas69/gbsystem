@@ -69,7 +69,7 @@ class CaptureController extends Controller
 
    public function store(Request $request)
    {
-        dd($request->all());
+        //dd($request->all());
     try {
        $capture =new Capture;
        $capture->plank_id = $request->plank_id;

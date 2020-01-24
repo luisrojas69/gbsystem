@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title-page', "Rodeos Granja Boraure")
+@section('title-page', "Error 404")
 
 @section('message')
 @include('layouts._my_message')

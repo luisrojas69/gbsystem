@@ -44,7 +44,7 @@ class CaptureController extends Controller
         ->join('activities', 'activities.id', '=', 'captures.activity_id')
         ->join('crops', 'crops.id', '=', 'captures.crop_id')
         ->select('captures.id','captures.activity_date as fecha', 'captures.area', 'planks.plank_de', 'crops.crop_na', 'activities.activity_na')
-        ->orderBy('fecha', 'desc')
+        ->orderBy('id', 'desc')
         ->get();
         //$captures= Capture::all();
         return view('pages.administration.farming.captures.index', compact('captures'));
@@ -69,7 +69,7 @@ class CaptureController extends Controller
 
    public function store(Request $request)
    {
-        //dd($request->all());
+        dd($request->all());
     try {
        $capture =new Capture;
        $capture->plank_id = $request->plank_id;

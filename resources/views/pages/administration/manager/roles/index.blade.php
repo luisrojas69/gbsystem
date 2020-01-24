@@ -88,16 +88,13 @@
             <div class="box-body">
 
           @foreach($roles as $role)    
-            <div class="col-md-3">
+            <div class="col-md-2">
               <!-- Profile Image -->
                 <div class="box box-primary">
                   <div class="box-body box-profile">
                     <img class="profile-role-img img-responsive img-circle" src="{{ asset('img/engranaje.png') }}" alt="Avatar del Usuario {{ $role->name }}">
 
                     <h3 class="profile-rolename text-center">{{ $role->name }}</h3>
-
-                    <p class="text-muted text-center text-blue"> {{ $role->email }} </p>
-
 
                     <div class="text-center">
                       @can('user.show')

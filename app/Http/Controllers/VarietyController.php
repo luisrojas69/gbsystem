@@ -27,7 +27,8 @@ class VarietyController extends Controller
 	public function index()
     {
         $varieties=Variety::all();
-    	return view('pages.administration.farming.varieties.index', compact('varieties'));
+        $crops = Crop::select('id', 'crop_na', 'crop_de')->orderBy('id', 'ASC')->get();
+    	return view('pages.administration.farming.varieties.index', compact('varieties', 'crops'));
     }
 
 
@@ -86,16 +87,17 @@ class VarietyController extends Controller
         return view('pages.administration.farming.varieties.edit', compact('variety','crop'));
     }
 
-    public function update(Request $request, Variety $variety)
+    public function update(Request $request)
     {
-        try {
-            $variety = Variety::find($variety->id);
+     try {
+            $variety = Variety::findOrFail($request->variety_id);
             $variety->variety_na = $request->get('variety_na');
             $variety->variety_de = $request->get('variety_de');
+            $variety->crop_id = $request->get('crop_id');
             DB::beginTransaction();
             $variety->save();
             DB::commit();
-            session()->flash('my_message', 'variedad Modificada Correctamente');
+            session()->flash('my_message', 'Variedad Modificada Correctamente');
             return redirect('supplies/variety');
         } catch (Exception $e) {
             session()->flash('my_error', $e->getMessage());

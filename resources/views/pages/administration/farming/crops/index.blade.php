@@ -92,6 +92,7 @@
                         @endcan
 
                         @can('crop.destroy')
+                        
                             <a href="javascript:void(0)" id="{{ $crop->id }}"
                               class="btn-delete"
                               title="Eliminar">

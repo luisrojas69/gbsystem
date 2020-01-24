@@ -47,7 +47,7 @@
       <td>{{ $capture->activity_na }}</td>
       <td style="text-align: center;">{{ $capture->crop_na }}</td>
       <td style="text-align: center;">{{ $capture->area }}</td>
-      <td style="text-align: center;">{{ $capture->fecha }}</td>
+      <td style="text-align: center;">{{ Carbon\Carbon::parse($capture->fecha)->format('d-m-Y') }}</td>
       <td style="text-align: center;">
 
         @can('capture.edit')  

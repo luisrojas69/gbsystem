@@ -21,8 +21,8 @@
               <h3 class="box-title">Administración de @yield('title-page')</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-bordered table-hover">
+            <div class="box-body table-responsive">
+              <table class="table table-bordered table-hover table-striped">
                 <tbody><tr>
                   <th><input type="checkbox" id="selectall"></th>
                   <th style="width: 60px">image</th>
@@ -30,6 +30,7 @@
                   <th>Codigo</th>
                   <th>Especie</th>
                   <th>Raza</th>
+                  <th>Lote</th>
                   <th>Rodeo</th>
                   <th>Potrero</th>
                   <th>Fecha Ingreso</th>
@@ -48,6 +49,7 @@
                   <td>{{ $animal->animal_cod }}</td>
                   <td>{{ $animal->breed->specie->specie_na }}</td>
                   <td>{{ $animal->breed->breed_na }}</td>
+                  <td>{{ $animal->lotAnimal->lot_de }}</td>
                   <td>{{ $animal->rodeo->rodeo_na }}</td>
                   <td>{{ $animal->paddock->paddock_na }}</td>
                   <td>{{ $animal->date_in }}</td>

@@ -35,6 +35,7 @@
                   <th style="text-align: center;">Codigo</th>
                   <th>Especie</th>
                   <th>Raza</th>
+                  <th>Lote</th>
                   <th>Rodeo</th>
                   <th>Potrero</th>
                   <th>Fecha Ingreso</th>
@@ -57,6 +58,7 @@
                   <td>{{ $animal->animal_cod }}</td>
                   <td>{{ $animal->breed->specie->specie_na }}</td>
                   <td>{{ $animal->breed->breed_na }}</td>
+                  <td>{{ $animal->lotAnimal->lot_de }}</td>
                   <td>{{ $animal->rodeo->rodeo_na }}</td>
                   <td>{{ $animal->paddock->paddock_na }}</td>
                   <td>{{ $animal->date_in }}</td>

@@ -59,7 +59,7 @@ class PluviometryController extends Controller
      */
      public function index()
      {   
-        $pluviometries = Pluviometry::whereYear('date_read', '2019')->orderBy('date_read', 'DESC')->limit(10)->get();
+        $pluviometries = Pluviometry::orderBy('date_read', 'DESC')->limit(10)->get();
         //$pluviometries = DB::select(DB::raw("SELECT * FROM pluviometries WHERE YEAR(date_read) = '2019' and archived = 'N' ORDER BY date_read ASC"));
         $sectors = Sector::all();
         return view('pages.administration.pluviometries.index', compact('pluviometries', 'sectors'));
